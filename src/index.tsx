@@ -1,6 +1,10 @@
 import App from '@/App';
+import GlobalStyle from '@/styles/GlobalStyle';
+import theme from '@/styles/theme';
+import { ThemeProvider } from '@emotion/react';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+
 
 if (process.env.NODE_ENV === 'development') {
     // eslint-disable-next-line @typescript-eslint/no-var-requires, global-require
@@ -12,6 +16,9 @@ const root = createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
     <React.StrictMode>
-        <App />
+        <ThemeProvider theme={theme}>
+            <GlobalStyle />
+            <App />
+        </ThemeProvider>
     </React.StrictMode>
 );
