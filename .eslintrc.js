@@ -20,7 +20,6 @@ module.exports = {
     plugins: ['prettier'], // 서드파티 플러그인 사용을 지원 prettier 코드 스타일이 어긋나면 eslint에 걸리도록 처리
     parser: '@typescript-eslint/parser', // 내가 작성한 코드를 분석하기 위한 파싱툴
     rules: {
-      'prettier/prettier': 'error',
       'react/jsx-props-no-spreading': 'off', // 넘겨받은 props를 spread 허용
       'react/jsx-filename-extension': ['warn', { extensions: ['tsx', 'jsx'] }], // jsx파일 내에서 jsx, tsx 문법 허용
       'react/react-in-jsx-scope': 'off', // 최상단에 import React'를 생략
