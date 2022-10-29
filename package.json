@@ -70,7 +70,16 @@
         "webpack-merge": "^5.8.0"
     },
     "scripts": {
-        "dev": "cross-env NODE_ENV=development webpack serve --config config/webpack.dev.js --progress"
+        "dev": "cross-env NODE_ENV=development webpack serve --config config/webpack.dev.js --progress",
+        "test": "react-scripts test"
+    },
+    "msw": {
+        "workerDirectory": "public"
+    },
+    "jest": {
+        "moduleNameMapper": {
+            "^@/(.*)$": "<rootDir>/src/$1"
+        }
     },
     "husky": {
         "hooks": {
