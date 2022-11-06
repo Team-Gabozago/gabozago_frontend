@@ -1,5 +1,3 @@
-import theme from './theme';
-
 interface Flexbox {
     dir: 'row' | 'column';
     jc: string;
