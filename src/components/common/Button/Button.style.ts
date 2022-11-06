@@ -1,57 +1,26 @@
-import { inlineFlexbox } from '@/styles/mixin';
-import theme from '@/styles/theme';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-const selectTypes = (size: string, color: string) => {
+import { TypeButtonSize } from '.';
+
+import { inlineFlexbox } from '@/styles/mixin';
+
+const selectTypes = (size: string) => {
     switch (size) {
-        case 'xLarge':
-            return css`
-                width: 27.5rem;
-                height: 4rem;
-                border: none;
-                color: ${theme.color.white};
-                background-color: ${color};
-            `;
-        case 'large':
+        case 'lg':
             return css`
                 width: 21.25rem;
                 height: 4rem;
-                border: none;
-                color: ${theme.color.white};
-                background-color: ${color};
             `;
-        case 'xRegular':
-            return css`
-                width: 9.5rem;
-                height: 3.75rem;
-                border: none;
-                color: ${theme.color.white};
-                background-color: ${color};
-            `;
-        case 'regular':
+        case 'md':
             return css`
                 width: 7rem;
                 height: 3.4375rem;
-                border: none;
-                color: ${theme.color.white};
-                background-color: ${color};
             `;
-        case 'small':
+        case 'sm':
             return css`
                 width: 7rem;
                 height: 2rem;
-                border: none;
-                color: ${theme.color.white};
-                background-color: ${color};
-            `;
-        case 'xSmall':
-            return css`
-                width: 4rem;
-                height: 2rem;
-                border: none;
-                color: ${theme.color.white};
-                background-color: ${color};
             `;
         default:
             throw new Error(`${size} type is not found`);
@@ -59,15 +28,18 @@ const selectTypes = (size: string, color: string) => {
 };
 
 export const Button = styled.button<{
-    size: string;
-    color: string;
-    background?: string;
+    size: TypeButtonSize;
+    backgroundColor?: string;
 }>`
     ${inlineFlexbox({ jc: 'center', ai: 'center' })}
     border-radius: 1rem;
-    background: ${props => props.background};
-    ${({ size, color }) => selectTypes(size, color)};
-
+    background-color: ${props => props.backgroundColor};
+    cursor: pointer;
+    ${({ size }) => selectTypes(size)};
+    &:hover {
+    }
+    &:focus {
+    }
     :disabled {
         background-color: #e9ebee;
         color: #c5c8ce;
