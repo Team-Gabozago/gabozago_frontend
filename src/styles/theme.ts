@@ -3,6 +3,7 @@ const calcRem = (size: number): string => `${size / 16}rem`;
 const color = {
     black: '#000',
     white: '#FFF',
+    lime: '#52FF00',
     transparent: 'transparent',
 };
 
