@@ -1,0 +1,27 @@
+@font-face {
+    font-family: 'gabozago';
+    src: url('fonts/gabozago.ttf?5qoicf') format('truetype'),
+        url('fonts/gabozago.woff?5qoicf') format('woff'),
+        url('fonts/gabozago.svg?5qoicf#gabozago') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+i {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'gabozago' !important;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.ic-logo:before {
+    content: '\e900';
+}
