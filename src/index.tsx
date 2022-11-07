@@ -7,6 +7,7 @@ import { RecoilRoot } from 'recoil';
 import App from '@/App';
 import GlobalStyle from '@/styles/GlobalStyle';
 import theme from '@/styles/theme';
+import './assets/style.css';
 
 
 if (process.env.NODE_ENV === 'development') {
