@@ -4,14 +4,19 @@ const color = {
     black: '#000',
     white: '#FFF',
     lime: '#52FF00',
+    gray: '#AAAAAA',
+    label: '#666666',
+    noActiveButton: '#9F9F9F',
+    inputFocus: '#222222',
     transparent: 'transparent',
 };
 
 const fontSize = {
     xs: calcRem(12),
     sm: calcRem(16),
-    md: calcRem(18),
+    md: calcRem(20),
     lg: calcRem(24),
+    title: calcRem(28),
     display: calcRem(32),
 };
 

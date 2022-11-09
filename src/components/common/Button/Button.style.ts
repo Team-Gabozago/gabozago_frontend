@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { TypeButtonSize } from '.';
 
 import { inlineFlexbox } from '@/styles/mixin';
+import theme from '@/styles/theme';
 
 const selectTypes = (size: string) => {
     switch (size) {
@@ -14,8 +15,8 @@ const selectTypes = (size: string) => {
             `;
         case 'md':
             return css`
-                width: 7rem;
-                height: 3.4375rem;
+                width: 20.375rem;
+                height: 3.25rem;
             `;
         case 'sm':
             return css`
@@ -32,7 +33,7 @@ export const Button = styled.button<{
     backgroundColor?: string;
 }>`
     ${inlineFlexbox({ jc: 'center', ai: 'center' })}
-    border-radius: 1rem;
+    border-radius: 3.125rem;
     background-color: ${props => props.backgroundColor};
     cursor: pointer;
     ${({ size }) => selectTypes(size)};
@@ -41,7 +42,7 @@ export const Button = styled.button<{
     &:focus {
     }
     :disabled {
-        background-color: #e9ebee;
-        color: #c5c8ce;
+        background-color: ${theme.color.noActiveButton};
+        color: ${theme.color.white};
     }
 `;
