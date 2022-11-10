@@ -9,6 +9,16 @@ export const Title = styled.h1`
     font-weight: bold;
 `;
 
+export const DirectiveMsg = styled.span<{ active: boolean }>`
+    width: 100%;
+    margin-top: 1.6rem;
+    margin-left: 1.7rem;
+    font-size: ${theme.fontSize.xs};
+    color: ${props =>
+        props.active ? theme.color.gray : theme.color.errorText};
+    /* transform: translate3d(0.9rem, 0, 0); */
+`;
+
 export const ButtonWrapper = styled.div`
     margin-top: 2rem;
 `;

@@ -9,6 +9,7 @@ const color = {
     noActiveButton: '#9F9F9F',
     inputFocus: '#222222',
     transparent: 'transparent',
+    errorText: '#FF5F5F',
 };
 
 const fontSize = {

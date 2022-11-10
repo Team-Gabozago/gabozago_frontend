@@ -55,7 +55,7 @@ const SignupPage = () => {
     const { value: password2, setValue: setPassword2, onChange: handleChangePassword2 } = useInput('');
     const { value: tel, setValue: setTel, onChange: handleChangeTel } = useInput('');
 
-    const handleNextButton = (e: React.SyntheticEvent<HTMLFormElement> | React.KeyboardEvent) => {
+    const handleNextButton = () => {
         // level 하나 증가시키고 Button은 다시 disabled
         setLevel(level + 1);
         setIsDisabled(true);
@@ -63,7 +63,7 @@ const SignupPage = () => {
 
     const handleOnKeyUp = (e: React.KeyboardEvent) => {
         if (e.code === 'Enter' && !isDisabled) {
-            handleNextButton(e);
+            handleNextButton();
         }
     }
 
@@ -83,14 +83,40 @@ const SignupPage = () => {
         <S.SignupWrapper>
             <S.SignupForm>
                 <S.Title>{formData[level].title}</S.Title>
-                {level >= 5 && <Input name="전화번호" type="tel" placeholder="띄어쓰기나 기호 없이 숫자만 입력해주세요. Ex) 01025486707" value={tel} tabIndex="-5" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChangeTel(e)} onKeyUp={(e: React.KeyboardEvent) => handleOnKeyUp(e)} />}
-                {level >= 4 && <Input name="비밀번호 확인" type="password" placeholder="비밀번호를 한 번 더 입력해주세요" value={password2} tabIndex="-4" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChangePassword2(e)} onKeyUp={(e: React.KeyboardEvent) => handleOnKeyUp(e)} />}
-                {level >= 3 && <Input name="비밀번호" type="password" placeholder="비밀번호를 입력해주세요" value={password} tabIndex="-3" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChangePassword(e)} onKeyUp={(e: React.KeyboardEvent) => handleOnKeyUp(e)} />}
-                {level >= 2 && <Input name="이메일" type="email" placeholder="이메일을 입력해주세요" value={email} tabIndex="-2" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChangeEmail(e)} onKeyUp={(e: React.KeyboardEvent) => handleOnKeyUp(e)} />}
-                {level >= 1 && <Input name="별명" type="text" placeholder="공백 포함 6자 이내의 한글, 영문, 숫자로 입력해주세요" value={nickname} tabIndex="-1" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChangeNickname(e)} onKeyUp={(e: React.KeyboardEvent) => handleOnKeyUp(e)} />}
-                <Input name="이름" type="text" placeholder="한글, 영문만 입력해주세요." value={name} tabIndex="0" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChangeName(e)} onKeyUp={(e: React.KeyboardEvent) => handleOnKeyUp(e)} />
+                {level >= 5 &&
+                    <>
+                        <Input name="전화번호" type="tel" placeholder="띄어쓰기나 기호 없이 숫자만 입력해주세요. Ex) 01025486707" value={tel} tabIndex="-5" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChangeTel(e)} onKeyUp={(e: React.KeyboardEvent) => handleOnKeyUp(e)} />
+                        {tel.length > 0 && <S.DirectiveMsg active={checkTel(tel)}>{formData[level].directive}</S.DirectiveMsg>}
+                    </>}
+                {level >= 4 &&
+                    <>
+                        <Input name="비밀번호 확인" type="password" placeholder="비밀번호를 한 번 더 입력해주세요" value={password2} tabIndex="-4" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChangePassword2(e)} onKeyUp={(e: React.KeyboardEvent) => handleOnKeyUp(e)} />
+                        {password2.length > 0 && <S.DirectiveMsg active={checkPassword2(password, password2)}>{formData[level].directive}</S.DirectiveMsg>}
+                    </>
+                }
+                {level >= 3 &&
+                    <>
+                        <Input name="비밀번호" type="password" placeholder="비밀번호를 입력해주세요" value={password} tabIndex="-3" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChangePassword(e)} onKeyUp={(e: React.KeyboardEvent) => handleOnKeyUp(e)} />
+                        {password.length > 0 && <S.DirectiveMsg active={checkPassword(password)}>{formData[level].directive}</S.DirectiveMsg>}
+                    </>
+                }
+                {level >= 2 &&
+                    <>
+                        <Input name="이메일" type="email" placeholder="이메일을 입력해주세요" value={email} tabIndex="-2" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChangeEmail(e)} onKeyUp={(e: React.KeyboardEvent) => handleOnKeyUp(e)} />
+                        {email.length > 0 && <S.DirectiveMsg active={checkEmail(email)}>{formData[level].directive}</S.DirectiveMsg>}
+                    </>}
+                {level >= 1 &&
+                    <>
+                        <Input name="별명" type="text" placeholder="공백 포함 6자 이내의 한글, 영문, 숫자로 입력해주세요" value={nickname} tabIndex="-1" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChangeNickname(e)} onKeyUp={(e: React.KeyboardEvent) => handleOnKeyUp(e)} />
+                        {nickname.length > 0 && <S.DirectiveMsg active={checkNickname(nickname)}>{formData[level].directive}</S.DirectiveMsg>}
+                    </>
+                }
+                <>
+                    <Input name="이름" type="text" placeholder="한글, 영문만 입력해주세요." value={name} tabIndex="0" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChangeName(e)} onKeyUp={(e: React.KeyboardEvent) => handleOnKeyUp(e)} />
+                    {name.length > 0 && <S.DirectiveMsg active={checkName(name)}>{formData[level].directive}</S.DirectiveMsg>}
+                </>
                 <S.ButtonWrapper>
-                    <Button type="submit" size="md" backgroundColor={theme.color.lime} disabled={isDisabled} onClick={(e: React.SyntheticEvent<HTMLFormElement>) => handleNextButton(e)}>다음</Button>
+                    <Button type="submit" size="md" backgroundColor={theme.color.lime} disabled={isDisabled} onClick={handleNextButton}>다음</Button>
                 </S.ButtonWrapper>
             </S.SignupForm>
         </S.SignupWrapper>
