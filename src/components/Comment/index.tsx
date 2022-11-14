@@ -1,4 +1,4 @@
-import CommentProfile from '../CommentProfile';
+import CommentProfile from '../Profile';
 
 const Comment = () => (
     <div>

@@ -7,17 +7,22 @@ export default function HomePage() {
     const post = [
         {
             title: '배드민턴/1명/여자',
-            info: '채나 다른 준비물은 제가 가지고있습니다다다다다다다! 공원으로 와주세요',
+            content:
+                '채나 다른 준비물은 제가 가지고있습니다다다다다다다! 공원으로 와주세요',
             writer: '투원투원',
             good: 99,
             comment: 1999,
+            time: '3분전',
+            image: '',
         },
         {
             title: '배드민턴/3명/남자여자',
-            info: '아무나 와주세요',
+            content: '아무나 와주세요',
             writer: '투원투원',
             good: 990,
             comment: 1999,
+            time: '하루전',
+            image: 'ggg',
         },
     ];
     return (
