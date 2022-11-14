@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Comment from '@/components/Comment';
-import CommentProfile from '@/components/CommentProfile';
+import CommentProfile from '@/components/Profile';
 
 const PostView = () => (
     <section>
