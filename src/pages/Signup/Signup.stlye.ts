@@ -19,6 +19,21 @@ export const DirectiveMsg = styled.span<{ active: boolean }>`
     /* transform: translate3d(0.9rem, 0, 0); */
 `;
 
+export const EmailCheckButton = styled.button`
+    width: 4.375rem;
+    height: 1.875rem;
+    border-radius: 5px;
+    padding: 0.5rem;
+    color: ${theme.color.white};
+    background-color: ${theme.color.gray};
+`;
+
+export const EmailButtonWrapper = styled.div`
+    ${flexbox({})}
+    width: 18.5rem;
+    margin-top: 1.5rem;
+`;
+
 export const ButtonWrapper = styled.div`
     margin-top: 2rem;
 `;
