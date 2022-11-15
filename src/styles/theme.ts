@@ -7,6 +7,7 @@ const color = {
     gray: '#AAAAAA',
     label: '#666666',
     noActiveButton: '#9F9F9F',
+    bodyBackground: '#f7f7fc',
     inputFocus: '#222222',
     transparent: 'transparent',
     errorText: '#FF5F5F',
