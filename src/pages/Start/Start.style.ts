@@ -4,13 +4,14 @@ import styled from '@emotion/styled';
 import { flexbox } from '@/styles/mixin';
 import theme from '@/styles/theme';
 
+const sportCount = 6;
+
 const cycle = keyframes`
-// 수정필요.
   from {
-    transform: translateY(0);
+    transform: translateY(-100%);
   }
   to {
-    transform: translateY((-100% / 6) * (6 - 1));
+    transform: translateY((-100% / ${sportCount}) * (${sportCount} - 1));
   }
 `;
 
@@ -20,18 +21,18 @@ export const TitleText = styled.div`
 `;
 
 export const SportWrapper = styled.div`
-    height: 40px;
+    height: 3rem;
     overflow: hidden;
 `;
 
 export const SportUL = styled.ul`
-    height: 1rem;
-    animation: ${cycle} 1.5s 1s infinite forwards;
+    animation: ${cycle} ${sportCount}s infinite forwards;
 `;
 
 export const SportLI = styled.li`
-    height: 20px;
-    padding: 15px 0;
+    ${flexbox({ ai: 'center' })}
+    height: 1rem;
+    padding: 1.5rem 0;
     width: 10rem;
 `;
 
