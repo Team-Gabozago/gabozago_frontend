@@ -15,7 +15,7 @@ const cycle = keyframes`
   }
 `;
 
-export const TitleText = styled.div`
+export const Title = styled.div`
     font-size: ${theme.fontSize.display};
     font-weight: bold;
 `;
@@ -48,7 +48,6 @@ export const ButtonWrapper = styled.div`
 
 export const LogoWrapper = styled.section`
     ${flexbox({ dir: 'column', ai: 'center', jc: 'center' })};
-    width: 100vw;
     height: 100vh;
 `;
 

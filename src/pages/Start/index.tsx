@@ -29,17 +29,17 @@ const StartPage = () => {
                 :
                 <S.StartWrapper>
                     <S.TitleWrppaer>
-                        <S.TitleText>동료는</S.TitleText>
-                        <S.TitleText>WANTU가 모을게,</S.TitleText>
-                        <S.TitleText data-id="like">
+                        <S.Title>동료는</S.Title>
+                        <S.Title>WANTU가 모을게,</S.Title>
+                        <S.Title data-id="like">
                             <S.SportWrapper>
                                 <S.SportUL>
                                     {sports.map((sport) => <S.SportLI key={sport.id}>{sport.name}{sport.emoji}</S.SportLI>)}
                                     <S.SportLI>{sports[0].name}{sports[0].emoji}</S.SportLI>
                                 </S.SportUL>
                             </S.SportWrapper>
-                        </S.TitleText>
-                        <S.TitleText>누가 할래?</S.TitleText>
+                        </S.Title>
+                        <S.Title>누가 할래?</S.Title>
                     </S.TitleWrppaer>
                     <S.ButtonWrapper>
                         <Link to="/signup">
