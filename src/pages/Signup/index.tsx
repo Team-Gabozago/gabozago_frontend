@@ -5,42 +5,15 @@ import { useNavigate } from 'react-router-dom';
 
 import * as S from './Signup.stlye';
 
-import { postUser, duplicateEmail } from '@/apis/user';
+import { postSignupUser, duplicateEmail } from '@/apis/user';
 import Button from '@/components/common/Button';
+import DirectiveMsg from '@/components/common/DirectiveMsg'
 import Input from '@/components/common/Input';
 import GlobalModal from '@/components/GlobalModal';
 import { signupFormData } from '@/constants/form';
 import { useInput } from '@/hooks/useInput';
 import theme from '@/styles/theme';
-
-const checkName = (name: string) => {
-    const regex = /^[가-힣a-zA-Z]+$/;
-    return regex.test(name);
-};
-
-const checkNickname = (nickname: string) => {
-    const regex = /^[가-힣|a-z|A-Z|0-9|]{1,6}$/;
-
-    return regex.test(nickname);
-};
-
-const checkEmail = (email: string) => {
-    const regex = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
-    return regex.test(email);
-};
-
-const checkPassword = (password: string) => {
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,25}$/;
-    return regex.test(password);
-};
-
-const checkPassword2 = (password: string, password2: string) =>
-    password === password2;
-
-const checkTel = (tel: string) => {
-    const regex = /^01([0|1|6|7|8|9])[0-9]{8}$/g;
-    return regex.test(tel);
-};
+import { checkName, checkNickname, checkEmail, checkPassword, checkPassword2, checkTel } from '@/utils/regex';
 
 /**
  * State 정리
@@ -51,7 +24,7 @@ const checkTel = (tel: string) => {
 const SignupPage = () => {
     const navigate = useNavigate();
 
-    const fetchPostUser = useMutation(postUser, {
+    const fetchSignupUser = useMutation(postSignupUser, {
         onSuccess: (data: { member_id: number }) => {
             if (data.member_id) {
                 // 성공 popup 띄우기.
@@ -178,7 +151,7 @@ const SignupPage = () => {
             tel,
         };
 
-        fetchPostUser.mutate(newUser);
+        fetchSignupUser.mutate(newUser);
     };
 
     const handleOnKeyUp = (e: React.KeyboardEvent) => {
@@ -218,9 +191,9 @@ const SignupPage = () => {
                                 }
                             />
                             {tel.length > 0 && !checkTel(tel) && (
-                                <S.DirectiveMsg active={checkTel(tel)}>
+                                <DirectiveMsg active={checkTel(tel)}>
                                     {signupFormData[5].directive}
-                                </S.DirectiveMsg>
+                                </DirectiveMsg>
                             )}
                         </>
                     )}
@@ -241,14 +214,14 @@ const SignupPage = () => {
                             />
                             {password2.length > 0 &&
                                 !checkPassword2(password, password2) && (
-                                    <S.DirectiveMsg
+                                    <DirectiveMsg
                                         active={checkPassword2(
                                             password,
                                             password2
                                         )}
                                     >
                                         {signupFormData[4].directive}
-                                    </S.DirectiveMsg>
+                                    </DirectiveMsg>
                                 )}
                         </>
                     )}
@@ -269,11 +242,11 @@ const SignupPage = () => {
                             />
                             {password.length > 0 &&
                                 !checkPassword(password) && (
-                                    <S.DirectiveMsg
+                                    <DirectiveMsg
                                         active={checkPassword(password)}
                                     >
                                         {signupFormData[3].directive}
-                                    </S.DirectiveMsg>
+                                    </DirectiveMsg>
                                 )}
                         </>
                     )}
@@ -293,14 +266,14 @@ const SignupPage = () => {
                                 }
                             />
                             {email.length > 0 && !checkEmail(email) && (
-                                <S.DirectiveMsg
+                                <DirectiveMsg
                                     active={checkEmail(email)}
                                     css={css`
                                         margin-bottom: -1.5rem;
                                     `}
                                 >
                                     {signupFormData[2].directive}
-                                </S.DirectiveMsg>
+                                </DirectiveMsg>
                             )}
                             <S.EmailButtonWrapper>
                                 <S.EmailCheckButton
@@ -329,11 +302,11 @@ const SignupPage = () => {
                             />
                             {nickname.length > 0 &&
                                 !checkNickname(nickname) && (
-                                    <S.DirectiveMsg
+                                    <DirectiveMsg
                                         active={checkNickname(nickname)}
                                     >
                                         {signupFormData[1].directive}
-                                    </S.DirectiveMsg>
+                                    </DirectiveMsg>
                                 )}
                         </>
                     )}
@@ -352,9 +325,9 @@ const SignupPage = () => {
                             }
                         />
                         {name.length > 0 && !checkName(name) && (
-                            <S.DirectiveMsg active={checkName(name)}>
+                            <DirectiveMsg active={checkName(name)}>
                                 {signupFormData[0].directive}
-                            </S.DirectiveMsg>
+                            </DirectiveMsg>
                         )}
                     </>
                     <S.ButtonWrapper>
@@ -367,8 +340,8 @@ const SignupPage = () => {
                                 level < 5
                                     ? handleNextButton
                                     : (
-                                          e: React.SyntheticEvent<HTMLFormElement>
-                                      ) => handleSignup(e)
+                                        e: React.SyntheticEvent<HTMLFormElement>
+                                    ) => handleSignup(e)
                             }
                         >
                             {level < 5 ? '다음' : '가입하기'}
