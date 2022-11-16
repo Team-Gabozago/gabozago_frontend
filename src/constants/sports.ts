@@ -10,17 +10,17 @@ export const sports = [
         emoji: '⚽️',
     },
     {
-        id: 1,
+        id: 3,
         name: '농구',
         emoji: '🏀',
     },
     {
-        id: 1,
+        id: 4,
         name: '핸드볼',
         emoji: '🥅',
     },
     {
-        id: 1,
+        id: 5,
         name: '복싱',
         emoji: '🥊',
     },
