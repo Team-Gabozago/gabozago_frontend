@@ -13,9 +13,8 @@ const Comment = () => {
         profileImage: '귀여운',
     };
     return (
-        <S.CommentContainer isCocoment={isCocoment}>
+        <S.CommentContainer isCocoment={isCocoment} key="commentid">
             <CommentProfile profile={profile} />
-
             {myComment && (
                 <S.Edit>
                     <button type="button">수정</button>
