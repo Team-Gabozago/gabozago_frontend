@@ -12,6 +12,12 @@ export default function IconPage() {
                 <I.Logo.Small /> <I.Logo.Big />
             </div>
             <br />
+
+            <br />
+
+            <div>
+                <I.BackButton />
+            </div>
         </fieldset>
     );
 }

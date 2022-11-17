@@ -25,3 +25,7 @@ i {
 .ic-logo:before {
     content: '\e900';
 }
+
+.ic-back-btn:before {
+    content: '\e901';
+}

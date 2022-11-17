@@ -24,8 +24,8 @@ const selectSize = (size: string) => {
             `;
         case 'medium':
             return css`
-                width: 25rem;
-                height: 32rem;
+                width: 20rem;
+                height: 28.25rem;
             `;
         case 'large':
             return css`

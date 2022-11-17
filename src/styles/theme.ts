@@ -4,10 +4,12 @@ const color = {
     black: '#000',
     white: '#FFF',
     blue: '#3F80FF',
+    lightGray: '#999999',
     gray: '#AAAAAA',
     label: '#666666',
     noActiveButton: '#9F9F9F',
-    inputFocus: '#222222',
+    bodyBackground: '#f7f7fc',
+    lightBlack: '#222222',
     transparent: 'transparent',
     errorText: '#FF5F5F',
 };

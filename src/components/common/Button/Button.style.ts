@@ -20,8 +20,13 @@ const selectTypes = (size: string) => {
             `;
         case 'sm':
             return css`
-                width: 7rem;
-                height: 2rem;
+                width: 7.75rem;
+                height: 3rem;
+            `;
+        case 'xs':
+            return css`
+                width: 4rem;
+                height: 1.875rem;
             `;
         default:
             throw new Error(`${size} type is not found`);
