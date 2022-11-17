@@ -44,7 +44,7 @@ export const InputLayer = styled.div<{
     transform: translate3d(0, 2rem, 0);
     transition: all 300ms;
     &:focus-within {
-        border-bottom: 1px solid ${theme.color.inputFocus};
+        border-bottom: 1px solid ${theme.color.lightBlack};
     }
 
     ${({ disabled }) =>

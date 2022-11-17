@@ -5,7 +5,7 @@ import * as S from './Button.style';
 import theme from '@/styles/theme';
 import { OverridableProps } from '@/types/abstract';
 
-export type TypeButtonSize = 'sm' | 'md' | 'lg';
+export type TypeButtonSize = 'xs' | 'sm' | 'md' | 'lg';
 
 type ButtonProps<T extends React.ElementType> = OverridableProps<
     T,
