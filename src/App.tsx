@@ -12,6 +12,7 @@ const SignupPage = lazy(() => import('@/pages/Signup'));
 const LoginPage = lazy(() => import('@/pages/Login'));
 const MyPage = lazy(() => import('@/pages/MyPage'));
 
+const PostViewPage = lazy(() => import('@/pages/PostView'));
 export default function App() {
     return (
         <BrowserRouter>
@@ -26,6 +27,11 @@ export default function App() {
                         <Route path="/signup" element={<SignupPage />} />
                         <Route path="/icons" element={<IconPage />} />
                         <Route path="/" element={<StartPage />} />
+                        <Route
+                            path="/post:postSeq"
+                            element={<PostViewPage />}
+                        />
+                        <Route path="/home" element={<HomePage />} />
                     </Route>
                 </Routes>
             </Suspense>

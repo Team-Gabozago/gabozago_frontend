@@ -17,7 +17,7 @@ export const LinkUl = styled.ul`
     display: flex;
     justify-content: center;
     align-items: center;
-    & li {
+    li {
         flex: 1;
         text-align: center;
         background: #d9d9d9;
