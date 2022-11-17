@@ -18,7 +18,7 @@ export const SubTitle = styled.h4`
 export const SportButton = styled.div`
     ${flexbox({ ai: 'center' })};
     padding: 0.5rem 0.75rem;
-    max-width: 68px;
+    max-width: 4.25rem;
     height: 1.75rem;
     border-radius: 1.25rem;
     font-size: ${theme.fontSize.xs};
