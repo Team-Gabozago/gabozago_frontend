@@ -14,13 +14,13 @@ export const TitleWrppaer = styled.div`
 `;
 
 export const LoginForm = styled.form`
-    ${flexbox({ dir: 'column' })};
+    ${flexbox({ dir: 'column', ai: 'center' })};
     gap: 1rem;
+    width: 18.5rem;
     margin-top: 5.375rem;
 `;
 
 export const ButtonWrapper = styled.div`
-    width: 23.4375rem;
     margin-top: 4rem;
 `;
 
