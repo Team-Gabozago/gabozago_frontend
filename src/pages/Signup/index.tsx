@@ -7,13 +7,20 @@ import * as S from './Signup.stlye';
 
 import { postSignupUser, duplicateEmail } from '@/apis/user';
 import Button from '@/components/common/Button';
-import DirectiveMsg from '@/components/common/DirectiveMsg'
+import DirectiveMsg from '@/components/common/DirectiveMsg';
 import Input from '@/components/common/Input';
 import GlobalModal from '@/components/GlobalModal';
 import { signupFormData } from '@/constants/form';
 import { useInput } from '@/hooks/useInput';
 import theme from '@/styles/theme';
-import { checkName, checkNickname, checkEmail, checkPassword, checkPassword2, checkTel } from '@/utils/regex';
+import {
+    checkName,
+    checkNickname,
+    checkEmail,
+    checkPassword,
+    checkPassword2,
+    checkTel,
+} from '@/utils/regex';
 
 /**
  * State 정리
@@ -68,6 +75,14 @@ const SignupPage = () => {
         return newForm.slice(0, level + 1).every(value => value === true)
             ? setIsDisabled(false)
             : setIsDisabled(true);
+    };
+
+    const clearInputValue = (
+        e: React.MouseEvent<HTMLButtonElement>,
+        setClearValue: () => void
+    ) => {
+        e.preventDefault();
+        setClearValue();
     };
 
     const {
@@ -173,8 +188,10 @@ const SignupPage = () => {
     return (
         <>
             <S.SignupWrapper>
-                <S.SignupForm>
+                <S.TitleWrapper>
                     <S.Title>{signupFormData[level].title}</S.Title>
+                </S.TitleWrapper>
+                <S.SignupForm>
                     {level >= 5 && (
                         <>
                             <Input
@@ -189,6 +206,8 @@ const SignupPage = () => {
                                 onKeyUp={(e: React.KeyboardEvent) =>
                                     handleOnKeyUp(e)
                                 }
+                                success={tel.length > 0 && checkTel(tel)}
+                                error={tel.length > 0 && !checkTel(tel)}
                             />
                             {tel.length > 0 && !checkTel(tel) && (
                                 <DirectiveMsg active={checkTel(tel)}>
@@ -210,6 +229,14 @@ const SignupPage = () => {
                                 ) => handleChangePassword2(e)}
                                 onKeyUp={(e: React.KeyboardEvent) =>
                                     handleOnKeyUp(e)
+                                }
+                                success={
+                                    password2.length > 0 &&
+                                    checkPassword2(password, password2)
+                                }
+                                error={
+                                    password2.length > 0 &&
+                                    !checkPassword2(password, password2)
                                 }
                             />
                             {password2.length > 0 &&
@@ -239,6 +266,14 @@ const SignupPage = () => {
                                 onKeyUp={(e: React.KeyboardEvent) =>
                                     handleOnKeyUp(e)
                                 }
+                                success={
+                                    password.length > 0 &&
+                                    checkPassword(password)
+                                }
+                                error={
+                                    password.length > 0 &&
+                                    !checkPassword(password)
+                                }
                             />
                             {password.length > 0 &&
                                 !checkPassword(password) && (
@@ -264,6 +299,8 @@ const SignupPage = () => {
                                 onKeyUp={(e: React.KeyboardEvent) =>
                                     handleOnKeyUp(e)
                                 }
+                                success={email.length > 0 && checkEmail(email)}
+                                error={email.length > 0 && !checkEmail(email)}
                             />
                             {email.length > 0 && !checkEmail(email) && (
                                 <DirectiveMsg
@@ -299,6 +336,14 @@ const SignupPage = () => {
                                 onKeyUp={(e: React.KeyboardEvent) =>
                                     handleOnKeyUp(e)
                                 }
+                                success={
+                                    nickname.length > 0 &&
+                                    checkNickname(nickname)
+                                }
+                                error={
+                                    nickname.length > 0 &&
+                                    !checkNickname(nickname)
+                                }
                             />
                             {nickname.length > 0 &&
                                 !checkNickname(nickname) && (
@@ -323,6 +368,11 @@ const SignupPage = () => {
                             onKeyUp={(e: React.KeyboardEvent) =>
                                 handleOnKeyUp(e)
                             }
+                            success={name.length > 0 && checkName(name)}
+                            error={name.length > 0 && !checkName(name)}
+                            onClear={(e: React.MouseEvent<HTMLButtonElement>) =>
+                                clearInputValue(e, () => setName(name))
+                            }
                         />
                         {name.length > 0 && !checkName(name) && (
                             <DirectiveMsg active={checkName(name)}>
@@ -334,17 +384,27 @@ const SignupPage = () => {
                         <Button
                             type="submit"
                             size="md"
-                            backgroundColor={theme.color.blue}
+                            backgroundColor={
+                                level < 5 ? theme.color.navy : theme.color.blue
+                            }
                             disabled={isDisabled}
                             onClick={
                                 level < 5
                                     ? handleNextButton
                                     : (
-                                        e: React.SyntheticEvent<HTMLFormElement>
-                                    ) => handleSignup(e)
+                                          e: React.SyntheticEvent<HTMLFormElement>
+                                      ) => handleSignup(e)
                             }
                         >
-                            {level < 5 ? '다음' : '가입하기'}
+                            <S.ButtonText
+                                color={
+                                    level < 5
+                                        ? theme.color.white
+                                        : theme.color.green
+                                }
+                            >
+                                {level < 5 ? '다음' : '가입완료'}
+                            </S.ButtonText>
                         </Button>
                     </S.ButtonWrapper>
                 </S.SignupForm>
@@ -354,21 +414,34 @@ const SignupPage = () => {
                     size="small"
                     handleCancelClick={() => setIsEmailModal(false)}
                 >
-                    {isDuplicateEmail ? (
-                        <>
-                            <h1>이미 사용 중인 이메일이에요.</h1>
-                            <span>다른 이메일로 다시 시도해보세요.</span>
-                        </>
-                    ) : (
-                        <h1>사용 가능한 이메일입니다!</h1>
-                    )}
-                    <Button
-                        size="sm"
-                        backgroundColor={theme.color.gray}
-                        onClick={() => setIsEmailModal(false)}
-                    >
-                        확인
-                    </Button>
+                    <S.EmailModalWrapper>
+                        {!isDuplicateEmail ? (
+                            <>
+                                <S.EmailModalTitle>
+                                    이미 사용 중인 이메일이에요.
+                                </S.EmailModalTitle>
+                                <S.SubEmailText>
+                                    다른 이메일로 다시 시도해보세요.
+                                </S.SubEmailText>
+                                <S.EmailModalButton
+                                    onClick={() => setIsEmailModal(false)}
+                                >
+                                    다시 시도
+                                </S.EmailModalButton>
+                            </>
+                        ) : (
+                            <>
+                                <S.EmailModalTitle>
+                                    사용 할 수 있는 이메일이에요.
+                                </S.EmailModalTitle>
+                                <S.EmailModalButton
+                                    onClick={() => setIsEmailModal(false)}
+                                >
+                                    확인
+                                </S.EmailModalButton>
+                            </>
+                        )}
+                    </S.EmailModalWrapper>
                 </GlobalModal>
             )}
         </>

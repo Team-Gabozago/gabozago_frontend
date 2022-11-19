@@ -2,7 +2,7 @@ export const signupFormData = [
     {
         id: 0,
         title: '이름을 알려주세요.',
-        directive: '한글, 영문만 입력해주세요',
+        directive: '이름을 입력해 주세요',
     },
     {
         id: 1,

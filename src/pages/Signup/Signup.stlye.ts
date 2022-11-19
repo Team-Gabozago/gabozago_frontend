@@ -9,6 +9,31 @@ export const Title = styled.h1`
     font-weight: bold;
 `;
 
+export const TitleWrapper = styled.div`
+    ${flexbox({ jc: 'center' })};
+    margin-bottom: 2rem;
+`;
+
+// Email Modal Area
+
+export const EmailModalTitle = styled.h1`
+    font-size: ${theme.fontSize.md};
+    font-weight: bold;
+`;
+
+export const SubEmailText = styled.span`
+    font-size: ${theme.fontSize.xs};
+    color: ${theme.color.label};
+`;
+
+export const EmailModalButton = styled.button`
+    width: 16.625rem;
+    height: 3rem;
+    border-radius: 10px;
+    background-color: ${theme.color.blue};
+    color: ${theme.color.white};
+`;
+
 export const EmailCheckButton = styled.button`
     width: 4.375rem;
     height: 1.875rem;
@@ -18,10 +43,19 @@ export const EmailCheckButton = styled.button`
     background-color: ${theme.color.gray};
 `;
 
+export const EmailModalWrapper = styled.div`
+    ${flexbox({ dir: 'column', ai: 'center' })};
+    gap: 2rem;
+    padding: 1.875rem 1.75rem 1.625rem;
+`;
+
 export const EmailButtonWrapper = styled.div`
     ${flexbox({})}
     width: 18.5rem;
-    margin-top: 1.5rem;
+`;
+
+export const ButtonText = styled.span<{ color: string }>`
+    color: ${props => props.color};
 `;
 
 export const ButtonWrapper = styled.div`
