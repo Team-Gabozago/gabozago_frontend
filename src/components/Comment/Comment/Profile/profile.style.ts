@@ -17,6 +17,7 @@ export const Time = styled.span`
     color: #666;
     font-size: 12px;
     font-weight: 400;
+    line-height: 18px;
     flex: 1;
 `;
 

@@ -2,8 +2,9 @@ import { Link } from 'react-router-dom';
 
 import * as S from './postView.style';
 
-import Comment from '@/components/Comment';
-import CommentProfile from '@/components/Comment/Profile';
+import Comment from '@/components/Comment/Comment';
+import CommentProfile from '@/components/Comment/Comment/Profile';
+import WriteComment from '@/components/Comment/WriteComment';
 
 const PostView = () => {
     const profile = {
@@ -12,6 +13,7 @@ const PostView = () => {
         time: '10.31 14:42',
         profileImage: '귀여운',
     };
+    const WriteCommentTrue = true;
     return (
         <S.ViewContainer>
             <S.Title>
@@ -24,13 +26,14 @@ const PostView = () => {
             </S.ProfileContainer>
             <S.ContentContainer>
                 <p>원투공원</p>
-                <p>content</p>
-                <button type="button">관심있어요</button>
+                <S.Content>content</S.Content>
+                <S.InterestedButton type="button">
+                    관심있어요
+                </S.InterestedButton>
             </S.ContentContainer>
-            <S.InputContainer>
-                {/* 댓글작성 */}
-                <input type="text" placeholder="댓글을 입력해주세요." />
-            </S.InputContainer>
+
+            <WriteComment readOnly={WriteCommentTrue} />
+
             <div>
                 {/* 댓글리스트 */}
                 <ul>
