@@ -18,10 +18,16 @@ export const Input = styled.input`
     }
 `;
 
-export const ClearButton = styled.button`
+export const ClearButton = styled.button<{
+    error?: boolean;
+    success?: boolean;
+}>`
     position: absolute;
     top: 50%;
     right: 10px;
+    color: ${theme.color.gray};
+
+    ${({ error }) => error && `color: ${theme.color.errorText};`};
 `;
 
 export const PlaceHolder = styled.div`
@@ -51,29 +57,20 @@ export const InputLayer = styled.div<{
     overflow: hidden;
     transform: translate3d(0, 2rem, 0);
     transition: all 300ms;
+
     &:focus-within {
         border-bottom: 1px solid ${theme.color.blue};
         caret-color: ${theme.color.blue};
     }
 
-    ${({ disabled }) =>
-        disabled &&
-        `
-      opacity: 0.5;
-    `};
+    &:focus-within button {
+        color: ${theme.color.blue};
+    }
 
     ${({ active }) =>
-        active &&
-        `${PlaceHolder} {
-            transform: translate3d(0, -3rem, 0);
-        }`};
+        active && `${PlaceHolder} { transform: translate3d(0, -3rem, 0) }`};
 
-    ${({ success }) =>
-        success &&
-        `
-            border-bottom: 1px solid ${theme.color.blue} !important;
-            caret-color: 1px solid ${theme.color.blue} !important;
-    `};
+    ${({ disabled }) => disabled && `opacity: 0.5;`};
 
     ${({ error }) =>
         error &&

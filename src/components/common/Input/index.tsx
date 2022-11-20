@@ -53,6 +53,7 @@ export const Input = memo(
             >
                 <S.Label htmlFor={name}>
                     <span>{name}</span>
+                    {success && 'check'}
                 </S.Label>
                 <S.Input
                     as={as ?? 'input'}
@@ -65,7 +66,14 @@ export const Input = memo(
                     autoFocus
                     onChange={onChange}
                 />
-                <S.ClearButton onClick={onClear}>X</S.ClearButton>
+                <S.ClearButton
+                    type="button"
+                    onClick={onClear}
+                    error={error}
+                    success={success}
+                >
+                    X
+                </S.ClearButton>
                 <S.PlaceHolder>{placeholder}</S.PlaceHolder>
             </S.InputLayer>
         )

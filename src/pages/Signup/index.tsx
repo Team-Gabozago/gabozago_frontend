@@ -10,6 +10,7 @@ import Button from '@/components/common/Button';
 import DirectiveMsg from '@/components/common/DirectiveMsg';
 import Input from '@/components/common/Input';
 import GlobalModal from '@/components/GlobalModal';
+import ProgressBar from '@/components/ProgressBar';
 import { signupFormData } from '@/constants/form';
 import { useInput } from '@/hooks/useInput';
 import theme from '@/styles/theme';
@@ -77,18 +78,11 @@ const SignupPage = () => {
             : setIsDisabled(true);
     };
 
-    const clearInputValue = (
-        e: React.MouseEvent<HTMLButtonElement>,
-        setClearValue: () => void
-    ) => {
-        e.preventDefault();
-        setClearValue();
-    };
-
     const {
         value: name,
         setValue: setName,
         onChange: handleChangeName,
+        onClear: handleNameClear,
     } = useInput('', (targetValue: string) => {
         setName(targetValue);
 
@@ -99,6 +93,7 @@ const SignupPage = () => {
         value: nickname,
         setValue: setNickName,
         onChange: handleChangeNickname,
+        onClear: handleNicknameClear,
     } = useInput('', (targetValue: string) => {
         setNickName(targetValue);
 
@@ -109,6 +104,7 @@ const SignupPage = () => {
         value: email,
         setValue: setEmail,
         onChange: handleChangeEmail,
+        onClear: handleEmailClear,
     } = useInput('', (targetValue: string) => {
         setEmail(targetValue);
 
@@ -119,6 +115,7 @@ const SignupPage = () => {
         value: password,
         setValue: setPassword,
         onChange: handleChangePassword,
+        onClear: handlePasswordClear,
     } = useInput('', (targetValue: string) => {
         setPassword(targetValue);
 
@@ -129,6 +126,7 @@ const SignupPage = () => {
         value: password2,
         setValue: setPassword2,
         onChange: handleChangePassword2,
+        onClear: handlePassword2Clear,
     } = useInput('', (targetValue: string) => {
         setPassword2(targetValue);
 
@@ -141,6 +139,7 @@ const SignupPage = () => {
         value: tel,
         setValue: setTel,
         onChange: handleChangeTel,
+        onClear: handleTelClear,
     } = useInput('', (targetValue: string) => {
         setTel(targetValue);
 
@@ -188,226 +187,237 @@ const SignupPage = () => {
     return (
         <>
             <S.SignupWrapper>
-                <S.TitleWrapper>
-                    <S.Title>{signupFormData[level].title}</S.Title>
-                </S.TitleWrapper>
-                <S.SignupForm>
-                    {level >= 5 && (
-                        <>
-                            <Input
-                                name="전화번호"
-                                type="tel"
-                                placeholder="띄어쓰기나 기호 없이 숫자만 입력해주세요. Ex) 01025486707"
-                                value={tel}
-                                tabIndex="-5"
-                                onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>
-                                ) => handleChangeTel(e)}
-                                onKeyUp={(e: React.KeyboardEvent) =>
-                                    handleOnKeyUp(e)
-                                }
-                                success={tel.length > 0 && checkTel(tel)}
-                                error={tel.length > 0 && !checkTel(tel)}
-                            />
-                            {tel.length > 0 && !checkTel(tel) && (
-                                <DirectiveMsg active={checkTel(tel)}>
-                                    {signupFormData[5].directive}
-                                </DirectiveMsg>
-                            )}
-                        </>
-                    )}
-                    {level >= 4 && (
-                        <>
-                            <Input
-                                name="비밀번호 확인"
-                                type="password"
-                                placeholder="비밀번호를 한 번 더 입력해주세요"
-                                value={password2}
-                                tabIndex="-4"
-                                onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>
-                                ) => handleChangePassword2(e)}
-                                onKeyUp={(e: React.KeyboardEvent) =>
-                                    handleOnKeyUp(e)
-                                }
-                                success={
-                                    password2.length > 0 &&
-                                    checkPassword2(password, password2)
-                                }
-                                error={
-                                    password2.length > 0 &&
-                                    !checkPassword2(password, password2)
-                                }
-                            />
-                            {password2.length > 0 &&
-                                !checkPassword2(password, password2) && (
-                                    <DirectiveMsg
-                                        active={checkPassword2(
-                                            password,
-                                            password2
-                                        )}
-                                    >
-                                        {signupFormData[4].directive}
+                <ProgressBar width={62.5 * (level + 1)} />
+                <S.ContentWrapper>
+                    <S.TitleWrapper>
+                        <S.Title>{signupFormData[level].title}</S.Title>
+                    </S.TitleWrapper>
+                    <S.SignupForm>
+                        {level >= 5 && (
+                            <>
+                                <Input
+                                    name="전화번호"
+                                    type="tel"
+                                    placeholder="띄어쓰기나 기호 없이 숫자만 입력해주세요. Ex) 01025486707"
+                                    value={tel}
+                                    tabIndex="-5"
+                                    onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                    ) => handleChangeTel(e)}
+                                    onKeyUp={(e: React.KeyboardEvent) =>
+                                        handleOnKeyUp(e)
+                                    }
+                                    success={tel.length > 0 && checkTel(tel)}
+                                    error={tel.length > 0 && !checkTel(tel)}
+                                    onClear={handleTelClear}
+                                />
+                                {tel.length > 0 && !checkTel(tel) && (
+                                    <DirectiveMsg active={checkTel(tel)}>
+                                        {signupFormData[5].directive}
                                     </DirectiveMsg>
                                 )}
-                        </>
-                    )}
-                    {level >= 3 && (
-                        <>
-                            <Input
-                                name="비밀번호"
-                                type="password"
-                                placeholder="비밀번호를 입력해주세요"
-                                value={password}
-                                tabIndex="-3"
-                                onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>
-                                ) => handleChangePassword(e)}
-                                onKeyUp={(e: React.KeyboardEvent) =>
-                                    handleOnKeyUp(e)
-                                }
-                                success={
-                                    password.length > 0 &&
-                                    checkPassword(password)
-                                }
-                                error={
-                                    password.length > 0 &&
-                                    !checkPassword(password)
-                                }
-                            />
-                            {password.length > 0 &&
-                                !checkPassword(password) && (
+                            </>
+                        )}
+                        {level >= 4 && (
+                            <>
+                                <Input
+                                    name="비밀번호 확인"
+                                    type="password"
+                                    placeholder="비밀번호를 한 번 더 입력해주세요"
+                                    value={password2}
+                                    tabIndex="-4"
+                                    onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                    ) => handleChangePassword2(e)}
+                                    onKeyUp={(e: React.KeyboardEvent) =>
+                                        handleOnKeyUp(e)
+                                    }
+                                    success={
+                                        password2.length > 0 &&
+                                        checkPassword2(password, password2)
+                                    }
+                                    error={
+                                        password2.length > 0 &&
+                                        !checkPassword2(password, password2)
+                                    }
+                                    onClear={handlePassword2Clear}
+                                />
+                                {password2.length > 0 &&
+                                    !checkPassword2(password, password2) && (
+                                        <DirectiveMsg
+                                            active={checkPassword2(
+                                                password,
+                                                password2
+                                            )}
+                                        >
+                                            {signupFormData[4].directive}
+                                        </DirectiveMsg>
+                                    )}
+                            </>
+                        )}
+                        {level >= 3 && (
+                            <>
+                                <Input
+                                    name="비밀번호"
+                                    type="password"
+                                    placeholder="비밀번호를 입력해주세요"
+                                    value={password}
+                                    tabIndex="-3"
+                                    onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                    ) => handleChangePassword(e)}
+                                    onKeyUp={(e: React.KeyboardEvent) =>
+                                        handleOnKeyUp(e)
+                                    }
+                                    success={
+                                        password.length > 0 &&
+                                        checkPassword(password)
+                                    }
+                                    error={
+                                        password.length > 0 &&
+                                        !checkPassword(password)
+                                    }
+                                    onClear={handlePasswordClear}
+                                />
+                                {password.length > 0 &&
+                                    !checkPassword(password) && (
+                                        <DirectiveMsg
+                                            active={checkPassword(password)}
+                                        >
+                                            {signupFormData[3].directive}
+                                        </DirectiveMsg>
+                                    )}
+                            </>
+                        )}
+                        {level >= 2 && (
+                            <>
+                                <Input
+                                    name="이메일"
+                                    type="email"
+                                    placeholder="이메일을 입력해주세요"
+                                    value={email}
+                                    tabIndex="-2"
+                                    onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                    ) => handleChangeEmail(e)}
+                                    onKeyUp={(e: React.KeyboardEvent) =>
+                                        handleOnKeyUp(e)
+                                    }
+                                    success={
+                                        email.length > 0 && checkEmail(email)
+                                    }
+                                    error={
+                                        email.length > 0 && !checkEmail(email)
+                                    }
+                                    onClear={handleEmailClear}
+                                />
+                                {email.length > 0 && !checkEmail(email) && (
                                     <DirectiveMsg
-                                        active={checkPassword(password)}
+                                        active={checkEmail(email)}
+                                        css={css`
+                                            margin-bottom: -1.5rem;
+                                        `}
                                     >
-                                        {signupFormData[3].directive}
+                                        {signupFormData[2].directive}
                                     </DirectiveMsg>
                                 )}
-                        </>
-                    )}
-                    {level >= 2 && (
-                        <>
-                            <Input
-                                name="이메일"
-                                type="email"
-                                placeholder="이메일을 입력해주세요"
-                                value={email}
-                                tabIndex="-2"
-                                onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>
-                                ) => handleChangeEmail(e)}
-                                onKeyUp={(e: React.KeyboardEvent) =>
-                                    handleOnKeyUp(e)
-                                }
-                                success={email.length > 0 && checkEmail(email)}
-                                error={email.length > 0 && !checkEmail(email)}
-                            />
-                            {email.length > 0 && !checkEmail(email) && (
-                                <DirectiveMsg
-                                    active={checkEmail(email)}
-                                    css={css`
-                                        margin-bottom: -1.5rem;
-                                    `}
-                                >
-                                    {signupFormData[2].directive}
-                                </DirectiveMsg>
-                            )}
-                            <S.EmailButtonWrapper>
-                                <S.EmailCheckButton
-                                    type="button"
-                                    onClick={handleDuplicateEmailClick}
-                                >
-                                    중복 확인
-                                </S.EmailCheckButton>
-                            </S.EmailButtonWrapper>
-                        </>
-                    )}
-                    {level >= 1 && (
-                        <>
-                            <Input
-                                name="별명"
-                                type="text"
-                                placeholder="6자 이내의 한글, 영문, 숫자로 입력해주세요"
-                                value={nickname}
-                                tabIndex="-1"
-                                onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>
-                                ) => handleChangeNickname(e)}
-                                onKeyUp={(e: React.KeyboardEvent) =>
-                                    handleOnKeyUp(e)
-                                }
-                                success={
-                                    nickname.length > 0 &&
-                                    checkNickname(nickname)
-                                }
-                                error={
-                                    nickname.length > 0 &&
-                                    !checkNickname(nickname)
-                                }
-                            />
-                            {nickname.length > 0 &&
-                                !checkNickname(nickname) && (
+                                <S.EmailButtonWrapper>
+                                    <S.EmailCheckButton
+                                        type="button"
+                                        onClick={handleDuplicateEmailClick}
+                                    >
+                                        중복 확인
+                                    </S.EmailCheckButton>
+                                </S.EmailButtonWrapper>
+                            </>
+                        )}
+                        {level >= 1 && (
+                            <>
+                                <Input
+                                    name="별명"
+                                    type="text"
+                                    placeholder="6자 이내의 한글, 영문, 숫자로 입력해주세요"
+                                    value={nickname}
+                                    tabIndex="-1"
+                                    onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                    ) => handleChangeNickname(e)}
+                                    onKeyUp={(e: React.KeyboardEvent) =>
+                                        handleOnKeyUp(e)
+                                    }
+                                    success={
+                                        nickname.length > 0 &&
+                                        checkNickname(nickname)
+                                    }
+                                    error={
+                                        nickname.length > 0 &&
+                                        !checkNickname(nickname)
+                                    }
+                                    onClear={handleNicknameClear}
+                                />
+                                {nickname.length > 0 && (
                                     <DirectiveMsg
                                         active={checkNickname(nickname)}
                                     >
                                         {signupFormData[1].directive}
                                     </DirectiveMsg>
                                 )}
-                        </>
-                    )}
-                    <>
-                        <Input
-                            name="이름"
-                            type="text"
-                            placeholder="한글, 영문만 입력해주세요."
-                            value={name}
-                            tabIndex="0"
-                            onChange={(
-                                e: React.ChangeEvent<HTMLInputElement>
-                            ) => handleChangeName(e)}
-                            onKeyUp={(e: React.KeyboardEvent) =>
-                                handleOnKeyUp(e)
-                            }
-                            success={name.length > 0 && checkName(name)}
-                            error={name.length > 0 && !checkName(name)}
-                            onClear={(e: React.MouseEvent<HTMLButtonElement>) =>
-                                clearInputValue(e, () => setName(name))
-                            }
-                        />
-                        {name.length > 0 && !checkName(name) && (
-                            <DirectiveMsg active={checkName(name)}>
-                                {signupFormData[0].directive}
-                            </DirectiveMsg>
+                            </>
                         )}
-                    </>
-                    <S.ButtonWrapper>
-                        <Button
-                            type="submit"
-                            size="md"
-                            backgroundColor={
-                                level < 5 ? theme.color.navy : theme.color.blue
-                            }
-                            disabled={isDisabled}
-                            onClick={
-                                level < 5
-                                    ? handleNextButton
-                                    : (
-                                          e: React.SyntheticEvent<HTMLFormElement>
-                                      ) => handleSignup(e)
-                            }
-                        >
-                            <S.ButtonText
-                                color={
+                        <>
+                            <Input
+                                name="이름"
+                                type="text"
+                                placeholder="한글, 영문만 입력해주세요."
+                                value={name}
+                                tabIndex="0"
+                                onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                ) => handleChangeName(e)}
+                                onKeyUp={(e: React.KeyboardEvent) =>
+                                    handleOnKeyUp(e)
+                                }
+                                success={name.length > 0 && checkName(name)}
+                                error={name.length > 0 && !checkName(name)}
+                                onClear={handleNameClear}
+                            />
+                            {name.length > 0 && (
+                                <DirectiveMsg active={checkName(name)}>
+                                    {signupFormData[0].directive}
+                                </DirectiveMsg>
+                            )}
+                        </>
+                        <S.ButtonWrapper>
+                            <Button
+                                type="submit"
+                                size="md"
+                                backgroundColor={
                                     level < 5
-                                        ? theme.color.white
-                                        : theme.color.green
+                                        ? theme.color.navy
+                                        : theme.color.blue
+                                }
+                                disabled={isDisabled}
+                                onClick={
+                                    level < 5
+                                        ? handleNextButton
+                                        : (
+                                              e: React.SyntheticEvent<HTMLFormElement>
+                                          ) => handleSignup(e)
                                 }
                             >
-                                {level < 5 ? '다음' : '가입완료'}
-                            </S.ButtonText>
-                        </Button>
-                    </S.ButtonWrapper>
-                </S.SignupForm>
+                                <S.ButtonText
+                                    color={
+                                        level < 5
+                                            ? theme.color.white
+                                            : theme.color.green
+                                    }
+                                >
+                                    {level < 5 ? '다음' : '가입완료'}
+                                </S.ButtonText>
+                            </Button>
+                        </S.ButtonWrapper>
+                    </S.SignupForm>
+                </S.ContentWrapper>
             </S.SignupWrapper>
             {isEmailModal && (
                 <GlobalModal

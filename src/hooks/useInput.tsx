@@ -14,5 +14,10 @@ export const useInput = (
         [callFunc]
     );
 
-    return { value, setValue, onChange };
+    const onClear = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setValue('');
+    };
+
+    return { value, setValue, onChange, onClear };
 };
