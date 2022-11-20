@@ -67,6 +67,8 @@ export const SignupForm = styled.form`
     gap: 1rem;
 `;
 
-export const SignupWrapper = styled.section`
+export const ContentWrapper = styled.div`
     padding: 7.5rem 0 4.375rem 0;
 `;
+
+export const SignupWrapper = styled.section``;
