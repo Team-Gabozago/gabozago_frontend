@@ -1,12 +1,22 @@
 import * as S from './ProgressBar.style';
 
-interface ProgressBarprops {
+export interface ProgressBarprops {
     width: number;
+    backgroundColor: string;
+    backgroundImage: string;
 }
 
-export const ProgressBar = ({ width }: ProgressBarprops) => (
+export const ProgressBar = ({
+    width,
+    backgroundColor,
+    backgroundImage,
+}: ProgressBarprops) => (
     <S.ProgressBarWrapper>
-        <S.Foreground width={width} />
+        <S.Foreground
+            width={width}
+            backgroundColor={backgroundColor}
+            backgroundImage={backgroundImage}
+        />
     </S.ProgressBarWrapper>
 );
 

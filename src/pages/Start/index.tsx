@@ -55,6 +55,7 @@ const StartPage = () => {
                             <Button
                                 size="md"
                                 backgroundColor={theme.color.gray}
+                                backgroundImage={theme.color.gradient}
                             >
                                 시작하기
                             </Button>
