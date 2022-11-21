@@ -15,6 +15,7 @@ const color = {
     lightBlack: '#222222',
     transparent: 'transparent',
     errorText: '#FF5F5F',
+    gradient: `linear-gradient(to right, rgb(152, 255, 236) , rgb(0, 255, 56))`,
 };
 
 const fontSize = {

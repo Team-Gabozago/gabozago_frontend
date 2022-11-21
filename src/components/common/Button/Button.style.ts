@@ -6,6 +6,12 @@ import { TypeButtonSize } from '.';
 import { inlineFlexbox } from '@/styles/mixin';
 import theme from '@/styles/theme';
 
+interface ButtonProps {
+    size: TypeButtonSize;
+    backgroundColor?: string;
+    backgroundImage?: string;
+}
+
 const selectTypes = (size: string) => {
     switch (size) {
         case 'lg':
@@ -36,12 +42,14 @@ const selectTypes = (size: string) => {
 export const Button = styled.button<{
     size: TypeButtonSize;
     backgroundColor?: string;
+    backgroundImage?: string;
 }>`
     ${inlineFlexbox({ jc: 'center', ai: 'center' })}
     border-radius: 3.125rem;
-    background-color: ${props => props.backgroundColor};
+    background-color: ${({ backgroundColor }: ButtonProps) => backgroundColor};
+    background-image: ${({ backgroundImage }: ButtonProps) => backgroundImage};
     cursor: pointer;
-    ${({ size }) => selectTypes(size)};
+    ${({ size }: ButtonProps) => selectTypes(size)};
     &:hover {
     }
     &:focus {

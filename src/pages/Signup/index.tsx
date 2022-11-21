@@ -184,10 +184,22 @@ const SignupPage = () => {
         setIsEmailModal(true);
     };
 
+    const checkAllForm = () =>
+        checkName(name) &&
+        checkNickname(nickname) &&
+        checkEmail(email) &&
+        checkPassword(password) &&
+        checkPassword2(password, password2) &&
+        checkTel(tel);
+
     return (
         <>
             <S.SignupWrapper>
-                <ProgressBar width={62.5 * (level + 1)} />
+                <ProgressBar
+                    width={62.5 * (level + 1)}
+                    backgroundColor={!checkAllForm() ? theme.color.silver : ''}
+                    backgroundImage={checkAllForm() ? theme.color.gradient : ''}
+                />
                 <S.ContentWrapper>
                     <S.TitleWrapper>
                         <S.Title>{signupFormData[level].title}</S.Title>
@@ -392,9 +404,10 @@ const SignupPage = () => {
                                 type="submit"
                                 size="md"
                                 backgroundColor={
-                                    level < 5
-                                        ? theme.color.navy
-                                        : theme.color.blue
+                                    !checkAllForm() ? theme.color.navy : ''
+                                }
+                                backgroundImage={
+                                    checkAllForm() ? theme.color.gradient : ''
                                 }
                                 disabled={isDisabled}
                                 onClick={
@@ -407,7 +420,7 @@ const SignupPage = () => {
                             >
                                 <S.ButtonText
                                     color={
-                                        level < 5
+                                        !checkAllForm()
                                             ? theme.color.white
                                             : theme.color.green
                                     }
