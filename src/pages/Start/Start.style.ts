@@ -16,6 +16,7 @@ const cycle = keyframes`
 `;
 
 export const Title = styled.div`
+    color: ${theme.color.white};
     font-size: ${theme.fontSize.display};
     font-weight: bold;
 `;
@@ -39,11 +40,23 @@ export const SportLI = styled.li`
 export const TitleWrppaer = styled.div`
     ${flexbox({ dir: 'column' })};
     gap: 1.5rem;
+    padding: 0 2.5rem;
+`;
+
+export const StartText = styled.span`
+    font-weight: bold;
+    color: ${theme.color.green};
+`;
+
+export const LoginText = styled.span`
+    font-size: ${theme.fontSize.sm};
+    color: ${theme.color.gray};
 `;
 
 export const ButtonWrapper = styled.div`
     ${flexbox({ dir: 'column' })};
     gap: 0.5rem;
+    padding: 0 1.5rem;
 `;
 
 export const LogoWrapper = styled.section`
@@ -55,4 +68,5 @@ export const StartWrapper = styled.section`
     ${flexbox({ dir: 'column', jc: 'space-between' })};
     height: 100vh;
     padding: 7.5rem 0 4.375rem 0;
+    background-color: ${theme.color.navy};
 `;

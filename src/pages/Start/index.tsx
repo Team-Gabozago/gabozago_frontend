@@ -21,14 +21,13 @@ const StartPage = () => {
     }, []);
 
     return (
-        // eslint-disable-next-line react/jsx-no-useless-fragment
-        <>
+        <S.StartWrapper>
             {isLogo ? (
                 <S.LogoWrapper>
                     <Logo.Big />
                 </S.LogoWrapper>
             ) : (
-                <S.StartWrapper>
+                <>
                     <S.TitleWrppaer>
                         <S.Title>동료는</S.Title>
                         <S.Title>WANTU가 모을게,</S.Title>
@@ -57,21 +56,23 @@ const StartPage = () => {
                                 backgroundColor={theme.color.gray}
                                 backgroundImage={theme.color.gradient}
                             >
-                                시작하기
+                                <S.StartText>시작하기</S.StartText>
                             </Button>
                         </Link>
                         <Link to="/login">
                             <Button
                                 size="md"
-                                backgroundColor={theme.color.bodyBackground}
+                                backgroundColor={theme.color.transparent}
                             >
-                                이미 계정이 있나요? 로그인
+                                <S.LoginText>
+                                    이미 계정이 있나요? 로그인
+                                </S.LoginText>
                             </Button>
                         </Link>
                     </S.ButtonWrapper>
-                </S.StartWrapper>
+                </>
             )}
-        </>
+        </S.StartWrapper>
     );
 };
 
