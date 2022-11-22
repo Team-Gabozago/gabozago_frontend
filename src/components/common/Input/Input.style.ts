@@ -25,9 +25,6 @@ export const ClearButton = styled.button<{
     position: absolute;
     top: 50%;
     right: 10px;
-    color: ${theme.color.gray};
-
-    ${({ error }) => error && `color: ${theme.color.errorText};`};
 `;
 
 export const PlaceHolder = styled.div`
@@ -77,5 +74,6 @@ export const InputLayer = styled.div<{
         `
             border-bottom: 1px solid ${theme.color.errorText} !important;
             caret-color: 1px solid ${theme.color.errorText} !important;
+            &:focus-within button { color: ${theme.color.errorText} }
     `};
 `;
