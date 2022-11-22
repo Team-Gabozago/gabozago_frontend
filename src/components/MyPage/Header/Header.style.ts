@@ -14,5 +14,8 @@ export const Title = styled.h1`
 
 export const Header = styled.header`
     ${flexbox({ ai: 'center' })};
+    padding: 1rem;
     height: 3.875rem;
+    background-color: ${theme.color.navy};
+    color: ${theme.color.white};
 `;

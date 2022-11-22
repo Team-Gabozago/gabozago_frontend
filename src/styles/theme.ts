@@ -7,6 +7,7 @@ const color = {
     navy: '#2C2C3A',
     green: '#185643',
     lightGray: '#999999',
+    darkGray: '#5c5c6a',
     silver: '#E1E1F4',
     gray: '#B2B2C8',
     label: '#666666',

@@ -11,6 +11,8 @@ export const Footer = styled.footer`
     transform: translateX(-50%);
     background: #f0f0f0;
     padding: 13px;
+    border-radius: 10px 10px 0 0;
+    background-color: ${theme.color.darkGray};
 `;
 
 export const LinkUl = styled.ul`

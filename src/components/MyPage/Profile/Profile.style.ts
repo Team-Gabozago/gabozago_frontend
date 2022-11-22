@@ -27,6 +27,6 @@ export const ProfileContent = styled.div`
 export const Profile = styled.div`
     ${flexbox({})};
     gap: 1rem;
-    padding: 20px 0;
-    border-bottom: 1px solid ${theme.color.gray};
+    padding: 20px 1rem;
+    border-bottom: 1px solid ${theme.color.silver};
 `;
