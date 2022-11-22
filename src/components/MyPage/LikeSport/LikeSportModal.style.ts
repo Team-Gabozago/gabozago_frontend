@@ -7,14 +7,14 @@ export const Title = styled.h1`
     font-size: ${theme.fontSize.md};
     font-weight: bold;
     margin-bottom: 1.75rem;
-    color: #626272;
+    color: ${theme.color.navy};
 `;
 
 export const SubTitle = styled.h4`
     font-size: ${theme.fontSize.xs};
     font-weight: 600;
     margin-bottom: 0.75rem;
-    color: #626272;
+    color: ${theme.color.lightNavy};
 `;
 
 export const SportTag = styled.div`

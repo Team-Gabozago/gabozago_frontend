@@ -48,23 +48,23 @@ const LikeSportModal = ({
                 />
                 <S.SearchContent>
                     <S.KeywordBox>
-                        <span>No Data...</span>
+                        <span>Dummy Data...</span>
                         <S.KeywordPlustButton>+</S.KeywordPlustButton>
                     </S.KeywordBox>
                     <S.KeywordBox>
-                        <span>No Data...</span>
+                        <span>Dummy Data...</span>
                         <S.KeywordPlustButton>+</S.KeywordPlustButton>
                     </S.KeywordBox>
                     <S.KeywordBox>
-                        <span>No Data...</span>
+                        <span>Dummy Data...</span>
                         <S.KeywordPlustButton>+</S.KeywordPlustButton>
                     </S.KeywordBox>
                     <S.KeywordBox>
-                        <span>No Data...</span>
+                        <span>Dummy Data...</span>
                         <S.KeywordPlustButton>+</S.KeywordPlustButton>
                     </S.KeywordBox>
                     <S.KeywordBox>
-                        <span>No Data...</span>
+                        <span>Dummy Data...</span>
                         <S.KeywordPlustButton>+</S.KeywordPlustButton>
                     </S.KeywordBox>
                 </S.SearchContent>
