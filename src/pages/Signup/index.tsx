@@ -10,6 +10,7 @@ import Button from '@/components/common/Button';
 import DirectiveMsg from '@/components/common/DirectiveMsg';
 import Input from '@/components/common/Input';
 import GlobalModal from '@/components/GlobalModal';
+import ModalContent from '@/components/ModalContent';
 import ProgressBar from '@/components/ProgressBar';
 import { signupFormData } from '@/constants/form';
 import { useInput } from '@/hooks/useInput';
@@ -32,25 +33,26 @@ import {
 const SignupPage = () => {
     const navigate = useNavigate();
 
+    const fetchDupliateEmail = useMutation(duplicateEmail);
+
+    const [isEmailModal, setIsEmailModal] = useState(false);
+    const [isSignupModal, setIsSignUpModal] = useState(false);
+    const [isDuplicateEmail, setIsDuplicateEmail] = useState(false);
+    const [level, setLevel] = useState(0);
+    const [isDisabled, setIsDisabled] = useState(true);
+    const [form, setForm] = useState<boolean[]>(new Array(6).fill(false));
+
     const fetchSignupUser = useMutation(postSignupUser, {
         onSuccess: (data: { member_id: number }) => {
             if (data.member_id) {
                 // 성공 popup 띄우기.
-                navigate('/home');
+                setIsSignUpModal(true);
             }
         },
         onError: (error: unknown) => {
             throw new Error(`error is ${error}`);
         },
     });
-
-    const fetchDupliateEmail = useMutation(duplicateEmail);
-
-    const [isEmailModal, setIsEmailModal] = useState(false);
-    const [isDuplicateEmail, setIsDuplicateEmail] = useState(false);
-    const [level, setLevel] = useState(0);
-    const [isDisabled, setIsDisabled] = useState(true);
-    const [form, setForm] = useState<boolean[]>(new Array(6).fill(false));
 
     const checkDisableButton = (
         paramsLevel: number, // 어떤 인풋인지 체킹
@@ -209,7 +211,7 @@ const SignupPage = () => {
                             <>
                                 <Input
                                     name="전화번호"
-                                    type="tel"
+                                    type="text"
                                     placeholder="띄어쓰기나 기호 없이 숫자만 입력해주세요. Ex) 01025486707"
                                     value={tel}
                                     tabIndex="-5"
@@ -437,34 +439,33 @@ const SignupPage = () => {
                     size="small"
                     handleCancelClick={() => setIsEmailModal(false)}
                 >
-                    <S.EmailModalWrapper>
-                        {!isDuplicateEmail ? (
-                            <>
-                                <S.EmailModalTitle>
-                                    이미 사용 중인 이메일이에요.
-                                </S.EmailModalTitle>
-                                <S.SubEmailText>
-                                    다른 이메일로 다시 시도해보세요.
-                                </S.SubEmailText>
-                                <S.EmailModalButton
-                                    onClick={() => setIsEmailModal(false)}
-                                >
-                                    다시 시도
-                                </S.EmailModalButton>
-                            </>
-                        ) : (
-                            <>
-                                <S.EmailModalTitle>
-                                    사용 할 수 있는 이메일이에요.
-                                </S.EmailModalTitle>
-                                <S.EmailModalButton
-                                    onClick={() => setIsEmailModal(false)}
-                                >
-                                    확인
-                                </S.EmailModalButton>
-                            </>
-                        )}
-                    </S.EmailModalWrapper>
+                    {isDuplicateEmail ? (
+                        <ModalContent
+                            title="이미 사용 중인 이메일이에요."
+                            description="다른 이메일로 다시 시도해보세요."
+                            buttonText="다시 시도"
+                            handleButtonClick={() => setIsEmailModal(false)}
+                        />
+                    ) : (
+                        <ModalContent
+                            title="사용할 수 있는 이메일이에요"
+                            buttonText="확인"
+                            handleButtonClick={() => setIsEmailModal(false)}
+                        />
+                    )}
+                </GlobalModal>
+            )}
+            {isSignupModal && (
+                <GlobalModal
+                    size="small"
+                    handleCancelClick={() => setIsEmailModal(false)}
+                >
+                    <ModalContent
+                        title="가입이 완료되었어요!"
+                        description="우리 동네 운동 친구를 찾으러 가볼까요?"
+                        buttonText="원투 홈으로"
+                        handleButtonClick={() => navigate('/home')}
+                    />
                 </GlobalModal>
             )}
         </>
