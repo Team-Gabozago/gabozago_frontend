@@ -38,6 +38,7 @@ const MyProfile = () => {
                     <S.ProfileImage src={user.profileImage} alt="profile" />
                 </S.ImageWrapper>
                 <Input
+                    width={20.375}
                     name="별명"
                     type="text"
                     placeholder="6자 이내의 한글, 영문, 숫자로 입력해주세요"
@@ -60,8 +61,8 @@ const MyProfile = () => {
                         css={css`
                             border: 1px solid
                                 ${isDisabled
-                                    ? theme.color.gray
-                                    : theme.color.white};
+                                ? theme.color.gray
+                                : theme.color.white};
                             color: ${isDisabled
                                 ? theme.color.navy
                                 : theme.color.white};
