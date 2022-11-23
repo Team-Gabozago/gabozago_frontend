@@ -1,10 +1,13 @@
 import { Link } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 
 import * as S from './postView.style';
 
 import Comment from '@/components/Comment/Comment';
 import CommentProfile from '@/components/Comment/Comment/Profile';
 import WriteComment from '@/components/Comment/WriteComment';
+import WriteModal from '@/components/Comment/WriteModal';
+import { commentOpenAtom } from '@/recoil/atoms/comment';
 
 const PostView = () => {
     const profile = {
@@ -14,6 +17,9 @@ const PostView = () => {
         profileImage: '귀여운',
     };
     const WriteCommentTrue = true;
+
+    const [commentOpen, setCommentOpen] = useRecoilState(commentOpenAtom);
+
     return (
         <S.ViewContainer>
             <S.Title>
@@ -32,8 +38,15 @@ const PostView = () => {
                 </S.InterestedButton>
             </S.ContentContainer>
 
-            <WriteComment readOnly={WriteCommentTrue} />
-
+            <button
+                type="button"
+                onClick={() => setCommentOpen(true)}
+                // eslint-disable-next-line react/no-unknown-property
+                css={{ width: '100%' }}
+            >
+                <WriteComment readOnly={WriteCommentTrue} />
+            </button>
+            {commentOpen && <WriteModal />}
             <div>
                 {/* 댓글리스트 */}
                 <ul>

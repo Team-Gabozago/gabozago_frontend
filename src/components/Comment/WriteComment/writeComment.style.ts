@@ -4,6 +4,8 @@ import styled from '@emotion/styled';
 export const Container = styled.div`
     padding: 24px;
     display: flex;
+    background-color: #fff;
+    width: 100%;
 `;
 
 export const Profile = styled.div`
