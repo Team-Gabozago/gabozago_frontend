@@ -29,12 +29,15 @@ export const InputContainer = styled.div`
 `;
 
 export const Input = styled.input`
-    color: #b2b2c8;
+    color: #000;
     font-size: 12px;
     background: none;
     border: none;
     padding: 8px;
     flex: 1;
+    ::placeholder {
+        color: #b2b2c8;
+    }
 `;
 
 export const Button = styled.button`

@@ -2,13 +2,13 @@ import { useRef } from 'react';
 import { useClickAway } from 'react-use';
 import { useSetRecoilState } from 'recoil';
 
-import WriteComment from '../WriteComment';
+import WriteComment from '../Edit';
 
-import * as S from './writeModal.style';
+import * as S from './modal.style';
 
 import { commentOpenAtom } from '@/recoil/atoms/comment';
 
-const WriteModal = () => {
+const Modal = () => {
     const setCommentOpen = useSetRecoilState(commentOpenAtom);
     const ref = useRef(null);
     useClickAway(ref, () => {
@@ -23,4 +23,4 @@ const WriteModal = () => {
     );
 };
 
-export default WriteModal;
+export default Modal;

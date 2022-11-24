@@ -1,6 +1,6 @@
 import { MutableRefObject } from 'react';
 
-import * as S from './writeComment.style';
+import * as S from './edit.style';
 
 interface Props {
     readOnly?: boolean;
@@ -10,7 +10,7 @@ interface Props {
     ref?: MutableRefObject<null>;
 }
 
-const WriteComment = ({ readOnly, ninkName, onClick }: Props) => {
+const Edit = ({ readOnly, ninkName, onClick }: Props) => {
     const asdf = 1;
     return (
         <S.Container>
@@ -31,4 +31,4 @@ const WriteComment = ({ readOnly, ninkName, onClick }: Props) => {
     );
 };
 
-export default WriteComment;
+export default Edit;

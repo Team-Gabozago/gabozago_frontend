@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
-import * as S from './postView.style';
+import * as S from './view.style';
 
 import Comment from '@/components/Comment/Comment';
 import CommentProfile from '@/components/Comment/Comment/Profile';
-import WriteComment from '@/components/Comment/WriteComment';
-import WriteModal from '@/components/Comment/WriteModal';
+import WriteComment from '@/components/Comment/Edit';
+import WriteModal from '@/components/Comment/Modal';
 import { commentOpenAtom } from '@/recoil/atoms/comment';
 
-const PostView = () => {
+const View = () => {
     const profile = {
         // get으로 댓글 프로필 가져오기(api요청)
         writer: '엉금엉금',
@@ -57,4 +57,4 @@ const PostView = () => {
     );
 };
 
-export default PostView;
+export default View;
