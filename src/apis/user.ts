@@ -39,8 +39,9 @@ export const duplicateEmail = async (email: string) => {
 };
 
 export const postLoginUser = async (postLoginBodyType: PostLoginBodyType) => {
-    const response = await fetch(`${process.env.GABOZAGO_URL}/login`, {
+    const response = await fetch(`https://api.wontu.site/auth/login`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
         },
