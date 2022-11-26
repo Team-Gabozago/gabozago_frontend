@@ -56,3 +56,9 @@ export const postLoginUser = async (postLoginBodyType: PostLoginBodyType) => {
         throw new Error(`postUser api fail err: ${err}`);
     }
 };
+
+export const secessionUser = async () => {
+    const response = await fetch(`${process.env.GABOZAGO_URL}/mypage/out`);
+    const { data } = response;
+    return data;
+};

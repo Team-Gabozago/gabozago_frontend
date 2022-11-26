@@ -61,8 +61,8 @@ const MyProfile = () => {
                         css={css`
                             border: 1px solid
                                 ${isDisabled
-                                ? theme.color.gray
-                                : theme.color.white};
+                                    ? theme.color.gray
+                                    : theme.color.white};
                             color: ${isDisabled
                                 ? theme.color.navy
                                 : theme.color.white};

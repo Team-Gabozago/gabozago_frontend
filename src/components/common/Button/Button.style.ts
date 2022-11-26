@@ -55,7 +55,8 @@ export const Button = styled.button<{
     &:focus {
     }
     :disabled {
-        background-color: ${theme.color.noActiveButton};
-        color: ${theme.color.white};
+        background-color: ${theme.color.white};
+        color: ${theme.color.black};
+        border: 1px solid ${theme.color.gray};
     }
 `;

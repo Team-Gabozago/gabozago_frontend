@@ -43,14 +43,16 @@ const MyPage = () => (
                 </Button>
             </Link>
         </S.ButtonWrapper>
+
         <S.MoveText
             css={css`
                 color: ${theme.color.lightGray};
                 margin-top: 6.6rem;
             `}
         >
-            탈퇴하기
+            <Link to="/mypage/secession">탈퇴하기</Link>
         </S.MoveText>
+
         <Footer />
     </S.MyPage>
 );

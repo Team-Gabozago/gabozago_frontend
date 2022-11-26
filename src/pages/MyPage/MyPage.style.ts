@@ -5,7 +5,6 @@ import theme from '@/styles/theme';
 
 export const MoveText = styled.span`
     padding: 0 1rem;
-    cursor: pointer;
 `;
 
 export const Box = styled.div`
