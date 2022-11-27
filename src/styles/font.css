@@ -1,0 +1,20 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('../fonts/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Spoqa-Han-Sans-Neo';
+    src: url('../fonts/SpoqaHanSansNeo-Bold.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GangwonEduPower';
+    src: url('../fonts/GangwonEduPower.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}

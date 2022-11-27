@@ -19,6 +19,7 @@ export const Title = styled.div`
     color: ${theme.color.white};
     font-size: ${theme.fontSize.display};
     font-weight: bold;
+    font-family: 'GangwonEduPower';
 `;
 
 export const SportWrapper = styled.div`
@@ -45,6 +46,7 @@ export const TitleWrppaer = styled.div`
 
 export const StartText = styled.span`
     font-weight: bold;
+    font-size: ${theme.fontSize.sm};
     color: ${theme.color.green};
 `;
 

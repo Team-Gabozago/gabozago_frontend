@@ -6,6 +6,7 @@ import theme from '@/styles/theme';
 export const Title = styled.h1`
     width: 18.5rem;
     font-size: ${theme.fontSize.title};
+    font-family: 'Spoqa-Han-Sans-Neo';
     font-weight: bold;
 `;
 
