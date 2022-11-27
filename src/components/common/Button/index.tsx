@@ -22,6 +22,7 @@ type ButtonProps<T extends React.ElementType> = OverridableProps<
          * default value : #000
          */
         backgroundColor?: string;
+        backgroundImage?: string;
         disabled?: boolean;
     }
 >;
@@ -31,6 +32,7 @@ const Button = memo(
         children,
         size = 'md',
         backgroundColor = theme.color.white,
+        backgroundImage,
         disabled = false,
         as,
         ...restProps
@@ -40,6 +42,7 @@ const Button = memo(
             type="button"
             size={size}
             backgroundColor={backgroundColor}
+            backgroundImage={backgroundImage}
             disabled={disabled}
             {...restProps}
         >

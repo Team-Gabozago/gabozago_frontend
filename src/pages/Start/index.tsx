@@ -5,7 +5,7 @@ import * as S from './Start.style';
 
 import Button from '@/components/common/Button';
 import Logo from '@/components/common/Icons/modules/Logo';
-import { sports } from '@/constants/sports'
+import { startSports } from '@/constants/sports';
 import theme from '@/styles/theme';
 
 const StartPage = () => {
@@ -21,21 +21,29 @@ const StartPage = () => {
     }, []);
 
     return (
-        // eslint-disable-next-line react/jsx-no-useless-fragment
-        <>
-            {isLogo ? <S.LogoWrapper>
-                <Logo.Big />
-            </S.LogoWrapper>
-                :
-                <S.StartWrapper>
+        <S.StartWrapper>
+            {isLogo ? (
+                <S.LogoWrapper>
+                    <Logo.Big />
+                </S.LogoWrapper>
+            ) : (
+                <>
                     <S.TitleWrppaer>
                         <S.Title>동료는</S.Title>
                         <S.Title>WANTU가 모을게,</S.Title>
                         <S.Title data-id="like">
                             <S.SportWrapper>
                                 <S.SportUL>
-                                    {sports.map((sport) => <S.SportLI key={sport.id}>{sport.name}{sport.emoji}</S.SportLI>)}
-                                    <S.SportLI>{sports[0].name}{sports[0].emoji}</S.SportLI>
+                                    {startSports.map(sport => (
+                                        <S.SportLI key={sport.id}>
+                                            {sport.name}
+                                            {sport.emoji}
+                                        </S.SportLI>
+                                    ))}
+                                    <S.SportLI>
+                                        {startSports[0].name}
+                                        {startSports[0].emoji}
+                                    </S.SportLI>
                                 </S.SportUL>
                             </S.SportWrapper>
                         </S.Title>
@@ -43,16 +51,29 @@ const StartPage = () => {
                     </S.TitleWrppaer>
                     <S.ButtonWrapper>
                         <Link to="/signup">
-                            <Button size="md" backgroundColor={theme.color.gray}>시작하기</Button>
+                            <Button
+                                size="md"
+                                backgroundColor={theme.color.gray}
+                                backgroundImage={theme.color.gradient}
+                            >
+                                <S.StartText>시작하기</S.StartText>
+                            </Button>
                         </Link>
                         <Link to="/login">
-                            <Button size="md" backgroundColor={theme.color.bodyBackground}>이미 계정이 있나요? 로그인</Button>
+                            <Button
+                                size="md"
+                                backgroundColor={theme.color.transparent}
+                            >
+                                <S.LoginText>
+                                    이미 계정이 있나요? 로그인
+                                </S.LoginText>
+                            </Button>
                         </Link>
                     </S.ButtonWrapper>
-                </S.StartWrapper>
-            }
-        </>
-    )
-}
+                </>
+            )}
+        </S.StartWrapper>
+    );
+};
 
 export default StartPage;

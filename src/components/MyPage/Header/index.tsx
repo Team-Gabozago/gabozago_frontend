@@ -4,7 +4,7 @@ import I from '@/components/common/Icons';
 import theme from '@/styles/theme';
 
 interface MyPageHeaderProps {
-    title?: string;
+    title: string;
 }
 
 const Header = ({ title = '' }: MyPageHeaderProps) => (
@@ -14,6 +14,6 @@ const Header = ({ title = '' }: MyPageHeaderProps) => (
         </S.BackButtonWrapper>
         <S.Title>{title}</S.Title>
     </S.Header>
-)
+);
 
 export default Header;

@@ -13,7 +13,7 @@ export const Sport = styled.div`
     padding: 0.75rem;
     height: 1.75rem;
     border-radius: 1.25rem;
-    border: 1px solid ${theme.color.lightBlack};
+    border: 1px solid ${theme.color.gray};
 `;
 
 export const SportWrapper = styled.div`
@@ -25,11 +25,12 @@ export const PlusSportButton = styled.button`
     width: 2rem;
     border-radius: 1.25rem;
     background-color: ${theme.color.gray};
+    color: ${theme.color.white};
 `;
 
 export const LikeSport = styled.div`
     ${flexbox({ dir: 'column' })};
     gap: 1.25rem;
-    padding: 1.5rem 0;
-    border-bottom: 1px solid ${theme.color.gray};
+    padding: 1.5rem 1rem;
+    border-bottom: 1px solid ${theme.color.silver};
 `;

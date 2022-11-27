@@ -6,7 +6,13 @@ import theme from '@/styles/theme';
 export const Title = styled.h1`
     width: 18.5rem;
     font-size: ${theme.fontSize.title};
+    font-family: 'Spoqa-Han-Sans-Neo';
     font-weight: bold;
+`;
+
+export const TitleWrapper = styled.div`
+    ${flexbox({ jc: 'center' })};
+    margin-bottom: 2rem;
 `;
 
 export const EmailCheckButton = styled.button`
@@ -21,7 +27,10 @@ export const EmailCheckButton = styled.button`
 export const EmailButtonWrapper = styled.div`
     ${flexbox({})}
     width: 18.5rem;
-    margin-top: 1.5rem;
+`;
+
+export const ButtonText = styled.span<{ color: string }>`
+    color: ${props => props.color};
 `;
 
 export const ButtonWrapper = styled.div`
@@ -33,6 +42,8 @@ export const SignupForm = styled.form`
     gap: 1rem;
 `;
 
-export const SignupWrapper = styled.section`
+export const ContentWrapper = styled.div`
     padding: 7.5rem 0 4.375rem 0;
 `;
+
+export const SignupWrapper = styled.section``;

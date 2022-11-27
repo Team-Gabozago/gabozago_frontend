@@ -11,7 +11,7 @@ const LikeSport = () => {
 
     const handlePlusClick = () => {
         setIsSportModal(true);
-    }
+    };
 
     return (
         <>
@@ -21,16 +21,24 @@ const LikeSport = () => {
                     <S.Sport>배드민턴</S.Sport>
                     <S.Sport>줄넘기</S.Sport>
                     <S.Sport>러닝</S.Sport>
-                    <S.PlusSportButton onClick={handlePlusClick}>+</S.PlusSportButton>
+                    <S.PlusSportButton onClick={handlePlusClick}>
+                        +
+                    </S.PlusSportButton>
                 </S.SportWrapper>
             </S.LikeSport>
             {isSportModal && (
-                <GlobalModal size="medium" handleCancelClick={() => setIsSportModal(false)}>
-                    <LikeSportModal likeSports={sports} />
-                </GlobalModal>)
-            }
+                <GlobalModal
+                    size="medium"
+                    handleCancelClick={() => setIsSportModal(false)}
+                >
+                    <LikeSportModal
+                        likeSports={sports}
+                        handleCancelModal={() => setIsSportModal(false)}
+                    />
+                </GlobalModal>
+            )}
         </>
-    )
-}
+    );
+};
 
 export default LikeSport;
