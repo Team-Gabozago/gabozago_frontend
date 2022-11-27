@@ -15,7 +15,8 @@ const MyProfilePage = lazy(() => import('@/pages/MyPage/MyProfile'));
 const MyPasswordPage = lazy(() => import('@/pages/MyPage/MyPassword'));
 const MySecessionPage = lazy(() => import('@/pages/MyPage/MySecession'));
 
-const PostViewPage = lazy(() => import('@/pages/PostView'));
+const PostViewPage = lazy(() => import('@/pages/post/View'));
+const PostEditPage = lazy(() => import('@/pages/post/Edit'));
 export default function App() {
     return (
         <BrowserRouter>
@@ -43,6 +44,8 @@ export default function App() {
                             path="/post:postSeq"
                             element={<PostViewPage />}
                         />
+                        <Route path="/edit" element={<PostEditPage />} />
+
                         <Route path="/home" element={<HomePage />} />
                     </Route>
                 </Routes>

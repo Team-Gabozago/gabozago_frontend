@@ -2,8 +2,8 @@ import * as S from './Home.style';
 
 import Footer from '@/components/common/Footer';
 import Header from '@/components/common/Header';
-import Post from '@/components/Post';
-import WriteButton from '@/components/WriteButton';
+import Post from '@/components/Post/Post';
+import WriteButton from '@/components/Post/WritePostButton';
 
 export default function HomePage() {
     const post = [
