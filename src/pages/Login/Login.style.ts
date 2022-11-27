@@ -13,6 +13,11 @@ export const TitleWrppaer = styled.div`
     gap: 0.5rem;
 `;
 
+export const ButtonText = styled.span<{ isDisabled: boolean }>`
+    color: ${props =>
+        props.isDisabled ? theme.color.black : theme.color.green};
+`;
+
 export const LoginForm = styled.form`
     ${flexbox({ dir: 'column', ai: 'center' })};
     gap: 1rem;

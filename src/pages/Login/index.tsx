@@ -105,7 +105,7 @@ const LoginPage = () => {
                         <Button
                             type="submit"
                             size="md"
-                            backgroundColor={isDisabled ? theme.color.gray : ''}
+                            backgroundColor={isDisabled ? theme.color.white : theme.color.navy}
                             backgroundImage={
                                 !isDisabled ? theme.color.gradient : ''
                             }
@@ -114,7 +114,7 @@ const LoginPage = () => {
                                 e: React.SyntheticEvent<HTMLFormElement>
                             ) => handleLogin(e)}
                         >
-                            로그인
+                            <S.ButtonText isDisabled={isDisabled}>로그인</S.ButtonText>
                         </Button>
                     </S.ButtonWrapper>
                 </S.LoginForm>

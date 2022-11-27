@@ -416,14 +416,14 @@ const SignupPage = () => {
                                     level < 5
                                         ? handleNextButton
                                         : (
-                                              e: React.SyntheticEvent<HTMLFormElement>
-                                          ) => handleSignup(e)
+                                            e: React.SyntheticEvent<HTMLFormElement>
+                                        ) => handleSignup(e)
                                 }
                             >
                                 <S.ButtonText
                                     color={
                                         !checkAllForm()
-                                            ? theme.color.white
+                                            ? theme.color.black
                                             : theme.color.green
                                     }
                                 >
