@@ -46,5 +46,5 @@ export const GlobalModal = styled.section<{ size: string }>`
     transform: translate(-50%, -50%);
     background-color: ${theme.color.white};
     z-index: 999;
-    border-radius: 2rem;
+    border-radius: 10px;
 `;

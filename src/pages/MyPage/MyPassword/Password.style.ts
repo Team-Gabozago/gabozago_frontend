@@ -3,24 +3,21 @@ import styled from '@emotion/styled';
 import { flexbox } from '@/styles/mixin';
 import theme from '@/styles/theme';
 
-export const MoveText = styled.span`
-    padding: 0 1rem;
-`;
-
-export const Box = styled.div`
-    ${flexbox({ ai: 'center' })}
-    height: 4.75rem;
-    border-bottom: 1px solid ${theme.color.silver};
+export const PasswordForm = styled.form`
+    ${flexbox({ dir: 'column', ai: 'center' })};
+    gap: 1rem;
 `;
 
 export const ButtonWrapper = styled.div`
-    ${flexbox({ jc: 'center' })};
+    position: absolute;
+    bottom: 0;
+    padding-bottom: 3.25rem;
 `;
 
-export const MyPage = styled.section`
+export const PasswordPage = styled.section`
     ${flexbox({ dir: 'column' })};
+    position: relative;
     min-width: 23.4375rem;
     min-height: 50.75rem;
-    position: relative;
     background-color: ${theme.color.white};
 `;

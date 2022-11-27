@@ -11,6 +11,9 @@ const IconPage = lazy(() => import('@/pages/Icons'));
 const SignupPage = lazy(() => import('@/pages/Signup'));
 const LoginPage = lazy(() => import('@/pages/Login'));
 const MyPage = lazy(() => import('@/pages/MyPage'));
+const MyProfilePage = lazy(() => import('@/pages/MyPage/MyProfile'));
+const MyPasswordPage = lazy(() => import('@/pages/MyPage/MyPassword'));
+const MySecessionPage = lazy(() => import('@/pages/MyPage/MySecession'));
 
 const PostViewPage = lazy(() => import('@/pages/post/View'));
 const PostEditPage = lazy(() => import('@/pages/post/Edit'));
@@ -22,6 +25,15 @@ export default function App() {
                     {/* <Route element={<Verification />}> */}
                     {/* 로그인이 필요한 페이지들 여기에 넣어주기 */}
                     <Route path="/mypage" element={<MyPage />} />
+                    <Route path="/mypage/edit" element={<MyProfilePage />} />
+                    <Route
+                        path="/mypage/password"
+                        element={<MyPasswordPage />}
+                    />
+                    <Route
+                        path="/mypage/secession"
+                        element={<MySecessionPage />}
+                    />
                     {/* </Route> */}
                     <Route path="/" element={<Layout />}>
                         <Route path="/login" element={<LoginPage />} />

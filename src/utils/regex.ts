@@ -15,7 +15,7 @@ export const checkEmail = (email: string) => {
 };
 
 export const checkPassword = (password: string) => {
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,25}$/;
+    const regex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^*+=-]).{6,25}$/;
     return regex.test(password);
 };
 
@@ -23,6 +23,6 @@ export const checkPassword2 = (password: string, password2: string) =>
     password === password2;
 
 export const checkTel = (tel: string) => {
-    const regex = /^01([0|1|6|7|8|9])[0-9]{8}$/g;
+    const regex = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
     return regex.test(tel);
 };
