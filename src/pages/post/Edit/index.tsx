@@ -7,11 +7,12 @@ import theme from '@/styles/theme';
 const Edit = () => {
     const [isDisabled, setIsDisabled] = useState(true);
     const [myImage, setMyimage] = useState<string[]>([]);
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     const handleEdit = (e: React.SyntheticEvent<HTMLFormElement>) => {};
     const addImage = (e: ChangeEvent<HTMLInputElement>) => {
-        const nowSelectImageList = e.target.files; // 한번에 받은 파일리스트
+        const nowSelectImageList = e.target.files as FileList; // 한번에 받은 파일리스트
         const nowImageURLList = [...myImage]; // 현재 myImage 복사
-        if (!nowSelectImageList) return null;
+
         // eslint-disable-next-line no-plusplus
         for (let i = 0; i < nowSelectImageList.length; i++) {
             // FileList는 map 안됨
@@ -55,7 +56,7 @@ const Edit = () => {
                         />
                     </li>
                     <li>
-                        <label htmlFor="내용">내용</label>
+                        내용
                         <textarea
                             name="내용"
                             placeholder="약속 시간, 준비물, 실력 등 플레이를 위한 정보를 적어주세요"
