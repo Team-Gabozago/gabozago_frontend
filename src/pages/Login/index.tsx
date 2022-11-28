@@ -19,14 +19,27 @@ const LoginPage = () => {
     const navigate = useNavigate();
     const [isDisabled, setIsDisabled] = useState(true);
     const [isFailModal, setIsFailModal] = useState(false);
+    const [modalText, setModalText] = useState({
+        title: '',
+        description: '',
+    });
 
     const fetchSignupUser = useMutation(postLoginUser, {
-        onSuccess: (data: { member_id: number }) => {
-            if (data.member_id) {
+        onSuccess: (code: string) => {
+            if (code === 'login success') {
                 navigate('/home');
-            } else {
-                // 일치하지 않는 popup 띄우기.
-                // id, password response statusCode에 따라 팝업 다르게 보여주기.
+            } else if (code === 'PASSWORD_WRONG') {
+                setModalText({
+                    title: '비밀번호를 확인해 주세요!',
+                    description: '해당 이메일에 등록된 비밀번호가 아니에요.',
+                });
+                setIsFailModal(true);
+            } else if (code === 'USER_NOT_FOUND') {
+                setModalText({
+                    title: '이메일을 확인해 주세요!',
+                    description: '해당 이메일로 등록된 회원이 없어요.',
+                });
+                setIsFailModal(true);
             }
         },
         onError: (error: unknown) => {
@@ -83,6 +96,7 @@ const LoginPage = () => {
                         placeholder="이메일을 입력해주세요"
                         value={email}
                         onChange={handleChangeEmail}
+                        tabIndex="1"
                     />
                     {email.length > 0 && !checkEmail(email) && (
                         <DirectiveMsg active={checkEmail(email)}>
@@ -95,6 +109,8 @@ const LoginPage = () => {
                         placeholder="비밀번호를 입력해주세요"
                         value={password}
                         onChange={handleChangePassword}
+                        tabIndex="2"
+                        onFocus={false}
                     />
                     {password.length > 0 && !checkPassword(password) && (
                         <DirectiveMsg active={checkPassword(password)}>
@@ -109,7 +125,7 @@ const LoginPage = () => {
                             backgroundImage={
                                 !isDisabled ? theme.color.gradient : ''
                             }
-                            isDisabled={isDisabled}
+                            disabled={isDisabled}
                             onClick={(
                                 e: React.SyntheticEvent<HTMLFormElement>
                             ) => handleLogin(e)}
@@ -125,7 +141,8 @@ const LoginPage = () => {
                     handleCancelClick={() => setIsFailModal(false)}
                 >
                     <ModalContent
-                        title="이메일 또는 비밀번호를 확인해주세요!"
+                        title={modalText.title}
+                        description={modalText.description}
                         buttonText="다시 시도"
                         handleButtonClick={() => setIsFailModal(false)}
                     />

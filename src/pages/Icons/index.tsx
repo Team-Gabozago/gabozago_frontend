@@ -1,4 +1,5 @@
 import I from '@/components/common/Icons';
+import theme from '@/styles/theme';
 
 export default function IconPage() {
     return (
@@ -17,6 +18,22 @@ export default function IconPage() {
 
             <div>
                 <I.BackButton />
+                <I.Asterisk />
+                <I.Comment />
+                <I.Create color={theme.color.navy} />
+                <I.Edit />
+                <I.Profile />
+                <I.Search color={theme.color.gray} />
+                <I.Cancel color={theme.color.errorText} />
+                <I.Conversation />
+                <I.Setting />
+                <I.Heart color={theme.color.gray} />
+                <I.Minus fontSize={0.25} color={theme.color.gray} />
+                <I.ArrowUp fontSize={0.25} color={theme.color.gray} />
+                <I.ArrowDown fontSize={0.25} color={theme.color.gray} />
+                <I.Check fontSize={0.25} color={theme.color.blue} />
+                <I.Toggle />
+                <I.Home />
             </div>
         </fieldset>
     );

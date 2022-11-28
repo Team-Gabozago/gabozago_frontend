@@ -27,6 +27,7 @@ export const EmailCheckButton = styled.button`
 export const EmailButtonWrapper = styled.div`
     ${flexbox({})}
     width: 18.5rem;
+    margin-bottom: 1rem;
 `;
 
 export const ButtonText = styled.span<{ color: string }>`

@@ -9,8 +9,8 @@ export const Icon = styled.i<{
     fontSize?: number;
     color?: string;
 }>`
-    ${({ fontSize }) => `font-size: ${fontSize}rem`};
-    ${({ color }) => `color: ${color}`};
+    ${({ fontSize }) => fontSize && `font-size: ${fontSize}rem`};
+    ${({ color }) => color && `color: ${color}`};
 `;
 
 /**
@@ -18,6 +18,6 @@ export const Icon = styled.i<{
  * color: #14142b
  */
 export const Logo = styled.i<{ fontSize: number }>`
-    color: ${theme.color.black};
+    color: ${theme.color.logo};
     font-size: ${({ fontSize }) => fontSize}rem;
 `;

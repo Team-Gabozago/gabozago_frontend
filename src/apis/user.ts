@@ -3,8 +3,9 @@ import { PostSignupBodyType, PostLoginBodyType } from '@/types/user';
 export const postSignupUser = async (
     postSignupBodyType: PostSignupBodyType
 ) => {
-    const response = await fetch(`${process.env.GABOZAGO_URL}/signup`, {
+    const response = await fetch(`${process.env.GABOZAGO_URL}/auth/join`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
         },
@@ -14,7 +15,19 @@ export const postSignupUser = async (
     const data = await response.json();
 
     try {
-        return data;
+        if (data) {
+            const { headers } = response;
+
+            if (headers.get('authorization')) {
+                localStorage.setItem(
+                    'accessToken',
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    headers.get('authorization')!
+                );
+            }
+        }
+
+        return data.message;
     } catch (err) {
         throw new Error(`postUser api fail err: ${err}`);
     }
@@ -39,7 +52,7 @@ export const duplicateEmail = async (email: string) => {
 };
 
 export const postLoginUser = async (postLoginBodyType: PostLoginBodyType) => {
-    const response = await fetch(`https://api.wontu.site/auth/login`, {
+    const response = await fetch(`${process.env.GABOZAGO_URL}/auth/login`, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -51,9 +64,26 @@ export const postLoginUser = async (postLoginBodyType: PostLoginBodyType) => {
     const data = await response.json();
 
     try {
-        return data;
+        if (data) {
+            const { headers } = response;
+            if (headers.get('Authorization')) {
+                localStorage.setItem(
+                    'accessToken',
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    headers.get('Authorization')!
+                );
+                return data.message;
+            }
+
+            if (data.code === 'PASSWORD_WRONG') {
+                return 'PASSWORD_WRONG';
+            }
+            if (data.code === 'USER_NOT_FOUND') {
+                return 'USER_NOT_FOUND';
+            }
+        }
     } catch (err) {
-        throw new Error(`postUser api fail err: ${err}`);
+        throw new Error(`postLoginUser api fail err: ${err}`);
     }
 };
 

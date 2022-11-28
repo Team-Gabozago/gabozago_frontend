@@ -1,27 +1,47 @@
+import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { inlineFlexbox } from '@/styles/mixin';
 import theme from '@/styles/theme';
 
+const fadeInDown = keyframes`
+    0% {
+        opacity: 0;
+        transform: translate3d(0, -100%, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translateZ(0);
+    }
+`;
+
 export const Label = styled.label`
     color: ${theme.color.label};
     font-size: ${theme.fontSize.xs};
-    cursor: pointer;
+    position: relative;
+
+    span {
+        margin-right: 0.5rem;
+    }
+
+    i {
+        position: absolute;
+        top: 15%;
+    }
 `;
 
 export const Input = styled.input`
     height: 100%;
     background-color: ${theme.color.transparent};
     font-size: ${theme.fontSize.md};
+    padding-left: 0.5rem;
+
     &:disabled {
         cursor: not-allowed;
     }
 `;
 
-export const ClearButton = styled.button<{
-    error?: boolean;
-    success?: boolean;
-}>`
+export const ClearButton = styled.button`
     position: absolute;
     top: 50%;
     right: 10px;
@@ -32,7 +52,7 @@ export const PlaceHolder = styled.div`
     position: absolute;
     font-size: ${theme.fontSize.xs};
     color: ${theme.color.gray};
-
+    padding-left: 0.5rem;
     pointer-events: none;
     transition: font-size 150ms, transform 150ms;
 `;
@@ -49,11 +69,9 @@ export const InputLayer = styled.div<{
     position: relative;
     width: ${props => props.width}rem;
     height: ${props => props.height}rem;
-    margin-bottom: 1.5rem;
     border-bottom: 1px solid ${theme.color.gray};
     overflow: hidden;
-    transform: translate3d(0, 2rem, 0);
-    transition: all 300ms;
+    animation: ${fadeInDown} 1s;
 
     &:focus-within {
         border-bottom: 1px solid ${theme.color.blue};
