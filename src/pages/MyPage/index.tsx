@@ -16,7 +16,10 @@ import { userState } from '@/recoil/atoms/user';
 import theme from '@/styles/theme';
 
 const MyPage = () => {
-    const { data: me } = useQuery(['myPage'], getMyPage);
+    const { data: me, refetch: refetchMyPage } = useQuery(
+        ['myPage'],
+        getMyPage
+    );
     const setUser = useSetRecoilState(userState);
 
     if (me === 403) {
@@ -40,7 +43,10 @@ const MyPage = () => {
             <S.MyPage>
                 <Header title="마이페이지" />
                 <Profile me={me} />
-                <LikeSport categories={me.categories} />
+                <LikeSport
+                    categories={me.categories}
+                    refetchMyPage={refetchMyPage}
+                />
                 <S.Box>
                     <Link to="/mypage/password">
                         <S.MoveText>비밀번호 변경</S.MoveText>
