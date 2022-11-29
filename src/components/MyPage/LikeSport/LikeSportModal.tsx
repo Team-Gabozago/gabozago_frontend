@@ -4,8 +4,8 @@ import * as S from './LikeSportModal.style';
 
 import Button from '@/components/common/Button';
 import { useInput } from '@/hooks/useInput';
+import { LikeSportType } from '@/interfaces/sport';
 import theme from '@/styles/theme';
-import { LikeSportType } from '@/types/sport';
 
 interface LikeSportModalProps {
     likeSports: LikeSportType[];

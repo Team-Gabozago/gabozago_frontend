@@ -9,7 +9,7 @@ const Verification = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (isLoggedIn) return;
+        if (localStorage.getItem('accessToken')) return;
 
         navigate('/login');
     }, [isLoggedIn, navigate]);

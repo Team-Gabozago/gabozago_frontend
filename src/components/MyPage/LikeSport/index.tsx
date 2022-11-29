@@ -5,10 +5,14 @@ import LikeSportModal from './LikeSportModal';
 
 import GlobalModal from '@/components/GlobalModal';
 import { sports } from '@/constants/sports';
+import { LikeSportCategory } from '@/interfaces/sport';
 
-const LikeSport = () => {
+interface LikeSportProps {
+    categories: LikeSportCategory[];
+}
+
+const LikeSport = ({ categories }: LikeSportProps) => {
     const [isSportModal, setIsSportModal] = useState(false);
-
     const handlePlusClick = () => {
         setIsSportModal(true);
     };
@@ -18,9 +22,9 @@ const LikeSport = () => {
             <S.LikeSport>
                 <S.Title>관심 운동</S.Title>
                 <S.SportWrapper>
-                    <S.Sport>배드민턴</S.Sport>
-                    <S.Sport>줄넘기</S.Sport>
-                    <S.Sport>러닝</S.Sport>
+                    {categories.map((category: LikeSportCategory) => (
+                        <S.Sport key={category.id}>{category.name}</S.Sport>
+                    ))}
                     <S.PlusSportButton onClick={handlePlusClick}>
                         +
                     </S.PlusSportButton>
