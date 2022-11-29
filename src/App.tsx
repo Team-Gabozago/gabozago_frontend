@@ -17,24 +17,28 @@ const MySecessionPage = lazy(() => import('@/pages/MyPage/MySecession'));
 
 const PostViewPage = lazy(() => import('@/pages/post/View'));
 const PostEditPage = lazy(() => import('@/pages/post/Edit'));
+const LogoutPage = lazy(() => import('@/pages/Logout'));
 export default function App() {
     return (
         <BrowserRouter>
             <Suspense fallback={null}>
                 <Routes>
-                    {/* <Route element={<Verification />}> */}
-                    {/* 로그인이 필요한 페이지들 여기에 넣어주기 */}
-                    <Route path="/mypage" element={<MyPage />} />
-                    <Route path="/mypage/edit" element={<MyProfilePage />} />
-                    <Route
-                        path="/mypage/password"
-                        element={<MyPasswordPage />}
-                    />
-                    <Route
-                        path="/mypage/secession"
-                        element={<MySecessionPage />}
-                    />
-                    {/* </Route> */}
+                    <Route element={<Verification />}>
+                        {/* 로그인이 필요한 페이지들 여기에 넣어주기 */}
+                        <Route path="/mypage" element={<MyPage />} />
+                        <Route
+                            path="/mypage/edit"
+                            element={<MyProfilePage />}
+                        />
+                        <Route
+                            path="/mypage/password"
+                            element={<MyPasswordPage />}
+                        />
+                        <Route
+                            path="/mypage/secession"
+                            element={<MySecessionPage />}
+                        />
+                    </Route>
                     <Route path="/" element={<Layout />}>
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/signup" element={<SignupPage />} />
@@ -47,6 +51,7 @@ export default function App() {
                         <Route path="/edit" element={<PostEditPage />} />
 
                         <Route path="/home" element={<HomePage />} />
+                        <Route path="/logout" element={<LogoutPage />} />
                     </Route>
                 </Routes>
             </Suspense>

@@ -17,6 +17,7 @@ import { checkEmail, checkPassword } from '@/utils/regex';
 
 const LoginPage = () => {
     const navigate = useNavigate();
+
     const [isDisabled, setIsDisabled] = useState(true);
     const [isFailModal, setIsFailModal] = useState(false);
     const [modalText, setModalText] = useState({
@@ -121,7 +122,11 @@ const LoginPage = () => {
                         <Button
                             type="submit"
                             size="md"
-                            backgroundColor={isDisabled ? theme.color.white : theme.color.navy}
+                            backgroundColor={
+                                isDisabled
+                                    ? theme.color.white
+                                    : theme.color.navy
+                            }
                             backgroundImage={
                                 !isDisabled ? theme.color.gradient : ''
                             }
@@ -130,7 +135,9 @@ const LoginPage = () => {
                                 e: React.SyntheticEvent<HTMLFormElement>
                             ) => handleLogin(e)}
                         >
-                            <S.ButtonText isDisabled={isDisabled}>로그인</S.ButtonText>
+                            <S.ButtonText isDisabled={isDisabled}>
+                                로그인
+                            </S.ButtonText>
                         </Button>
                     </S.ButtonWrapper>
                 </S.LoginForm>

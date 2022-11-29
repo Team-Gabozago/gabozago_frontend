@@ -2,20 +2,29 @@ import { Link } from 'react-router-dom';
 
 import * as S from './Profile.style';
 
-const Profile = () => (
+import I from '@/components/common/Icons';
+import { LikeSportCategory } from '@/interfaces/sport';
+import theme from '@/styles/theme';
+
+interface ProfileProps {
+    id: number;
+    email: string;
+    nickname: string;
+    profile_image: string;
+    categories: LikeSportCategory[];
+}
+
+const Profile = ({ me }: { me: ProfileProps }) => (
     <S.Profile>
-        <S.ProfileImage
-            src="https://m.c-star.co.kr/web/product/big/202106/6419caaaf3881fa5f58db26afc29cd70.jpg"
-            alt="profile"
-        />
+        <S.ProfileImage src={me.profile_image} alt="profile" />
         <S.ProfileContent>
             <S.ProfileDetail>
-                <span>달팽이</span>
+                <span>{me.nickname}</span>
                 <Link to="/mypage/edit">
-                    <div>Edit</div>
+                    <I.Edit color={theme.color.gray} />
                 </Link>
             </S.ProfileDetail>
-            <S.ProfileEmailText>jinlog9@gmail.com</S.ProfileEmailText>
+            <S.ProfileEmailText>{me.email}</S.ProfileEmailText>
         </S.ProfileContent>
     </S.Profile>
 );
