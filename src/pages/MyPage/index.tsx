@@ -15,6 +15,10 @@ import theme from '@/styles/theme';
 const MyPage = () => {
     const { data: me } = useQuery(['myPage'], getMyPage);
 
+    if (me === 403) {
+        return <div>Error Page..</div>;
+    }
+
     return (
         me && (
             <S.MyPage>
