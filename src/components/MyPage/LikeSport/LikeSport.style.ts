@@ -23,6 +23,7 @@ export const SportWrapper = styled.div`
 
 export const PlusSportButton = styled.button`
     width: 2rem;
+    height: 1.75rem;
     border-radius: 1.25rem;
     background-color: ${theme.color.gray};
     color: ${theme.color.white};

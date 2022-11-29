@@ -73,13 +73,19 @@ export const KeywordPlustButton = styled.button`
     border-radius: 50%;
 `;
 
+export const KeywordText = styled.span`
+    font-size: ${theme.fontSize.xs};
+`;
+
 export const KeywordBox = styled.div`
     ${flexbox({ jc: 'space-between', ai: 'center' })};
+    height: 2rem;
     padding: 10px 1rem;
     border-bottom: 1px solid ${theme.color.silver};
 `;
 
 export const SearchContent = styled.div`
+    width: 266px;
     height: 8rem;
     overflow-y: auto;
     -ms-overflow-style: none;
