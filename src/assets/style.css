@@ -62,7 +62,7 @@ i {
     content: '\e909';
 }
 
-.ic-setting:in-range {
+.ic-setting:before {
     content: '\e90a';
 }
 
@@ -90,6 +90,6 @@ i {
     content: '\e910';
 }
 
-.ic-home-:before {
+.ic-home:before {
     content: '\e911';
 }

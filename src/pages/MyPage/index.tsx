@@ -1,6 +1,8 @@
 import { css } from '@emotion/react';
 import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
 
 import * as S from './MyPage.style';
 
@@ -10,14 +12,28 @@ import Footer from '@/components/common/Footer';
 import Header from '@/components/MyPage/Header';
 import LikeSport from '@/components/MyPage/LikeSport';
 import Profile from '@/components/MyPage/Profile';
+import { userState } from '@/recoil/atoms/user';
 import theme from '@/styles/theme';
 
 const MyPage = () => {
     const { data: me } = useQuery(['myPage'], getMyPage);
+    const setUser = useSetRecoilState(userState);
 
     if (me === 403) {
-        return <div>Error Page..</div>;
+        return <div>Error Page...</div>;
     }
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useEffect(() => {
+        if (me) {
+            setUser({
+                id: me.id,
+                email: me.email,
+                nickname: me.nickname,
+                profile_image: me.profille_image,
+            });
+        }
+    }, [me, setUser]);
 
     return (
         me && (
