@@ -10,6 +10,11 @@ import DirectiveMsg from '@/components/common/DirectiveMsg';
 import Input from '@/components/common/Input';
 import GlobalModal from '@/components/GlobalModal';
 import ModalContent from '@/components/ModalContent';
+import {
+    FAIL_PASSWORD_WRONG,
+    FAIL_USER_NOT_FOUND,
+    SUCCESS_LOGIN,
+} from '@/constants/code';
 import { signupFormData } from '@/constants/form';
 import { useInput } from '@/hooks/useInput';
 import theme from '@/styles/theme';
@@ -27,15 +32,15 @@ const LoginPage = () => {
 
     const fetchSignupUser = useMutation(postLoginUser, {
         onSuccess: (code: string) => {
-            if (code === 'login success') {
+            if (code === SUCCESS_LOGIN) {
                 navigate('/home');
-            } else if (code === 'PASSWORD_WRONG') {
+            } else if (code === FAIL_PASSWORD_WRONG) {
                 setModalText({
                     title: '비밀번호를 확인해 주세요!',
                     description: '해당 이메일에 등록된 비밀번호가 아니에요.',
                 });
                 setIsFailModal(true);
-            } else if (code === 'USER_NOT_FOUND') {
+            } else if (code === FAIL_USER_NOT_FOUND) {
                 setModalText({
                     title: '이메일을 확인해 주세요!',
                     description: '해당 이메일로 등록된 회원이 없어요.',

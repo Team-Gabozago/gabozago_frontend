@@ -42,7 +42,7 @@ export const patchSport = async (sportId: number) => {
     const data = await response.json();
 
     try {
-        return data;
+        return data.code;
     } catch (err) {
         throw new Error(`patchSport api fail err: ${err}`);
     }
