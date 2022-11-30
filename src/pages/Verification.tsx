@@ -9,7 +9,8 @@ const Verification = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (localStorage.getItem('accessToken')) return;
+        // 만료된 토큰 확인?
+        if (isLoggedIn) return;
 
         navigate('/login');
     }, [isLoggedIn, navigate]);

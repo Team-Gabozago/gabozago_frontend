@@ -8,10 +8,13 @@ import * as S from './MySecession.style';
 import { secessionUser } from '@/apis/user';
 import Button from '@/components/common/Button';
 import DirectiveMsg from '@/components/common/DirectiveMsg';
+import I from '@/components/common/Icons';
 import Input from '@/components/common/Input';
 import GlobalModal from '@/components/GlobalModal';
 import ModalContent from '@/components/ModalContent';
 import Header from '@/components/MyPage/Header';
+import { PROFILE_DELETED } from '@/constants/code';
+import { signupFormData } from '@/constants/form';
 import { useInput } from '@/hooks/useInput';
 import { userState } from '@/recoil/atoms/user';
 import theme from '@/styles/theme';
@@ -38,9 +41,9 @@ const MySecessionPage = () => {
     });
 
     const fetchSecessionUser = useMutation(secessionUser, {
-        onSuccess: (data: { member_id: number }) => {
-            if (data.member_id) {
-                // 성공 popup 띄우기.
+        onSuccess: (code: string) => {
+            if (code === PROFILE_DELETED) {
+                localStorage.removeItem('accessToken');
                 setIsSecessionModal(true);
             }
         },
@@ -51,6 +54,7 @@ const MySecessionPage = () => {
 
     const handleNextButton = () => {
         setisNext(true);
+        setIsComplete(true);
         setIsCheck(false);
         setIsDisabled(true);
     };
@@ -63,6 +67,7 @@ const MySecessionPage = () => {
 
     const handleSecession = (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
+        fetchSecessionUser.mutate();
     };
 
     useEffect(() => {
@@ -95,10 +100,6 @@ const MySecessionPage = () => {
                                 onChange={(
                                     e: React.ChangeEvent<HTMLInputElement>
                                 ) => handleChangeNickname(e)}
-                                success={
-                                    nickname.length > 0 &&
-                                    checkNickname(nickname)
-                                }
                                 error={
                                     nickname.length > 0 &&
                                     !checkNickname(nickname)
@@ -109,7 +110,7 @@ const MySecessionPage = () => {
                                     <DirectiveMsg
                                         active={checkNickname(nickname)}
                                     >
-                                        사용 중인 별명을 입력해 주세요
+                                        {signupFormData[1].directive}
                                     </DirectiveMsg>
                                 )}
                         </>
@@ -154,7 +155,16 @@ const MySecessionPage = () => {
                                         e: React.MouseEvent<HTMLButtonElement>
                                     ) => handleCheckButton(e)}
                                     isCheck={isCheck}
-                                />
+                                >
+                                    <I.Check
+                                        fontSize={0.4}
+                                        color={
+                                            isCheck
+                                                ? theme.color.white
+                                                : theme.color.gray
+                                        }
+                                    />
+                                </S.CheckButton>
                                 <S.CheckText>
                                     모두 확인했어요. 탈퇴를 진행할래요.
                                 </S.CheckText>

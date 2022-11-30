@@ -12,6 +12,7 @@ import Footer from '@/components/common/Footer';
 import Header from '@/components/MyPage/Header';
 import LikeSport from '@/components/MyPage/LikeSport';
 import Profile from '@/components/MyPage/Profile';
+import { UNAUTHENTICATED, PROFILE_FETCHED } from '@/constants/code';
 import { userState } from '@/recoil/atoms/user';
 import theme from '@/styles/theme';
 
@@ -22,13 +23,13 @@ const MyPage = () => {
     );
     const setUser = useSetRecoilState(userState);
 
-    if (me === 403) {
+    if (me === UNAUTHENTICATED) {
         return <div>Error Page...</div>;
     }
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-        if (me) {
+        if (me && me.code === PROFILE_FETCHED) {
             setUser({
                 id: me.id,
                 email: me.email,

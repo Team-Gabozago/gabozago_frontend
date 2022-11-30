@@ -11,6 +11,11 @@ import Input from '@/components/common/Input';
 import GlobalModal from '@/components/GlobalModal';
 import ModalContent from '@/components/ModalContent';
 import Header from '@/components/MyPage/Header';
+import {
+    PASSWORD_CORRECT,
+    PASSWORD_INCORRECT,
+    PASSWORD_CHANGED,
+} from '@/constants/code';
 import { signupFormData } from '@/constants/form';
 import { useInput } from '@/hooks/useInput';
 import theme from '@/styles/theme';
@@ -29,11 +34,11 @@ const PasswordPage = () => {
     });
 
     const fetchCheckPasswordUser = useMutation(checkMyPassword, {
-        onSuccess: (correct: boolean) => {
-            if (correct) {
+        onSuccess: (code: string) => {
+            if (code === PASSWORD_CORRECT) {
                 setIsCheckCurrentPassword(true); // 비밀번호 변경으로 넘어가기
                 setIsDisabled(true); // 버튼 비활성화 풀기
-            } else {
+            } else if (code === PASSWORD_INCORRECT) {
                 setModalText({
                     title: '사용 중인 비밀번호와 달라요.',
                     description: '현재 비밀번호를 바르게 입력해주세요.',
@@ -49,8 +54,8 @@ const PasswordPage = () => {
 
     const fetchPatchMyPassword = useMutation(patchMyPassword, {
         // TODO 응답 데이터 변경 예정.
-        onSuccess: (correct: boolean) => {
-            if (correct) {
+        onSuccess: (code: string) => {
+            if (code === PASSWORD_CHANGED) {
                 setModalText({
                     title: '비밀번호가 변경되었어요.',
                     description: '잊지 않게 다시 로그인해 볼까요?',
@@ -106,7 +111,7 @@ const PasswordPage = () => {
 
     const handleModifyPassword = (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
-        fetchPatchMyPassword.mutate(currentPassword, newPassword);
+        fetchPatchMyPassword.mutate({ currentPassword, newPassword });
     };
 
     useEffect(() => {

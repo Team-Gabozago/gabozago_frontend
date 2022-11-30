@@ -40,6 +40,7 @@ export const Content = styled.div`
 `;
 
 export const CheckButton = styled.button<{ isCheck: boolean }>`
+    ${flexbox({ jc: 'center', ai: 'center' })}
     width: 1rem;
     height: 1rem;
     border-radius: 50%;

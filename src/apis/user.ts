@@ -27,25 +27,28 @@ export const postSignupUser = async (
             }
         }
 
-        return data.message;
+        return data.code;
     } catch (err) {
         throw new Error(`postUser api fail err: ${err}`);
     }
 };
 
 export const duplicateEmail = async (email: string) => {
-    const response = await fetch(`${process.env.GABOZAGO_URL}/email`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(email),
-    });
+    const response = await fetch(
+        `${process.env.GABOZAGO_URL}/auth/email-exists`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email }),
+        }
+    );
 
     const data = await response.json();
 
     try {
-        return data;
+        return data.code;
     } catch (err) {
         throw new Error(`duplicateEmail api fail err: ${err}`);
     }
@@ -64,31 +67,39 @@ export const postLoginUser = async (postLoginBodyType: PostLoginBodyType) => {
     const data = await response.json();
 
     try {
-        if (data) {
-            const { headers } = response;
-            if (headers.get('Authorization')) {
-                localStorage.setItem(
-                    'accessToken',
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    headers.get('Authorization')!
-                );
-                return data.message;
-            }
-
-            if (data.code === 'PASSWORD_WRONG') {
-                return 'PASSWORD_WRONG';
-            }
-            if (data.code === 'USER_NOT_FOUND') {
-                return 'USER_NOT_FOUND';
-            }
+        const { headers } = response;
+        if (headers.get('Authorization')) {
+            localStorage.setItem(
+                'accessToken',
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                headers.get('Authorization')!
+            );
         }
+
+        return data.code;
     } catch (err) {
         throw new Error(`postLoginUser api fail err: ${err}`);
     }
 };
 
 export const secessionUser = async () => {
-    const response = await fetch(`${process.env.GABOZAGO_URL}/mypage/out`);
-    const { data } = response;
-    return data;
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) throw new Error('accessToken is undefined');
+
+    const response = await fetch(`${process.env.GABOZAGO_URL}/profile`, {
+        method: 'DELETE',
+        credentials: 'include',
+        headers: {
+            Authorization: accessToken,
+            'Content-Type': 'application/json',
+        },
+    });
+
+    const data = await response.json();
+
+    try {
+        return data.code;
+    } catch (err) {
+        throw new Error(`secessionUser api fail err: ${err}`);
+    }
 };
