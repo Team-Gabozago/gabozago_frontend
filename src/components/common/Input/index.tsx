@@ -2,6 +2,8 @@ import React, { forwardRef, memo } from 'react';
 
 import * as S from './Input.style';
 
+import I from '@/components/common/Icons';
+import theme from '@/styles/theme';
 import { OverridableProps } from '@/types/abstract';
 
 type InputProps<T extends React.ElementType> = OverridableProps<
@@ -19,6 +21,7 @@ type InputProps<T extends React.ElementType> = OverridableProps<
         success?: boolean;
         onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
         onClear: () => void;
+        onFocus?: boolean;
     }
 >;
 
@@ -39,6 +42,7 @@ export const Input = memo(
                 success = false,
                 onChange,
                 onClear,
+                onFocus = true,
                 ...restProps
             }: InputProps<T>,
             ref: React.ForwardedRef<HTMLInputElement>
@@ -53,7 +57,9 @@ export const Input = memo(
             >
                 <S.Label htmlFor={name}>
                     <span>{name}</span>
-                    {success && 'check'}
+                    {success && (
+                        <I.Check fontSize={0.375} color={theme.color.blue} />
+                    )}
                 </S.Label>
                 <S.Input
                     as={as ?? 'input'}
@@ -63,16 +69,13 @@ export const Input = memo(
                     value={value}
                     disabled={disabled}
                     {...restProps}
-                    autoFocus
+                    autoFocus={onFocus}
                     onChange={onChange}
                 />
-                <S.ClearButton
-                    type="button"
-                    onClick={onClear}
-                    error={error}
-                    success={success}
-                >
-                    X
+                <S.ClearButton type="button" onClick={onClear} tabIndex={-1}>
+                    <I.Cancel
+                        color={error ? theme.color.errorText : theme.color.blue}
+                    />
                 </S.ClearButton>
                 <S.PlaceHolder>{placeholder}</S.PlaceHolder>
             </S.InputLayer>

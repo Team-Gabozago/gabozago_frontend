@@ -12,6 +12,12 @@ import Input from '@/components/common/Input';
 import GlobalModal from '@/components/GlobalModal';
 import ModalContent from '@/components/ModalContent';
 import ProgressBar from '@/components/ProgressBar';
+import {
+    AVAILABLE_EMAIL,
+    DUPLICATED_EMAIL,
+    EMAIL_EXISTS,
+    USER_CREATED,
+} from '@/constants/code';
 import { signupFormData } from '@/constants/form';
 import { useInput } from '@/hooks/useInput';
 import theme from '@/styles/theme';
@@ -33,21 +39,60 @@ import {
 const SignupPage = () => {
     const navigate = useNavigate();
 
-    const fetchDupliateEmail = useMutation(duplicateEmail);
-
-    const [isEmailModal, setIsEmailModal] = useState(false);
-    const [isSignupModal, setIsSignUpModal] = useState(false);
-    const [isDuplicateEmail, setIsDuplicateEmail] = useState(false);
+    const [isModal, setIsModal] = useState(false);
+    const [modalInfo, setModalInfo] = useState({
+        title: '',
+        description: '',
+        buttonText: '',
+        signup: false,
+    });
     const [level, setLevel] = useState(0);
     const [isDisabled, setIsDisabled] = useState(true);
     const [form, setForm] = useState<boolean[]>(new Array(6).fill(false));
 
-    const fetchSignupUser = useMutation(postSignupUser, {
-        onSuccess: (data: { member_id: number }) => {
-            if (data.member_id) {
-                // 성공 popup 띄우기.
-                setIsSignUpModal(true);
+    const fetchDupliateEmail = useMutation(duplicateEmail, {
+        onSuccess: (code: string) => {
+            // response 에 따라 팝업 내용 다르게 보여주기
+            if (code === EMAIL_EXISTS) {
+                setModalInfo({
+                    ...modalInfo,
+                    title: '이미 사용 중인 이메일이에요.',
+                    description: '다른 이메일로 다시 시도해보세요.',
+                    buttonText: '다시 시도',
+                });
+            } else if (code === AVAILABLE_EMAIL) {
+                setModalInfo({
+                    ...modalInfo,
+                    title: '사용할 수 있는 이메일이에요.',
+                    description: '',
+                    buttonText: '확인',
+                });
             }
+            setIsModal(true);
+        },
+        onError: (error: unknown) => {
+            throw new Error(`error is ${error}`);
+        },
+    });
+
+    const fetchSignupUser = useMutation(postSignupUser, {
+        onSuccess: (code: string) => {
+            if (code === USER_CREATED) {
+                setModalInfo({
+                    title: '가입이 완료되었어요!',
+                    description: '우리 동네 운동 친구를 찾으러 가볼까요?',
+                    buttonText: '원투 홈으로',
+                    signup: true,
+                });
+            } else if (code === DUPLICATED_EMAIL) {
+                setModalInfo({
+                    ...modalInfo,
+                    title: '이미 사용 중인 이메일이에요.',
+                    description: '다른 이메일로 다시 시도해보세요.',
+                    buttonText: '확인',
+                });
+            }
+            setIsModal(true);
         },
         onError: (error: unknown) => {
             throw new Error(`error is ${error}`);
@@ -163,7 +208,6 @@ const SignupPage = () => {
             nickname,
             email,
             password,
-            password2,
             tel,
         };
 
@@ -177,13 +221,8 @@ const SignupPage = () => {
     };
 
     const handleDuplicateEmailClick = () => {
-        // duplicate email api
-        const response = fetchDupliateEmail.mutate(email);
-        // response 에 따라 팝업 내용 다르게 보여주기
-        if (response) {
-            setIsDuplicateEmail(true);
-        }
-        setIsEmailModal(true);
+        if (email === '') return;
+        fetchDupliateEmail.mutate(email);
     };
 
     const checkAllForm = () =>
@@ -204,7 +243,7 @@ const SignupPage = () => {
                 />
                 <S.ContentWrapper>
                     <S.TitleWrapper>
-                        <S.Title>{signupFormData[level].title}</S.Title>
+                        <S.Title>{signupFormData[level]?.title}</S.Title>
                     </S.TitleWrapper>
                     <S.SignupForm>
                         {level >= 5 && (
@@ -214,7 +253,7 @@ const SignupPage = () => {
                                     type="text"
                                     placeholder="띄어쓰기나 기호 없이 숫자만 입력해주세요. Ex) 01025486707"
                                     value={tel}
-                                    tabIndex="-5"
+                                    tabIndex="1"
                                     onChange={(
                                         e: React.ChangeEvent<HTMLInputElement>
                                     ) => handleChangeTel(e)}
@@ -225,7 +264,7 @@ const SignupPage = () => {
                                     error={tel.length > 0 && !checkTel(tel)}
                                     onClear={handleTelClear}
                                 />
-                                {tel.length > 0 && !checkTel(tel) && (
+                                {tel.length > 0 && (
                                     <DirectiveMsg active={checkTel(tel)}>
                                         {signupFormData[5].directive}
                                     </DirectiveMsg>
@@ -239,7 +278,7 @@ const SignupPage = () => {
                                     type="password"
                                     placeholder="비밀번호를 한 번 더 입력해주세요"
                                     value={password2}
-                                    tabIndex="-4"
+                                    tabIndex="2"
                                     onChange={(
                                         e: React.ChangeEvent<HTMLInputElement>
                                     ) => handleChangePassword2(e)}
@@ -256,17 +295,16 @@ const SignupPage = () => {
                                     }
                                     onClear={handlePassword2Clear}
                                 />
-                                {password2.length > 0 &&
-                                    !checkPassword2(password, password2) && (
-                                        <DirectiveMsg
-                                            active={checkPassword2(
-                                                password,
-                                                password2
-                                            )}
-                                        >
-                                            {signupFormData[4].directive}
-                                        </DirectiveMsg>
-                                    )}
+                                {password2.length > 0 && (
+                                    <DirectiveMsg
+                                        active={checkPassword2(
+                                            password,
+                                            password2
+                                        )}
+                                    >
+                                        {signupFormData[4].directive}
+                                    </DirectiveMsg>
+                                )}
                             </>
                         )}
                         {level >= 3 && (
@@ -276,7 +314,7 @@ const SignupPage = () => {
                                     type="password"
                                     placeholder="비밀번호를 입력해주세요"
                                     value={password}
-                                    tabIndex="-3"
+                                    tabIndex="3"
                                     onChange={(
                                         e: React.ChangeEvent<HTMLInputElement>
                                     ) => handleChangePassword(e)}
@@ -293,14 +331,13 @@ const SignupPage = () => {
                                     }
                                     onClear={handlePasswordClear}
                                 />
-                                {password.length > 0 &&
-                                    !checkPassword(password) && (
-                                        <DirectiveMsg
-                                            active={checkPassword(password)}
-                                        >
-                                            {signupFormData[3].directive}
-                                        </DirectiveMsg>
-                                    )}
+                                {password.length > 0 && (
+                                    <DirectiveMsg
+                                        active={checkPassword(password)}
+                                    >
+                                        {signupFormData[3].directive}
+                                    </DirectiveMsg>
+                                )}
                             </>
                         )}
                         {level >= 2 && (
@@ -310,7 +347,7 @@ const SignupPage = () => {
                                     type="email"
                                     placeholder="이메일을 입력해주세요"
                                     value={email}
-                                    tabIndex="-2"
+                                    tabIndex="4"
                                     onChange={(
                                         e: React.ChangeEvent<HTMLInputElement>
                                     ) => handleChangeEmail(e)}
@@ -325,7 +362,7 @@ const SignupPage = () => {
                                     }
                                     onClear={handleEmailClear}
                                 />
-                                {email.length > 0 && !checkEmail(email) && (
+                                {email.length > 0 && (
                                     <DirectiveMsg
                                         active={checkEmail(email)}
                                         css={css`
@@ -339,6 +376,7 @@ const SignupPage = () => {
                                     <S.EmailCheckButton
                                         type="button"
                                         onClick={handleDuplicateEmailClick}
+                                        tabIndex={-1}
                                     >
                                         중복 확인
                                     </S.EmailCheckButton>
@@ -352,7 +390,7 @@ const SignupPage = () => {
                                     type="text"
                                     placeholder="6자 이내의 한글, 영문, 숫자로 입력해주세요"
                                     value={nickname}
-                                    tabIndex="-1"
+                                    tabIndex="5"
                                     onChange={(
                                         e: React.ChangeEvent<HTMLInputElement>
                                     ) => handleChangeNickname(e)}
@@ -384,7 +422,7 @@ const SignupPage = () => {
                                 type="text"
                                 placeholder="한글, 영문만 입력해주세요."
                                 value={name}
-                                tabIndex="0"
+                                tabIndex="6"
                                 onChange={(
                                     e: React.ChangeEvent<HTMLInputElement>
                                 ) => handleChangeName(e)}
@@ -416,15 +454,15 @@ const SignupPage = () => {
                                     level < 5
                                         ? handleNextButton
                                         : (
-                                            e: React.SyntheticEvent<HTMLFormElement>
-                                        ) => handleSignup(e)
+                                              e: React.SyntheticEvent<HTMLFormElement>
+                                          ) => handleSignup(e)
                                 }
                             >
                                 <S.ButtonText
                                     color={
-                                        !checkAllForm()
+                                        isDisabled
                                             ? theme.color.black
-                                            : theme.color.green
+                                            : theme.color.white
                                     }
                                 >
                                     {level < 5 ? '다음' : '가입완료'}
@@ -434,37 +472,20 @@ const SignupPage = () => {
                     </S.SignupForm>
                 </S.ContentWrapper>
             </S.SignupWrapper>
-            {isEmailModal && (
+            {isModal && (
                 <GlobalModal
                     size="small"
-                    handleCancelClick={() => setIsEmailModal(false)}
-                >
-                    {isDuplicateEmail ? (
-                        <ModalContent
-                            title="이미 사용 중인 이메일이에요."
-                            description="다른 이메일로 다시 시도해보세요."
-                            buttonText="다시 시도"
-                            handleButtonClick={() => setIsEmailModal(false)}
-                        />
-                    ) : (
-                        <ModalContent
-                            title="사용할 수 있는 이메일이에요"
-                            buttonText="확인"
-                            handleButtonClick={() => setIsEmailModal(false)}
-                        />
-                    )}
-                </GlobalModal>
-            )}
-            {isSignupModal && (
-                <GlobalModal
-                    size="small"
-                    handleCancelClick={() => setIsEmailModal(false)}
+                    handleCancelClick={() => setIsModal(false)}
                 >
                     <ModalContent
-                        title="가입이 완료되었어요!"
-                        description="우리 동네 운동 친구를 찾으러 가볼까요?"
-                        buttonText="원투 홈으로"
-                        handleButtonClick={() => navigate('/home')}
+                        title={modalInfo.title}
+                        description={modalInfo.description}
+                        buttonText={modalInfo.buttonText}
+                        handleButtonClick={() =>
+                            modalInfo.signup
+                                ? navigate('/home')
+                                : setIsModal(false)
+                        }
                     />
                 </GlobalModal>
             )}

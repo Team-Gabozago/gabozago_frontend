@@ -36,6 +36,7 @@ module.exports = {
         'import/prefer-default-export': 'off', // export default 가 아닌 default 없이 export 할 수 있도록
         'no-nested-ternary': 'off', // 삼항연산자 2개이상 허용
         'react-hooks/exhaustive-deps': ['warn'],
+        'jsx-a11y/tabindex-no-positive': 'off', // tabIndex string 형 허용하기.
         'react/function-component-definition': [
             // 함수형 컴포넌트 선언방식
             2,

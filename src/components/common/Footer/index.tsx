@@ -1,21 +1,27 @@
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import * as S from './footer.style';
+
+import I from '@/components/common/Icons';
+import theme from '@/styles/theme';
 
 const Footer = () => (
     <S.Footer>
         <S.LinkUl>
             <li>
-                <NavLink to="/">홈</NavLink>
+                <NavLink to="/home">
+                    <I.Home color={theme.color.silver} fontSize={1.2} />
+                </NavLink>
             </li>
             <li>
-                <NavLink to="/">관심운동</NavLink>
+                <NavLink to="/like">
+                    <I.Heart color={theme.color.silver} fontSize={1.2} />
+                </NavLink>
             </li>
             <li>
-                <NavLink to="/">장소탐색</NavLink>
-            </li>
-            <li>
-                <NavLink to="/">마이페이지</NavLink>
+                <NavLink to="/mypage">
+                    <I.Profile color={theme.color.silver} fontSize={1.2} />
+                </NavLink>
             </li>
         </S.LinkUl>
     </S.Footer>

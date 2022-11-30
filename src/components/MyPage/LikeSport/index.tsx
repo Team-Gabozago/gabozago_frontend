@@ -4,11 +4,15 @@ import * as S from './LikeSport.style';
 import LikeSportModal from './LikeSportModal';
 
 import GlobalModal from '@/components/GlobalModal';
-import { sports } from '@/constants/sports';
+import { LikeSportCategory } from '@/interfaces/sport';
 
-const LikeSport = () => {
+interface LikeSportProps {
+    categories: LikeSportCategory[];
+    refetchMyPage: () => void;
+}
+
+const LikeSport = ({ categories, refetchMyPage }: LikeSportProps) => {
     const [isSportModal, setIsSportModal] = useState(false);
-
     const handlePlusClick = () => {
         setIsSportModal(true);
     };
@@ -18,9 +22,14 @@ const LikeSport = () => {
             <S.LikeSport>
                 <S.Title>관심 운동</S.Title>
                 <S.SportWrapper>
-                    <S.Sport>배드민턴</S.Sport>
-                    <S.Sport>줄넘기</S.Sport>
-                    <S.Sport>러닝</S.Sport>
+                    {categories.map(
+                        (category: LikeSportCategory) =>
+                            category.favorite && (
+                                <S.Sport key={category.id}>
+                                    {category.name}
+                                </S.Sport>
+                            )
+                    )}
                     <S.PlusSportButton onClick={handlePlusClick}>
                         +
                     </S.PlusSportButton>
@@ -32,8 +41,9 @@ const LikeSport = () => {
                     handleCancelClick={() => setIsSportModal(false)}
                 >
                     <LikeSportModal
-                        likeSports={sports}
+                        likeSports={categories}
                         handleCancelModal={() => setIsSportModal(false)}
+                        refetchMyPage={refetchMyPage}
                     />
                 </GlobalModal>
             )}

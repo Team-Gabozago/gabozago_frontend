@@ -22,10 +22,74 @@ i {
     -moz-osx-font-smoothing: grayscale;
 }
 
-.ic-logo:before {
+.ic-asterisk:before {
     content: '\e900';
 }
 
 .ic-back-btn:before {
     content: '\e901';
+}
+
+.ic-comment:before {
+    content: '\e902';
+}
+
+.ic-create:before {
+    content: '\e903';
+}
+
+.ic-edit:before {
+    content: '\e904';
+}
+
+.ic-logo:before {
+    content: '\e905';
+}
+
+.ic-profile:before {
+    content: '\e906';
+}
+
+.ic-search:before {
+    content: '\e907';
+}
+
+.ic-cancel:before {
+    content: '\e908';
+}
+
+.ic-conversation:before {
+    content: '\e909';
+}
+
+.ic-setting:before {
+    content: '\e90a';
+}
+
+.ic-heart:before {
+    content: '\e90b';
+}
+
+.ic-minus:before {
+    content: '\e90c';
+}
+
+.ic-arrow-up:before {
+    content: '\e90d';
+}
+
+.ic-arrow-down:before {
+    content: '\e90e';
+}
+
+.ic-check:before {
+    content: '\e90f';
+}
+
+.ic-toggle:before {
+    content: '\e910';
+}
+
+.ic-home:before {
+    content: '\e911';
 }

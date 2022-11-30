@@ -10,6 +10,11 @@ import DirectiveMsg from '@/components/common/DirectiveMsg';
 import Input from '@/components/common/Input';
 import GlobalModal from '@/components/GlobalModal';
 import ModalContent from '@/components/ModalContent';
+import {
+    FAIL_PASSWORD_WRONG,
+    FAIL_USER_NOT_FOUND,
+    SUCCESS_LOGIN,
+} from '@/constants/code';
 import { signupFormData } from '@/constants/form';
 import { useInput } from '@/hooks/useInput';
 import theme from '@/styles/theme';
@@ -17,16 +22,30 @@ import { checkEmail, checkPassword } from '@/utils/regex';
 
 const LoginPage = () => {
     const navigate = useNavigate();
+
     const [isDisabled, setIsDisabled] = useState(true);
     const [isFailModal, setIsFailModal] = useState(false);
+    const [modalText, setModalText] = useState({
+        title: '',
+        description: '',
+    });
 
     const fetchSignupUser = useMutation(postLoginUser, {
-        onSuccess: (data: { member_id: number }) => {
-            if (data.member_id) {
+        onSuccess: (code: string) => {
+            if (code === SUCCESS_LOGIN) {
                 navigate('/home');
-            } else {
-                // 일치하지 않는 popup 띄우기.
-                // id, password response statusCode에 따라 팝업 다르게 보여주기.
+            } else if (code === FAIL_PASSWORD_WRONG) {
+                setModalText({
+                    title: '비밀번호를 확인해 주세요!',
+                    description: '해당 이메일에 등록된 비밀번호가 아니에요.',
+                });
+                setIsFailModal(true);
+            } else if (code === FAIL_USER_NOT_FOUND) {
+                setModalText({
+                    title: '이메일을 확인해 주세요!',
+                    description: '해당 이메일로 등록된 회원이 없어요.',
+                });
+                setIsFailModal(true);
             }
         },
         onError: (error: unknown) => {
@@ -83,6 +102,7 @@ const LoginPage = () => {
                         placeholder="이메일을 입력해주세요"
                         value={email}
                         onChange={handleChangeEmail}
+                        tabIndex="1"
                     />
                     {email.length > 0 && !checkEmail(email) && (
                         <DirectiveMsg active={checkEmail(email)}>
@@ -95,6 +115,8 @@ const LoginPage = () => {
                         placeholder="비밀번호를 입력해주세요"
                         value={password}
                         onChange={handleChangePassword}
+                        tabIndex="2"
+                        onFocus={false}
                     />
                     {password.length > 0 && !checkPassword(password) && (
                         <DirectiveMsg active={checkPassword(password)}>
@@ -105,16 +127,22 @@ const LoginPage = () => {
                         <Button
                             type="submit"
                             size="md"
-                            backgroundColor={isDisabled ? theme.color.white : theme.color.navy}
+                            backgroundColor={
+                                isDisabled
+                                    ? theme.color.white
+                                    : theme.color.navy
+                            }
                             backgroundImage={
                                 !isDisabled ? theme.color.gradient : ''
                             }
-                            isDisabled={isDisabled}
+                            disabled={isDisabled}
                             onClick={(
                                 e: React.SyntheticEvent<HTMLFormElement>
                             ) => handleLogin(e)}
                         >
-                            <S.ButtonText isDisabled={isDisabled}>로그인</S.ButtonText>
+                            <S.ButtonText isDisabled={isDisabled}>
+                                로그인
+                            </S.ButtonText>
                         </Button>
                     </S.ButtonWrapper>
                 </S.LoginForm>
@@ -125,7 +153,8 @@ const LoginPage = () => {
                     handleCancelClick={() => setIsFailModal(false)}
                 >
                     <ModalContent
-                        title="이메일 또는 비밀번호를 확인해주세요!"
+                        title={modalText.title}
+                        description={modalText.description}
                         buttonText="다시 시도"
                         handleButtonClick={() => setIsFailModal(false)}
                     />
