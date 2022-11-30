@@ -18,6 +18,10 @@ const MySecessionPage = lazy(() => import('@/pages/MyPage/MySecession'));
 const PostViewPage = lazy(() => import('@/pages/post/View'));
 const PostEditPage = lazy(() => import('@/pages/post/Edit'));
 const LogoutPage = lazy(() => import('@/pages/Logout'));
+
+const MyLikePage = lazy(() => import('@/pages/MyPage/MyLike'));
+const MyBoardPage = lazy(() => import('@/pages/MyPage/MyBoard'));
+const MyCommentPage = lazy(() => import('@/pages/MyPage/MyComment'));
 export default function App() {
     return (
         <BrowserRouter>
@@ -37,6 +41,12 @@ export default function App() {
                         <Route
                             path="/mypage/secession"
                             element={<MySecessionPage />}
+                        />
+                        <Route path="/mypage/like" element={<MyLikePage />} />
+                        <Route path="/mypage/board" element={<MyBoardPage />} />
+                        <Route
+                            path="/mypage/comment"
+                            element={<MyCommentPage />}
                         />
                     </Route>
                     <Route path="/" element={<Layout />}>
