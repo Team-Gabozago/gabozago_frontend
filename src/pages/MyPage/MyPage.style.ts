@@ -5,6 +5,20 @@ import theme from '@/styles/theme';
 
 export const MoveText = styled.span`
     padding: 0 1rem;
+    user-select: none;
+`;
+
+export const MyWriteContent = styled.div`
+    width: 100%;
+    height: 100%;
+    ${flexbox({ jc: 'space-between', ai: 'center' })}
+    cursor: pointer;
+    padding-right: 1.75rem;
+`;
+
+export const MoveSubContent = styled.div`
+    ${flexbox({ dir: 'column' })};
+    border-bottom: 1px solid ${theme.color.silver};
 `;
 
 export const Box = styled.div`

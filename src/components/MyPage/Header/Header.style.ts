@@ -18,4 +18,5 @@ export const Header = styled.header`
     height: 3.875rem;
     background-color: ${theme.color.navy};
     color: ${theme.color.white};
+    border-bottom: 1px solid ${theme.color.darkGray};
 `;
