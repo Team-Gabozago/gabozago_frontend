@@ -22,12 +22,15 @@ const LogoutPage = lazy(() => import('@/pages/Logout'));
 const MyLikePage = lazy(() => import('@/pages/MyPage/MyLike'));
 const MyBoardPage = lazy(() => import('@/pages/MyPage/MyBoard'));
 const MyCommentPage = lazy(() => import('@/pages/MyPage/MyComment'));
+
+const LikePage = lazy(() => import('@/pages/Like'));
 export default function App() {
     return (
         <BrowserRouter>
             <Suspense fallback={null}>
                 <Routes>
                     <Route element={<Verification />}>
+                        <Route path="/like" element={<LikePage />} />
                         {/* 로그인이 필요한 페이지들 여기에 넣어주기 */}
                         <Route path="/mypage" element={<MyPage />} />
                         <Route
@@ -42,12 +45,12 @@ export default function App() {
                             path="/mypage/secession"
                             element={<MySecessionPage />}
                         />
-                        <Route path="/mypage/like" element={<MyLikePage />} />
                         <Route path="/mypage/board" element={<MyBoardPage />} />
                         <Route
                             path="/mypage/comment"
                             element={<MyCommentPage />}
                         />
+                        <Route path="/mypage/like" element={<LikePage />} />
                     </Route>
                     <Route path="/" element={<Layout />}>
                         <Route path="/login" element={<LoginPage />} />
