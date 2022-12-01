@@ -31,5 +31,5 @@ export const ButtonWrapper = styled.div`
 
 export const LoginWrapper = styled.section`
     ${flexbox({ dir: 'column' })};
-    padding: 7.5rem 0 4.375rem 0;
+    padding: 7.5rem 0 4.375rem 2.5rem;
 `;

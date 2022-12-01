@@ -65,6 +65,6 @@ export const MyCommentPage = styled.section`
     ${flexbox({ dir: 'column' })};
     position: relative;
     min-width: 23.4375rem;
-    min-height: 50.75rem;
+    height: 100vh;
     background-color: ${theme.color.navy};
 `;
