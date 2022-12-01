@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import * as S from './Like.style';
 
@@ -11,7 +11,7 @@ import Navigation from '@/components/common/Navigation';
 import GlobalModal from '@/components/GlobalModal';
 import LikeSportModal from '@/components/MyPage/LikeSport/LikeSportModal';
 import Post from '@/components/Post';
-import { Feed } from '@/interfaces/feed';
+import { IPost } from '@/types/post';
 
 const LikePage = () => {
     const [clickedSport, setClickedSport] = useState({ idx: 0, name: '' });
@@ -33,7 +33,10 @@ const LikePage = () => {
         setClickedValue(value);
     }
 
-    console.log(feeds);
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useEffect(() => {
+        refetchFeeds();
+    }, [clickedSport, clickedValue])
 
     return (
         <S.LikePage>
@@ -53,7 +56,7 @@ const LikePage = () => {
                             </S.PlusSportButton>
                         </S.SportWrapper>
                         <Navigation clickedValue={clickedValue} handleNaviLi={handleNaviLi} />
-                        {feeds && feeds.length > 0 && feeds.map((feed: Feed) => <Post post={feed} />)}
+                        {feeds && feeds.length > 0 ? feeds.map((feed: IPost) => <Post post={feed} />) : <S.BlankLike>No Data...</S.BlankLike>}
                     </>
                     : <S.NoLikeContent>
                         <S.NoLikeText>

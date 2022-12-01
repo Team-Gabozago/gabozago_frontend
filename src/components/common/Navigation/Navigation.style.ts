@@ -28,5 +28,6 @@ export const NaviLi = styled.li<{ clickedValue: boolean }>`
 `;
 
 export const Navigation = styled.nav`
+    margin-top: 3rem;
     margin-bottom: 0.75rem;
 `;
