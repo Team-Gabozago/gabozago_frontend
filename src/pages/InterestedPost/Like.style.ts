@@ -21,11 +21,17 @@ export const Title = styled.h1`
     line-height: 2.2rem;
 `;
 
+export const BlankLike = styled.div`
+    width: 100%;
+    text-align: center;
+    margin-top: 2rem;
+    color: ${theme.color.lightGray};
+`;
+
 export const SportWrapper = styled.div`
     ${flexbox({})};
     gap: 0.5rem;
     flex-wrap: wrap;
-    margin-bottom: 3rem;
 `;
 
 export const SportButton = styled.button<{ clicked: boolean }>`
