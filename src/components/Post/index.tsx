@@ -9,6 +9,7 @@ interface IPostProps {
 }
 const Post = ({ post }: IPostProps) => {
     const { title, content, writer, likes, comments, time, image } = post;
+
     return (
         <S.PostContainer>
             {image && <S.ImageContainer />}

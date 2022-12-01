@@ -2,7 +2,7 @@ import * as S from './Home.style';
 
 import Footer from '@/components/common/Footer';
 import Header from '@/components/common/Header';
-import Post from '@/components/Post/Post';
+import Post from '@/components/Post';
 import WriteButton from '@/components/Post/WritePostButton';
 
 export default function HomePage() {
@@ -28,15 +28,14 @@ export default function HomePage() {
         },
     ];
     return (
-        <>
-            {/* <Header /> */}
+        <S.HomePage>
+            <Header />
             <h1>우리 동네의 새 제안이에요</h1>
-            <S.HomeContainer />
             {post.map(data => (
                 <Post post={data} />
             ))}
             <WriteButton />
             <Footer />
-        </>
+        </S.HomePage>
     );
 }

@@ -23,7 +23,7 @@ const MyLikePage = lazy(() => import('@/pages/MyPage/MyLike'));
 const MyBoardPage = lazy(() => import('@/pages/MyPage/MyBoard'));
 const MyCommentPage = lazy(() => import('@/pages/MyPage/MyComment'));
 
-const LikePage = lazy(() => import('@/pages/Like'));
+const LikePage = lazy(() => import('@/pages/InterestedPost'));
 export default function App() {
     return (
         <BrowserRouter>
@@ -50,7 +50,7 @@ export default function App() {
                             path="/mypage/comment"
                             element={<MyCommentPage />}
                         />
-                        <Route path="/mypage/like" element={<LikePage />} />
+                        <Route path="/mypage/like" element={<MyLikePage />} />
                     </Route>
                     <Route path="/" element={<Layout />}>
                         <Route path="/login" element={<LoginPage />} />

@@ -18,7 +18,7 @@ const color = {
     transparent: 'transparent',
     errorText: '#FF5F5F',
     gradient: `linear-gradient(to right, rgb(152, 255, 236) , rgb(0, 255, 56))`,
-    logo: '#00FF38',
+    greenSpeech: '#00FF38',
 };
 
 const fontSize = {
