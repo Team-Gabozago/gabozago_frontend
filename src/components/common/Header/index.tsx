@@ -1,14 +1,17 @@
-import React from 'react';
+import * as S from "./Header.style"
+
+import I from '@/components/common/Icons'
+import theme from "@/styles/theme";
 
 const Header = () => (
-    <header>
-        <div>로고</div>
-        <div>현재위치</div>
-        <ul>
-            <li>검색</li>
-            <li>마이페이지</li>
-        </ul>
-    </header>
+    <S.Header>
+        <I.Logo.Small />
+        <S.Title>현재위치</S.Title>
+        <S.Box>
+            <I.Search fontSize={1.2} color={theme.color.white} />
+            <I.Profile fontSize={1.2} color={theme.color.white} />
+        </S.Box>
+    </S.Header>
 );
 
 export default Header;

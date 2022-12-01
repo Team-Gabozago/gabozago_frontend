@@ -25,6 +25,7 @@ export const SportWrapper = styled.div`
     ${flexbox({})};
     gap: 0.5rem;
     flex-wrap: wrap;
+    margin-bottom: 3rem;
 `;
 
 export const SportButton = styled.button<{ clicked: boolean }>`

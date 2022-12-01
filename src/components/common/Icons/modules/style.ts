@@ -18,6 +18,6 @@ export const Icon = styled.i<{
  * color: #14142b
  */
 export const Logo = styled.i<{ fontSize: number }>`
-    color: ${theme.color.logo};
+    color: ${theme.color.greenSpeech};
     font-size: ${({ fontSize }) => fontSize}rem;
 `;
