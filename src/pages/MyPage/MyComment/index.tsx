@@ -1,34 +1,22 @@
+import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useLongPress } from 'use-long-press';
 
 import * as S from './MyComment.style';
 
+import { getMyCommentPage } from '@/apis/mypage';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
 import GlobalModal from '@/components/GlobalModal';
 import ModalContent from '@/components/ModalContent';
 import Header from '@/components/MyPage/Header';
+import { IComment } from '@/types/post';
 
 const MyCommentPage = () => {
     const [isModal, setIsModal] = useState(false);
-    const posts = [
-        {
-            id: 1,
-            title: '배드민턴/1명/여자/원투공원/저녁10시까지',
-            content: 'content',
-            time: '11.03',
-        },
-        {
-            id: 2,
-            title: '같이 배드민턴 쳐요!',
-            content: 'content',
-            time: '10.14',
-        },
-        {
-            id: 3,
-            title: '모닝 배드민턴 쳐요^^',
-            content: 'content',
-            time: '08.25',
-        },
-    ];
+    const { data: comments } = useQuery(
+        ['myPage'],
+        getMyCommentPage
+    );
 
     const bind = useLongPress(() => {
         setIsModal(true);
@@ -40,14 +28,14 @@ const MyCommentPage = () => {
                 <Header title="내가 쓴 댓글/답글" />
                 <S.MyCommentContent>
                     <S.SubTitle>길게 눌러 삭제</S.SubTitle>
-                    {posts.map(post => (
-                        <S.PostContainer key={`comment-${post.id}`}>
-                            <S.Time>{post.time}</S.Time>
-                            <S.Title>{post.title}</S.Title>
+                    {comments && comments.length > 0 ? comments.map((comment: IComment) => (
+                        <S.PostContainer key={`comment-${comment.id}`}>
+                            <S.Time>{comment.time}</S.Time>
+                            <S.Title>{comment.title}</S.Title>
                             <S.Divider />
-                            <S.Content>{post.content}</S.Content>
+                            <S.Content>{comment.content}</S.Content>
                         </S.PostContainer>
-                    ))}
+                    )) : <LoadingSpinner size="large" />}
                 </S.MyCommentContent>
                 <S.EndPointWrapper>
                     <S.EndPoint />
