@@ -12,10 +12,6 @@ export const getMyPage = async () => {
     const mypageData = await response.json();
 
     try {
-        if (mypageData.code === 'UNAUTHENTICATED') {
-            return 403;
-        }
-
         return mypageData;
     } catch (err) {
         throw new Error(`getMypage get api fail err: ${err}`);
@@ -41,16 +37,19 @@ export const checkMyPassword = async (currentPassword: string) => {
     const myPassword = await response.json();
 
     try {
-        return myPassword.correct;
+        return myPassword.code;
     } catch (err) {
         throw new Error(`getMyPassword get api fail err: ${err}`);
     }
 };
 
-export const patchMyPassword = async (
-    currentPassword: string,
-    newPassword: string
-) => {
+export const patchMyPassword = async ({
+    currentPassword,
+    newPassword,
+}: {
+    currentPassword: string;
+    newPassword: string;
+}) => {
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) throw new Error('accessToken is undefined');
 
@@ -67,7 +66,7 @@ export const patchMyPassword = async (
     const data = await response.json();
 
     try {
-        return data;
+        return data.code;
     } catch (err) {
         throw new Error(`patchMyPassword patch api fail err: ${err}`);
     }
@@ -77,20 +76,22 @@ export const postMyImageFile = async (files: any) => {
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) throw new Error('accessToken is undefined');
 
+    const formData = new FormData();
+    formData.append('image', files);
+
     const response = await fetch(`${process.env.GABOZAGO_URL}/profile/images`, {
         method: 'POST',
         credentials: 'include',
         headers: {
             Authorization: accessToken,
-            'Content-Type': 'multipart/form-data',
         },
-        body: files,
+        body: formData,
     });
 
     const data = await response.json();
 
     try {
-        return data;
+        return { code: data.code, profileImage: data.image_url };
     } catch (err) {
         throw new Error(`patchMyPassword patch api fail err: ${err}`);
     }
@@ -107,7 +108,7 @@ export const patchMyInfo = async (nickname: string) => {
             Authorization: accessToken,
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(nickname),
+        body: JSON.stringify({ nickname }),
     });
 
     const data = await response.json();

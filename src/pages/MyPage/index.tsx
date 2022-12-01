@@ -26,7 +26,7 @@ const MyPage = () => {
     );
     const setUser = useSetRecoilState(userState);
 
-    if (me === UNAUTHENTICATED) {
+    if (me && me.code === UNAUTHENTICATED) {
         return <div>Error Page...</div>;
     }
 
@@ -41,7 +41,7 @@ const MyPage = () => {
                 id: me.id,
                 email: me.email,
                 nickname: me.nickname,
-                profile_image: me.profille_image,
+                profile_image: me.profile_image,
             });
         }
     }, [me, setUser]);
