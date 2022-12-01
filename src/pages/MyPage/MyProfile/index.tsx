@@ -14,7 +14,7 @@ import Input from '@/components/common/Input';
 import GlobalModal from '@/components/GlobalModal';
 import ModalContent from '@/components/ModalContent';
 import Header from '@/components/MyPage/Header';
-import { PROFILE_UPDATED } from '@/constants/code';
+import { PROFILE_UPDATED, IMAGE_UPLOADED } from '@/constants/code';
 import { signupFormData } from '@/constants/form';
 import { useInput } from '@/hooks/useInput';
 import { userState } from '@/recoil/atoms/user';
@@ -45,9 +45,15 @@ const MyProfile = () => {
     });
 
     const fetchPostImageFile = useMutation(postMyImageFile, {
-        onSuccess: async (imageUrl: string) => {
-            if (imageUrl) {
-                setUser({ ...user, profile_image: imageUrl });
+        onSuccess: async ({
+            code,
+            profileImage,
+        }: {
+            code: string;
+            profileImage: string;
+        }) => {
+            if (code === IMAGE_UPLOADED) {
+                setUser({ ...user, profile_image: profileImage });
             }
         },
         onError: (error: unknown) => {
@@ -80,6 +86,7 @@ const MyProfile = () => {
         e.preventDefault();
         if (nickname === user.nickname) return;
         fetchMyInfo.mutate(nickname);
+        setIsModal(true);
     };
 
     return (
@@ -88,7 +95,10 @@ const MyProfile = () => {
                 <Header title="프로필 수정" />
                 <S.EditForm>
                     <S.ImageWrapper>
-                        <S.ProfileImage src={user.image_url} alt="profile" />
+                        <S.ProfileImage
+                            src={user.profile_image}
+                            alt="profile"
+                        />
                         <S.ProfileForm>
                             <S.ImageButton
                                 accept="image/*"
