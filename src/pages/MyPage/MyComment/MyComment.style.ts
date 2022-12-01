@@ -17,7 +17,7 @@ export const Time = styled.p`
 `;
 
 export const Title = styled.h3`
-    font-size: ${theme.fontSize.sm};
+    font-size: ${theme.fontSize.xs};
     color: ${theme.color.gray};
     font-weight: 600;
     text-overflow: ellipsis;
