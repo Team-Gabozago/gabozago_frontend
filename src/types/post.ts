@@ -2,10 +2,17 @@ export type IPost = {
     title: string;
     content: string;
     writer: string;
-    good: number;
-    comment: number;
+    likes: number;
+    comments: number;
     time: string;
     image: string;
+};
+
+export type IComment = {
+    id: number;
+    title: string;
+    content: string;
+    time: string;
 };
 
 export type IProfile = {

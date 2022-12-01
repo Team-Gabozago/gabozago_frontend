@@ -22,7 +22,7 @@ const LikeSport = ({ categories, refetchMyPage }: LikeSportProps) => {
             <S.LikeSport>
                 <S.Title>관심 운동</S.Title>
                 <S.SportWrapper>
-                    {categories.map(
+                    {categories && categories.map(
                         (category: LikeSportCategory) =>
                             category.favorite && (
                                 <S.Sport key={category.id}>
