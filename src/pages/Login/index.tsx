@@ -136,7 +136,7 @@ const LoginPage = () => {
                                 !isDisabled ? theme.color.gradient : ''
                             }
                             disabled={isDisabled}
-                            onClick={(
+                            onTouchStart={(
                                 e: React.SyntheticEvent<HTMLFormElement>
                             ) => handleLogin(e)}
                         >

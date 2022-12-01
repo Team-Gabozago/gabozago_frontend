@@ -80,7 +80,7 @@ const LikeSportModal = ({
                                 type="button"
                                 onClick={() => handleDeleteSport(sport.id)}
                             >
-                                <I.Minus fontSize={0.15} />
+                                -
                             </S.SportMinusButton>
                         </S.SportTag>
                     ))}

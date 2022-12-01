@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 export const ViewContainer = styled.div`
-    width: 375px;
+    width: 23.4375rem;
     background-color: #fff;
 `;
 
