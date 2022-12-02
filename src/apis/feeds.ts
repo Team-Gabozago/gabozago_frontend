@@ -22,12 +22,12 @@ export const getFeeds = async (categoryName: string, sortType: string) => {
     }
 };
 
-export const getAllFeeds = async () => {
+export const getAllFeeds = async (sortType: string) => {
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) throw new Error('accessToken is undefined');
 
     const response = await fetch(
-        `${process.env.GABOZAGO_URL}/feeds/recent?categoryName=${categoryName}&sortType=${sortType}`,
+        `${process.env.GABOZAGO_URL}/feeds/recent?categoryName=''&sortType=${sortType}`,
         {
             method: 'GET',
             headers: {

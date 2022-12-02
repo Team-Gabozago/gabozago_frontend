@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
-import * as S from './MyProfile.style';
+import * as S from './MyEditProfile.style';
 
 import { patchMyInfo, postMyImageFile } from '@/apis/mypage';
 import Button from '@/components/common/Button';
@@ -21,7 +21,7 @@ import { userState } from '@/recoil/atoms/user';
 import theme from '@/styles/theme';
 import { checkNickname } from '@/utils/regex';
 
-const MyProfile = () => {
+const MyEditProfile = () => {
     const navigate = useNavigate();
 
     const [user, setUser] = useRecoilState(userState);
@@ -91,7 +91,7 @@ const MyProfile = () => {
 
     return (
         <>
-            <S.MyProfile>
+            <S.MyEditProfile>
                 <Header title="프로필 수정" />
                 <S.EditForm>
                     <S.ImageWrapper>
@@ -142,8 +142,8 @@ const MyProfile = () => {
                             css={css`
                                 border: 1px solid
                                     ${isDisabled
-                                        ? theme.color.gray
-                                        : theme.color.white};
+                                    ? theme.color.gray
+                                    : theme.color.white};
                                 color: ${isDisabled
                                     ? theme.color.navy
                                     : theme.color.white};
@@ -162,7 +162,7 @@ const MyProfile = () => {
                         </Button>
                     </S.ButtonWrapper>
                 </S.EditForm>
-            </S.MyProfile>
+            </S.MyEditProfile>
             {isModal && (
                 <GlobalModal
                     size="small"
@@ -180,4 +180,4 @@ const MyProfile = () => {
     );
 };
 
-export default MyProfile;
+export default MyEditProfile;

@@ -1,7 +1,9 @@
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import Layout from './components/Layout';
+import AfterLoginLayout from './components/AfterLoginLayout';
+import BeforeLoginLayout from './components/BeforeLoginLayout';
+import MypageLayout from './components/MypageLayout';
 
 import Verification from '@/pages/Verification';
 
@@ -11,7 +13,7 @@ const IconPage = lazy(() => import('@/pages/Icons'));
 const SignupPage = lazy(() => import('@/pages/Signup'));
 const LoginPage = lazy(() => import('@/pages/Login'));
 const MyPage = lazy(() => import('@/pages/MyPage'));
-const MyProfilePage = lazy(() => import('@/pages/MyPage/MyProfile'));
+const MyEditProfilePage = lazy(() => import('@/pages/MyPage/MyEditProfile'));
 const MyPasswordPage = lazy(() => import('@/pages/MyPage/MyPassword'));
 const MySecessionPage = lazy(() => import('@/pages/MyPage/MySecession'));
 
@@ -24,35 +26,44 @@ const MyBoardPage = lazy(() => import('@/pages/MyPage/MyBoard'));
 const MyCommentPage = lazy(() => import('@/pages/MyPage/MyComment'));
 
 const LikePage = lazy(() => import('@/pages/InterestedPost'));
+
+const CreateFeedPage = lazy(() => import('@/pages/Feed/Create'));
 export default function App() {
     return (
         <BrowserRouter>
             <Suspense fallback={null}>
                 <Routes>
                     <Route element={<Verification />}>
-                        <Route path="/like" element={<LikePage />} />
                         {/* 로그인이 필요한 페이지들 여기에 넣어주기 */}
-                        <Route path="/mypage" element={<MyPage />} />
-                        <Route
-                            path="/mypage/edit"
-                            element={<MyProfilePage />}
-                        />
-                        <Route
-                            path="/mypage/password"
-                            element={<MyPasswordPage />}
-                        />
-                        <Route
-                            path="/mypage/secession"
-                            element={<MySecessionPage />}
-                        />
-                        <Route path="/mypage/board" element={<MyBoardPage />} />
-                        <Route
-                            path="/mypage/comment"
-                            element={<MyCommentPage />}
-                        />
-                        <Route path="/mypage/like" element={<MyLikePage />} />
+                        <Route path="/" element={<AfterLoginLayout />}>
+                            <Route path="/like" element={<LikePage />} />
+                            <Route path="/home" element={<HomePage />} />
+                            <Route path="/mypage/board" element={<MyBoardPage />} />
+                            <Route
+                                path="/mypage/comment"
+                                element={<MyCommentPage />}
+                            />
+                            <Route path="/mypage/like" element={<MyLikePage />} />
+                        </Route>
+
+                        <Route path="/" element={<MypageLayout />}>
+                            <Route path="/mypage" element={<MyPage />} />
+                            <Route
+                                path="/mypage/edit"
+                                element={<MyEditProfilePage />}
+                            />
+                            <Route
+                                path="/mypage/password"
+                                element={<MyPasswordPage />}
+                            />
+                            <Route
+                                path="/mypage/secession"
+                                element={<MySecessionPage />}
+                            />
+                            <Route path="/feed/create" element={<CreateFeedPage />} />
+                        </Route>
                     </Route>
-                    <Route path="/" element={<Layout />}>
+                    <Route path="/" element={<BeforeLoginLayout />}>
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/signup" element={<SignupPage />} />
                         <Route path="/icons" element={<IconPage />} />
@@ -62,8 +73,6 @@ export default function App() {
                             element={<PostViewPage />}
                         />
                         <Route path="/edit" element={<PostEditPage />} />
-
-                        <Route path="/home" element={<HomePage />} />
                         <Route path="/logout" element={<LogoutPage />} />
                     </Route>
                 </Routes>

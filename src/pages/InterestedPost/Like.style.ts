@@ -65,14 +65,4 @@ export const NoLikeContent = styled.div`
     height: 100%;
 `;
 
-export const Contents = styled.div`
-    width: 23.4375rem;
-    padding: 0 1.75rem;
-`;
-
-export const LikePage = styled.section`
-    ${flexbox({ dir: 'column' })};
-    min-width: 23.4375rem;
-    height: 100vh;
-    background-color: ${theme.color.navy};
-`;
+export const LikePage = styled.section``;
