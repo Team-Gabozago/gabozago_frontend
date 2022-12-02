@@ -1,10 +1,9 @@
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
     position: fixed;
     width: 100%;
-    max-width: 375px;
+    max-width: 23.4375rem;
     height: 100%;
     opacity: 0.6;
     background: #000;

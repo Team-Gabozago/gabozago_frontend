@@ -48,7 +48,7 @@ export const Button = styled.button<{
     border-radius: 3.125rem;
     background-color: ${({ backgroundColor }: ButtonProps) => backgroundColor};
     background-image: ${({ backgroundImage }: ButtonProps) => backgroundImage};
-    cursor: pointer;
+    cursor: 'pointer';
     ${({ size }: ButtonProps) => selectTypes(size)};
     &:hover {
     }

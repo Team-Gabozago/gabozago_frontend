@@ -74,7 +74,7 @@ const LoginPage = () => {
         setPassword(targetValue);
     });
 
-    const handleLogin = (e: React.SyntheticEvent<HTMLFormElement>) => {
+    const handleLogin = (e: React.MouseEvent<HTMLFormElement>) => {
         e.preventDefault();
         const user = {
             email,
@@ -136,9 +136,8 @@ const LoginPage = () => {
                                 !isDisabled ? theme.color.gradient : ''
                             }
                             disabled={isDisabled}
-                            onClick={(
-                                e: React.SyntheticEvent<HTMLFormElement>
-                            ) => handleLogin(e)}
+
+                            onClick={(e: React.MouseEvent<HTMLFormElement>) => handleLogin(e)}
                         >
                             <S.ButtonText isDisabled={isDisabled}>
                                 로그인

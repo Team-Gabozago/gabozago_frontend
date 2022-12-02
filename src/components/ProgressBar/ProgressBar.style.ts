@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { ProgressBarprops } from '.';
 
 export const ProgressBarWrapper = styled.div`
-    width: 375px;
+    width: 23.4375rem;
     height: 0.5rem;
     border-radius: 10px;
     overflow: hidden;

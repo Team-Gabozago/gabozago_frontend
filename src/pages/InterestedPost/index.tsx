@@ -1,29 +1,91 @@
-import Post from '@/components/Post/Post';
+import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
 
-export default function InterestedPost() {
-    const post = [
-        {
-            title: '난 이걸 좋아요',
-            info: '채나 다른 준비물은 제가 가지고있습니다다다다다다다! 공원으로 와주세요',
-            writer: '투원투원',
-            good: 99,
-            comment: 1999,
-        },
-        {
-            title: '관심피드입니다',
-            info: '아무나 와주세요',
-            writer: '투원투원',
-            good: 990,
-            comment: 1999,
-        },
-    ];
+import * as S from './Like.style';
+
+import { getFeeds } from '@/apis/feeds'
+import { getMyPage } from '@/apis/mypage';
+import Footer from '@/components/common/Footer';
+import Header from '@/components/common/Header';
+import Navigation from '@/components/common/Navigation';
+import GlobalModal from '@/components/GlobalModal';
+import LikeSportModal from '@/components/MyPage/LikeSport/LikeSportModal';
+import Post from '@/components/Post';
+import { IPost } from '@/types/post';
+
+const LikePage = () => {
+    const [clickedSport, setClickedSport] = useState({ idx: 0, name: '' });
+    const [clickedValue, setClickedValue] = useState('NEWEST');
+
+    const [isSportModal, setIsSportModal] = useState(false);
+    const { data: me, refetch: refetchMyPage } = useQuery(
+        ['myPage'],
+        getMyPage
+    );
+
+    const { data: feeds, refetch: refetchFeeds } = useQuery(['feeds'], () => getFeeds(clickedSport.name, clickedValue));
+
+    const handlePlusClick = () => {
+        setIsSportModal(true);
+    };
+
+    const handleNaviLi = (value: string) => {
+        setClickedValue(value);
+    }
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useEffect(() => {
+        refetchFeeds();
+    }, [clickedSport, clickedValue])
+
     return (
-        <>
-            <h1>관심 운동의 새 제안이에요</h1>
-
-            {post.map(data => (
-                <Post post={data} />
-            ))}
-        </>
+        <S.LikePage>
+            <S.Contents>
+                <Header />
+                {me && me.categories.length > 0 ?
+                    <>
+                        <S.Title>관심 운동의<br /> 새 제안이에요.</S.Title>
+                        <S.SportWrapper>
+                            {me.categories.map((category: { id: number, name: string, favorite: boolean }, idx: number) =>
+                                <S.SportButton clicked={idx === clickedSport.idx} key={category.id} onClick={() => setClickedSport({ idx, name: category.name })}
+                                >
+                                    {category.name}
+                                </S.SportButton>)}
+                            <S.PlusSportButton onClick={handlePlusClick}>
+                                +
+                            </S.PlusSportButton>
+                        </S.SportWrapper>
+                        <Navigation clickedValue={clickedValue} handleNaviLi={handleNaviLi} />
+                        {feeds && feeds.length > 0 ? feeds.map((feed: IPost) => <Post post={feed} />) : <S.BlankLike>No Data...</S.BlankLike>}
+                    </>
+                    : <S.NoLikeContent>
+                        <S.NoLikeText>
+                            아직 등록된 관심 운동이 없어요.<br />
+                            좋아하는 운동 종목을 설정해보세요.
+                        </S.NoLikeText>
+                        <S.LikeAddButton onClick={handlePlusClick}>
+                            관심운동 추가
+                        </S.LikeAddButton>
+                    </S.NoLikeContent>
+                }
+            </S.Contents>
+            <Footer />
+            {
+                isSportModal && (
+                    <GlobalModal
+                        size="medium"
+                        handleCancelClick={() => setIsSportModal(false)}
+                    >
+                        <LikeSportModal
+                            likeSports={me.categories}
+                            handleCancelModal={() => setIsSportModal(false)}
+                            refetchMyPage={refetchMyPage}
+                        />
+                    </GlobalModal>
+                )
+            }
+        </S.LikePage >
     );
 }
+
+export default LikePage;

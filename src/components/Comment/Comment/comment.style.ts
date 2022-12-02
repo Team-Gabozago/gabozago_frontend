@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 export const CommentContainer = styled.li<{ isCocoment: boolean }>`
     position: relative;
     width: 100%;
-    max-width: 375px;
+    max-width: 23.4375rem;
     padding: 24px;
     border-top: 1px solid #ccc;
     background: ${props => (props.isCocoment ? '#ccc' : '#fff')};

@@ -36,8 +36,7 @@ const StartPage = () => {
                                 <S.SportUL>
                                     {startSports.map(sport => (
                                         <S.SportLI key={sport.id}>
-                                            {sport.name}
-                                            {sport.emoji}
+                                            {sport.name}{sport.emoji}
                                         </S.SportLI>
                                     ))}
                                     <S.SportLI>

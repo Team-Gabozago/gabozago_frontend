@@ -4,13 +4,13 @@ import { flexbox } from '@/styles/mixin';
 import theme from '@/styles/theme';
 
 export const Footer = styled.footer`
-    width: 100%;
-    max-width: 375px;
+    min-width: 23.4375rem;
     height: 3.5rem;
     position: fixed;
     bottom: 0;
     border-radius: 10px 10px 0 0;
-    background-color: ${theme.color.darkGray};
+    border-top: 1px solid ${theme.color.darkGray};
+    background-color: ${theme.color.navy};
 `;
 
 export const LinkUl = styled.ul`

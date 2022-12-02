@@ -35,7 +35,6 @@ export const SportLI = styled.li`
     ${flexbox({ ai: 'center' })}
     height: 1rem;
     padding: 1.5rem 0;
-    width: 12rem;
 `;
 
 export const TitleWrppaer = styled.div`

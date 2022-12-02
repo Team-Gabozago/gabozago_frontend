@@ -8,7 +8,8 @@ interface IPostProps {
     post: IPost;
 }
 const Post = ({ post }: IPostProps) => {
-    const { title, content, writer, good, comment, time, image } = post;
+    const { title, content, writer, likes, comments, time, image } = post;
+
     return (
         <S.PostContainer>
             {image && <S.ImageContainer />}
@@ -19,8 +20,8 @@ const Post = ({ post }: IPostProps) => {
                 <S.WriterContainer>
                     <span>{writer}</span>
                     <S.WriterUl>
-                        <li>하트 {good}</li>
-                        <li>댓글 {comment}</li>
+                        <li>하트 {likes}</li>
+                        <li>댓글 {comments}</li>
                     </S.WriterUl>
                 </S.WriterContainer>
             </S.Post>
