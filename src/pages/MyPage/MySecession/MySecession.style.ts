@@ -69,12 +69,7 @@ export const ButtonText = styled.span<{ isCheck: boolean }>`
 
 export const ButtonWrapper = styled.div`
     position: absolute;
-    bottom: 0;
-    padding-bottom: 3.25rem;
+    bottom: 5rem;
 `;
 
-export const MySecessionPage = styled.section`
-    ${flexbox({ dir: 'column' })};
-    min-width: 23.4375rem;
-    min-height: 50.75rem;
-`;
+export const MySecessionPage = styled.section``;
