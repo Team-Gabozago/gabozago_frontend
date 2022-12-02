@@ -21,11 +21,17 @@ export const Title = styled.h1`
     line-height: 2.2rem;
 `;
 
+export const BlankLike = styled.div`
+    width: 100%;
+    text-align: center;
+    margin-top: 2rem;
+    color: ${theme.color.lightGray};
+`;
+
 export const SportWrapper = styled.div`
     ${flexbox({})};
     gap: 0.5rem;
     flex-wrap: wrap;
-    margin-bottom: 3rem;
 `;
 
 export const SportButton = styled.button<{ clicked: boolean }>`
@@ -59,14 +65,4 @@ export const NoLikeContent = styled.div`
     height: 100%;
 `;
 
-export const Contents = styled.div`
-    width: 23.4375rem;
-    padding: 0 1.75rem;
-`;
-
-export const LikePage = styled.section`
-    ${flexbox({ dir: 'column' })};
-    min-width: 23.4375rem;
-    height: 100vh;
-    background-color: ${theme.color.navy};
-`;
+export const LikePage = styled.section``;

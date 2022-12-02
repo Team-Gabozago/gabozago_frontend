@@ -1,41 +1,37 @@
+import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
+
 import * as S from './Home.style';
 
-import Footer from '@/components/common/Footer';
+import { getAllFeeds } from '@/apis/feeds';
 import Header from '@/components/common/Header';
+import Navigation from '@/components/common/Navigation';
+import CreateFeed from '@/components/CreateFeed'
 import Post from '@/components/Post';
-import WriteButton from '@/components/Post/WritePostButton';
+import { IPost } from '@/types/post';
 
 export default function HomePage() {
-    const post = [
-        {
-            title: '배드민턴/1명/여자',
-            content:
-                '채나 다른 준비물은 제가 가지고있습니다다다다다다다! 공원으로 와주세요',
-            writer: '투원투원',
-            good: 99,
-            comment: 1999,
-            time: '3분전',
-            image: '',
-        },
-        {
-            title: '배드민턴/3명/남자여자',
-            content: '아무나 와주세요',
-            writer: '투원투원',
-            good: 990,
-            comment: 1999,
-            time: '하루전',
-            image: 'ggg',
-        },
-    ];
+    const [sortType, setSortType] = useState('NEWEST');
+
+    const { data: feeds, refetch: refetchFeeds } = useQuery(['feeds'], () => getAllFeeds(sortType));
+
+    const handleNaviLi = (value: string) => {
+        setSortType(value);
+    }
+
+    useEffect(() => {
+        refetchFeeds();
+    }, [sortType])
+
     return (
         <S.HomePage>
             <Header />
-            <h1>우리 동네의 새 제안이에요</h1>
-            {post.map(data => (
-                <Post post={data} />
+            <S.Title>우리 동네의<br /> 새 제안이에요.</S.Title>
+            <Navigation sortType={sortType} handleNaviLi={handleNaviLi} />
+            {feeds && feeds.length > 0 && feeds.map((feed: IPost) => (
+                <Post post={feed} />
             ))}
-            <WriteButton />
-            <Footer />
+            <CreateFeed />
         </S.HomePage>
     );
 }

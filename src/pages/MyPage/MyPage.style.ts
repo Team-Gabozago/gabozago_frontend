@@ -32,9 +32,5 @@ export const ButtonWrapper = styled.div`
 `;
 
 export const MyPage = styled.section`
-    ${flexbox({ dir: 'column' })};
-    min-width: 23.4375rem;
-    min-height: 50.75rem;
-    position: relative;
     background-color: ${theme.color.white};
 `;

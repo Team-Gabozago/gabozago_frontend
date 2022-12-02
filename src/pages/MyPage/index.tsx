@@ -8,7 +8,6 @@ import * as S from './MyPage.style';
 
 import { getMyPage } from '@/apis/mypage';
 import Button from '@/components/common/Button';
-import Footer from '@/components/common/Footer';
 import I from '@/components/common/Icons';
 import Header from '@/components/MyPage/Header';
 import LikeSport from '@/components/MyPage/LikeSport';
@@ -64,9 +63,9 @@ const MyPage = () => {
                     <S.MyWriteContent onClick={handleMyWrite}>
                         <S.MoveText>내가 쓴 글</S.MoveText>
                         {clickedArrow ? (
-                            <I.ArrowUp fontSize={0.2} />
+                            <I.ArrowUp fontSize={0.5} color={theme.color.navy} />
                         ) : (
-                            <I.ArrowDown fontSize={0.2} />
+                            <I.ArrowDown fontSize={0.5} color={theme.color.navy} />
                         )}
                     </S.MyWriteContent>
                 </S.Box>
@@ -121,12 +120,12 @@ const MyPage = () => {
                     css={css`
                         color: ${theme.color.lightGray};
                         margin-top: 6.6rem;
+                        position: absolute;
+                        bottom: 5rem;
                     `}
                 >
                     <Link to="/mypage/secession">탈퇴하기</Link>
                 </S.MoveText>
-
-                <Footer />
             </S.MyPage>
         )
     );

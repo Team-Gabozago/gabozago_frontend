@@ -61,10 +61,4 @@ export const EndPointWrapper = styled.div`
     margin-top: 3.75rem;
 `;
 
-export const MyCommentPage = styled.section`
-    ${flexbox({ dir: 'column' })};
-    position: relative;
-    min-width: 23.4375rem;
-    height: 100vh;
-    background-color: ${theme.color.navy};
-`;
+export const MyCommentPage = styled.section``;
