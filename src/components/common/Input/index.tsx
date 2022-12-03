@@ -22,7 +22,7 @@ type InputProps<T extends React.ElementType> = OverridableProps<
         success?: boolean;
         onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
         onClear: () => void;
-        onFocus?: boolean;
+        autoFocus?: boolean;
     }
 >;
 
@@ -44,7 +44,7 @@ export const Input = memo(
                 success = false,
                 onChange,
                 onClear,
-                onFocus = true,
+                autoFocus = true,
                 ...restProps
             }: InputProps<T>,
             ref: React.ForwardedRef<HTMLInputElement>
@@ -61,10 +61,13 @@ export const Input = memo(
                     <S.LabelTextWrapper>
                         <span>{name}</span>
                         {essential && <S.Asterisk>*</S.Asterisk>}
+                        {success && (
+                            <I.Check
+                                fontSize={0.375}
+                                color={theme.color.blue}
+                            />
+                        )}
                     </S.LabelTextWrapper>
-                    {success && (
-                        <I.Check fontSize={0.375} color={theme.color.blue} />
-                    )}
                 </S.Label>
                 <S.Input
                     as={as ?? 'input'}
@@ -74,7 +77,7 @@ export const Input = memo(
                     value={value}
                     disabled={disabled}
                     {...restProps}
-                    autoFocus={onFocus}
+                    autoFocus={autoFocus}
                     onChange={onChange}
                 />
                 <S.ClearButton type="button" onClick={onClear} tabIndex={-1}>

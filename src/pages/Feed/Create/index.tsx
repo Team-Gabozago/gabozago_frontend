@@ -1,9 +1,9 @@
 import Form from '../Form';
 
-import { CreateFeedPage } from "./Create.style";
+import { CreateFeedPage } from './Create.style';
 import * as S from './Create.style';
 
-import Header from "@/components/MyPage/Header";
+import Header from '@/components/MyPage/Header';
 
 const Create = () => (
     <S.CreateFeedPage>
@@ -11,6 +11,6 @@ const Create = () => (
         <Form />
         <CreateFeedPage />
     </S.CreateFeedPage>
-)
+);
 
 export default Create;
