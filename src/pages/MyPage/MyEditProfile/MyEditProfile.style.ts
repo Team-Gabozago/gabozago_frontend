@@ -44,10 +44,4 @@ export const ButtonWrapper = styled.div`
     margin-top: 5.5rem;
 `;
 
-export const MyProfile = styled.section`
-    ${flexbox({ dir: 'column' })};
-    min-width: 23.4375rem;
-    min-height: 50.75rem;
-    position: relative;
-    background-color: ${theme.color.white};
-`;
+export const MyEditProfile = styled.section``;

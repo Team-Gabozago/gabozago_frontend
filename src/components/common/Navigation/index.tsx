@@ -4,23 +4,23 @@ import I from '@/components/common/Icons';
 import theme from "@/styles/theme";
 
 interface NavigationProps {
-    clickedValue: string;
+    sortType: string;
     handleNaviLi: (value: string) => void;
 }
 
-const Navigation = ({ clickedValue, handleNaviLi }: NavigationProps) => (
+const Navigation = ({ sortType, handleNaviLi }: NavigationProps) => (
     <S.Navigation>
         <S.NaviUL>
-            <S.NaviLi clickedValue={clickedValue === 'NEWEST'} onClick={() => handleNaviLi('NEWEST')}>
+            <S.NaviLi sortType={sortType === 'NEWEST'} onClick={() => handleNaviLi('NEWEST')}>
                 <S.NaviText>최신순</S.NaviText>
-                {clickedValue && <S.NaviBorder clickedValue={clickedValue === 'NEWEST'} />}
+                {sortType && <S.NaviBorder sortType={sortType === 'NEWEST'} />}
             </S.NaviLi>
-            <S.NaviLi clickedValue={clickedValue === 'LIKE'} onClick={() => handleNaviLi('LIKE')}>
-                <I.Heart color={clickedValue === 'LIKE' ? theme.color.greenSpeech : theme.color.lightNavy}
+            <S.NaviLi sortType={sortType === 'LIKE'} onClick={() => handleNaviLi('LIKE')}>
+                <I.Heart color={sortType === 'LIKE' ? theme.color.greenSpeech : theme.color.lightNavy}
                     fontSize={0.5}
                 />
                 <S.NaviText>많은순</S.NaviText>
-                {clickedValue && <S.NaviBorder clickedValue={clickedValue === 'LIKE'} />}
+                {sortType && <S.NaviBorder sortType={sortType === 'LIKE'} />}
             </S.NaviLi>
         </S.NaviUL>
     </S.Navigation>

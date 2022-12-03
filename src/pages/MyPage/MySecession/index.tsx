@@ -182,8 +182,8 @@ const MySecessionPage = () => {
                             onClick={
                                 isComplete
                                     ? (
-                                          e: React.SyntheticEvent<HTMLFormElement>
-                                      ) => handleSecession(e)
+                                        e: React.SyntheticEvent<HTMLFormElement>
+                                    ) => handleSecession(e)
                                     : handleNextButton
                             }
                         >

@@ -22,74 +22,74 @@ i {
     -moz-osx-font-smoothing: grayscale;
 }
 
-.ic-asterisk:before {
+.ic-arrow-down:before {
     content: '\e900';
 }
 
-.ic-back-btn:before {
+.ic-arrow-up:before {
     content: '\e901';
 }
 
-.ic-comment:before {
+.ic-asterisk:before {
     content: '\e902';
 }
 
-.ic-create:before {
+.ic-back-btn:before {
     content: '\e903';
 }
 
-.ic-edit:before {
+.ic-check:before {
     content: '\e904';
 }
 
-.ic-logo:before {
+.ic-comment:before {
     content: '\e905';
 }
 
-.ic-profile:before {
+.ic-create:before {
     content: '\e906';
 }
 
-.ic-search:before {
+.ic-edit:before {
     content: '\e907';
 }
 
-.ic-cancel:before {
+.ic-heart:before {
     content: '\e908';
 }
 
-.ic-conversation:before {
+.ic-home:before {
     content: '\e909';
 }
 
-.ic-setting:before {
+.ic-logo:before {
     content: '\e90a';
 }
 
-.ic-heart:before {
+.ic-minus:before {
     content: '\e90b';
 }
 
-.ic-minus:before {
+.ic-profile:before {
     content: '\e90c';
 }
 
-.ic-arrow-up:before {
+.ic-search:before {
     content: '\e90d';
 }
 
-.ic-arrow-down:before {
+.ic-setting:before {
     content: '\e90e';
 }
 
-.ic-check:before {
+.ic-toggle:before {
     content: '\e90f';
 }
 
-.ic-toggle:before {
+.ic-cancel:before {
     content: '\e910';
 }
 
-.ic-home:before {
+.ic-conversation:before {
     content: '\e911';
 }
