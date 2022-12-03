@@ -6,7 +6,7 @@ export const useInput = (
 ) => {
     const [value, setValue] = useState(initialValue || '');
     const onChange = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) => {
+        (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
             if (callFunc) {
                 callFunc(e.target.value);
             }

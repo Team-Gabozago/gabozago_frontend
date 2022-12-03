@@ -1,18 +1,13 @@
-import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { inlineFlexbox } from '@/styles/mixin';
 import theme from '@/styles/theme';
+import { fadeInDown } from '@/utils/animation';
 
-const fadeInDown = keyframes`
-    0% {
-        opacity: 0;
-        transform: translate3d(0, -100%, 0);
-    }
-    to {
-        opacity: 1;
-        transform: translateZ(0);
-    }
+export const LabelTextWrapper = styled.div``;
+
+export const Asterisk = styled.span`
+    color: ${theme.color.blue};
 `;
 
 export const Label = styled.label`
