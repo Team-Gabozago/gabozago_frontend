@@ -165,7 +165,7 @@ const PasswordPage = () => {
                                         !checkPassword(newPassword2)
                                     }
                                     onClear={handleNewPassword2Clear}
-                                    onFocus={false}
+                                    autoFocus={false}
                                 />
                             </>
                         ) : (
@@ -209,11 +209,11 @@ const PasswordPage = () => {
                                 onClick={
                                     isComplete
                                         ? (
-                                            e: React.SyntheticEvent<HTMLFormElement>
-                                        ) => handleModifyPassword(e)
+                                              e: React.SyntheticEvent<HTMLFormElement>
+                                          ) => handleModifyPassword(e)
                                         : (
-                                            e: React.SyntheticEvent<HTMLFormElement>
-                                        ) => handleNextButton(e)
+                                              e: React.SyntheticEvent<HTMLFormElement>
+                                          ) => handleNextButton(e)
                                 }
                             >
                                 <S.ButtonText
