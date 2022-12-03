@@ -1,7 +1,7 @@
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import { inlineFlexbox } from '@/styles/mixin';
+import { flexbox, inlineFlexbox } from '@/styles/mixin';
 import theme from '@/styles/theme';
 
 const fadeInDown = keyframes`
@@ -13,6 +13,14 @@ const fadeInDown = keyframes`
         opacity: 1;
         transform: translateZ(0);
     }
+`;
+
+export const LabelTextWrapper = styled.div`
+    ${flexbox({ ai: 'center' })}
+`;
+
+export const Asterisk = styled.span`
+    color: ${theme.color.blue};
 `;
 
 export const Label = styled.label`

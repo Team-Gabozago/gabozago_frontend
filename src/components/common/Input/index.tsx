@@ -16,6 +16,7 @@ type InputProps<T extends React.ElementType> = OverridableProps<
         placeholder?: string;
         tabindex?: string;
         value: string;
+        essential?: boolean;
         disabled?: boolean;
         error?: boolean;
         success?: boolean;
@@ -37,6 +38,7 @@ export const Input = memo(
                 placeholder,
                 tabindex,
                 value = '',
+                essential = false,
                 disabled = false,
                 error = false,
                 success = false,
@@ -56,7 +58,10 @@ export const Input = memo(
                 success={success}
             >
                 <S.Label htmlFor={name}>
-                    <span>{name}</span>
+                    <S.LabelTextWrapper>
+                        <span>{name}</span>
+                        {essential && <S.Asterisk>*</S.Asterisk>}
+                    </S.LabelTextWrapper>
                     {success && (
                         <I.Check fontSize={0.375} color={theme.color.blue} />
                     )}
