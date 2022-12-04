@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import * as S from './Home.style';
 
@@ -29,7 +30,9 @@ export default function HomePage() {
             <S.Title>우리 동네의<br /> 새 제안이에요.</S.Title>
             <Navigation sortType={sortType} handleNaviLi={handleNaviLi} />
             {feeds && feeds.length > 0 && feeds.map((feed: IPost) => (
-                <Post post={feed} />
+                <Link to={`/feed/${feed.id}`} key={`post-${feed.id}`} >
+                    <Post post={feed} />
+                </Link>
             ))}
             <CreateFeed />
         </S.HomePage>

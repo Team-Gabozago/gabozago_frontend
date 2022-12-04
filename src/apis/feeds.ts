@@ -94,3 +94,24 @@ export const postFeed = async (postFeedType: PostFeedType) => {
         throw new Error(`postFeed get api fail err: ${err}`);
     }
 };
+
+export const getFeed = async (id: number) => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) throw new Error('accessToken is undefined');
+
+    const response = await fetch(`${process.env.GABOZAGO_URL}/feeds/${id}`, {
+        method: 'GET',
+        headers: {
+            Authorization: accessToken,
+            'Content-Type': 'application/json',
+        },
+    });
+
+    const data = await response.json();
+
+    try {
+        return data;
+    } catch (err) {
+        throw new Error(`postFeed get api fail err: ${err}`);
+    }
+};
