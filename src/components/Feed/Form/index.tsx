@@ -12,7 +12,6 @@ import { useInput } from '@/hooks/useInput';
 import theme from '@/styles/theme';
 
 const Form = () => {
-
     const [isDisabled, setIsDisabled] = useState(true);
     const [selectSport, setSelectSport] = useState(false);
     const [selectPlace, setSelectPlace] = useState(false);
@@ -60,7 +59,7 @@ const Form = () => {
         value: place,
         setValue: setPlace,
         onChange: handleChangePlace,
-        onClear: handlePlaceClear
+        onClear: handlePlaceClear,
     } = useInput('', (targetValue: string) => {
         setPlace(targetValue);
     });
@@ -69,7 +68,7 @@ const Form = () => {
         value: placeDetail,
         setValue: setPlaceDetail,
         onChange: handleChangePlaceDetail,
-        onClear: handlePlaceDetailClear
+        onClear: handlePlaceDetailClear,
     } = useInput('', (targetValue: string) => {
         setPlaceDetail(targetValue);
     });
@@ -78,7 +77,6 @@ const Form = () => {
         value: content,
         setValue: setContent,
         onChange: handleChangeContent,
-        onClear: handleContentClear
     } = useInput('', (targetValue: string) => {
         setContent(targetValue);
     });
@@ -88,7 +86,7 @@ const Form = () => {
     };
 
     const handlePlaceFocus = () => {
-        setSelectPlace(true)
+        setSelectPlace(true);
     };
 
     const handleCreateFeed = (e: React.MouseEvent<HTMLFormElement>) => {
@@ -133,7 +131,12 @@ const Form = () => {
                 onClear={handleSportClear}
                 essential
             />
-            {selectSport && <SelectSportBox setSport={setSport} setSelectSport={setSelectSport} />}
+            {selectSport && (
+                <SelectSportBox
+                    setSport={setSport}
+                    setSelectSport={setSelectSport}
+                />
+            )}
             <Input
                 width={20.375}
                 name="제목"
@@ -187,12 +190,18 @@ const Form = () => {
 
                 <S.ImageContainer>
                     <S.FileLabel htmlFor="file" />
-                    {feedFiles.map((file) => <S.ImageBox src={file} />)}
+                    {feedFiles.map(file => (
+                        <S.ImageBox src={file} />
+                    ))}
                 </S.ImageContainer>
-                <S.FileInput type="file" id="file" accept="image/*"
-                    onChange={(
-                        e: React.ChangeEvent<HTMLInputElement>
-                    ) => handleImageUpdate(e)} />
+                <S.FileInput
+                    type="file"
+                    id="file"
+                    accept="image/*"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        handleImageUpdate(e)
+                    }
+                />
             </S.ImageWrapper>
 
             <S.ButtonWrapper>
