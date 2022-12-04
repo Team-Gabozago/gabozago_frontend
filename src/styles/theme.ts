@@ -11,6 +11,7 @@ const color = {
     lightGray: '#999999',
     darkGray: '#5c5c6a',
     silver: '#E1E1F4',
+    lightSilver: '#f0f0f8',
     label: '#666666',
     noActiveButton: '#9F9F9F',
     bodyBackground: '#f7f7fc',

@@ -34,6 +34,10 @@ export default function App() {
             <Suspense fallback={null}>
                 <Routes>
                     <Route element={<Verification />}>
+                        <Route path="/" element={<BeforeLoginLayout />}>
+                            <Route path="/" element={<StartPage />} />
+                        </Route>
+
                         {/* 로그인이 필요한 페이지들 여기에 넣어주기 */}
                         <Route path="/" element={<AfterLoginLayout />}>
                             <Route path="/like" element={<LikePage />} />
@@ -63,11 +67,11 @@ export default function App() {
                             <Route path="/feed/create" element={<CreateFeedPage />} />
                         </Route>
                     </Route>
+
                     <Route path="/" element={<BeforeLoginLayout />}>
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/signup" element={<SignupPage />} />
                         <Route path="/icons" element={<IconPage />} />
-                        <Route path="/" element={<StartPage />} />
                         <Route
                             path="/post:postSeq"
                             element={<PostViewPage />}
