@@ -4,7 +4,7 @@ import { flexbox } from '@/styles/mixin';
 import theme from '@/styles/theme';
 import { fadeInDown } from '@/utils/animation';
 
-export const SelectSportBox = styled.div`
+export const SelectSportWrapper = styled.div`
     width: 20.375rem;
     height: 22.5rem;
     position: absolute;
@@ -18,6 +18,28 @@ export const SelectSportBox = styled.div`
     ::-webkit-scrollbar {
         display: none;
     }
+`;
+
+export const SelectSportUl = styled.ul``;
+
+export const SelectSportLi = styled.li`
+    ${flexbox({})};
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid ${theme.color.silver};
+    cursor: pointer;
+`;
+
+export const CheckBox = styled.div<{ clickedSport: boolean }>`
+    ${flexbox({})};
+    width: 1rem;
+    height: 1rem;
+    border: 1px solid ${theme.color.gray};
+    border-radius: 50%;
+    color: ${props =>
+        props.clickedSport ? theme.color.white : theme.color.gray};
+    background-color: ${props =>
+        props.clickedSport ? theme.color.navy : theme.color.lightSilver};
 `;
 
 export const LabelWrapper = styled.div`
@@ -97,6 +119,51 @@ export const ButtonWrapper = styled.div`
 export const ButtonText = styled.span<{ isDisabled: boolean }>`
     color: ${props =>
         props.isDisabled ? theme.color.black : theme.color.white};
+`;
+
+export const SearchModalContent = styled.div`
+    ${flexbox({ dir: 'column' })};
+    gap: 1rem;
+    padding: 2rem;
+`;
+
+export const SearchHeader = styled.header`
+    ${flexbox({})};
+    gap: 1rem;
+`;
+
+export const SearchInput = styled.input`
+    width: 20.375rem;
+    padding: 0.5rem;
+    border-bottom: 1px solid ${theme.color.gray};
+`;
+
+export const SearchButton = styled.button`
+    width: 3rem;
+    background-color: ${theme.color.navy};
+    color: ${theme.color.white};
+`;
+
+export const PlaceInfo = styled.div<{ clickedPlace: boolean }>`
+    padding: 1rem 0;
+    cursor: pointer;
+    background-color: ${props =>
+        props.clickedPlace ? theme.color.silver : theme.color.white};
+`;
+
+export const SubmitButton = styled.button`
+    width: 10rem;
+    height: 2rem;
+    margin: 0 auto;
+    border-radius: 10px;
+    color: ${theme.color.white};
+    background-color: ${theme.color.navy};
+`;
+
+export const SearchContent = styled.div`
+    height: 30rem;
+    overflow-y: auto;
+    -ms-overflow-style: none;
 `;
 
 export const Form = styled.form`

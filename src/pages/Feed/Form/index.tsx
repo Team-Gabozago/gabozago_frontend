@@ -1,19 +1,48 @@
+import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 
 import * as S from './Form.style';
+import SelectPlaceBox from './SelectPlaceBox';
+import SelectSportBox from './SelectSportBox';
 
+import { postFeed, postImageFile } from '@/apis/feeds';
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
 import { useInput } from '@/hooks/useInput';
 import theme from '@/styles/theme';
 
 const Form = () => {
+
     const [isDisabled, setIsDisabled] = useState(true);
     const [selectSport, setSelectSport] = useState(false);
+    const [selectPlace, setSelectPlace] = useState(false);
+    const [feedFiles, setFeedFiles] = useState<string[]>([]);
+
+    const fetchPostImageFile = useMutation(postImageFile, {
+        onSuccess: async (url: string) => {
+            if (url) {
+                if (feedFiles.length === 5) return;
+                setFeedFiles([...feedFiles, url]);
+            }
+        },
+        onError: (error: unknown) => {
+            throw new Error(`error is ${error}`);
+        },
+    });
+
+    const fetchPostFeed = useMutation(postFeed, {
+        onSuccess: async () => {
+            // Success Popup.
+        },
+        onError: (error: unknown) => {
+            throw new Error(`error is ${error}`);
+        },
+    });
+
     const {
         value: sport,
         setValue: setSport,
-        onChange: handleChangeSport,
+        onClear: handleSportClear,
     } = useInput('', (targetValue: string) => {
         setSport(targetValue);
     });
@@ -22,6 +51,7 @@ const Form = () => {
         value: title,
         setValue: setTitle,
         onChange: handleChangeTitle,
+        onClear: handleTitleClear,
     } = useInput('', (targetValue: string) => {
         setTitle(targetValue);
     });
@@ -30,6 +60,7 @@ const Form = () => {
         value: place,
         setValue: setPlace,
         onChange: handleChangePlace,
+        onClear: handlePlaceClear
     } = useInput('', (targetValue: string) => {
         setPlace(targetValue);
     });
@@ -38,6 +69,7 @@ const Form = () => {
         value: placeDetail,
         setValue: setPlaceDetail,
         onChange: handleChangePlaceDetail,
+        onClear: handlePlaceDetailClear
     } = useInput('', (targetValue: string) => {
         setPlaceDetail(targetValue);
     });
@@ -46,6 +78,7 @@ const Form = () => {
         value: content,
         setValue: setContent,
         onChange: handleChangeContent,
+        onClear: handleContentClear
     } = useInput('', (targetValue: string) => {
         setContent(targetValue);
     });
@@ -54,10 +87,13 @@ const Form = () => {
         setSelectSport(true);
     };
 
-    const handlePlaceFocus = () => {};
+    const handlePlaceFocus = () => {
+        setSelectPlace(true)
+    };
 
     const handleCreateFeed = (e: React.MouseEvent<HTMLFormElement>) => {
         e.preventDefault();
+        fetchPostFeed.mutate();
     };
 
     const checkForm = (params: {
@@ -68,6 +104,15 @@ const Form = () => {
         if (params.sport && params.title && params.content)
             setIsDisabled(false);
         else setIsDisabled(true);
+    };
+
+    const handleImageUpdate = (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        const { files } = e.target as HTMLInputElement;
+
+        if (files) {
+            fetchPostImageFile.mutate(files[0]);
+        }
     };
 
     useEffect(() => {
@@ -82,22 +127,13 @@ const Form = () => {
                 type="text"
                 placeholder="함께 할 운동을 선택해 주세요"
                 value={sport}
-                onChange={handleChangeSport}
                 onFocus={handleSportFocus}
                 tabIndex="1"
                 autoFocus={false}
+                onClear={handleSportClear}
                 essential
             />
-            {selectSport && (
-                <S.SelectSportBox>
-                    <ul>
-                        <li>당구</li>
-                        <li>당구</li>
-                        <li>당구</li>
-                        <li>당구</li>
-                    </ul>
-                </S.SelectSportBox>
-            )}
+            {selectSport && <SelectSportBox setSport={setSport} setSelectSport={setSelectSport} />}
             <Input
                 width={20.375}
                 name="제목"
@@ -107,6 +143,7 @@ const Form = () => {
                 onChange={handleChangeTitle}
                 tabIndex="2"
                 autoFocus={false}
+                onClear={handleTitleClear}
                 essential
             />
             <Input
@@ -115,11 +152,13 @@ const Form = () => {
                 type="text"
                 placeholder="운동 장소를 검색해 보세요"
                 value={place}
-                onChange={handleChangePlace}
                 onFocus={handlePlaceFocus}
+                onChange={handleChangePlace}
                 autoFocus={false}
+                onClear={handlePlaceClear}
                 tabIndex="3"
             />
+            {selectPlace && <SelectPlaceBox setPlace={setPlace} />}
             <Input
                 width={20.375}
                 name="장소 상세"
@@ -128,6 +167,7 @@ const Form = () => {
                 value={placeDetail}
                 onChange={handleChangePlaceDetail}
                 autoFocus={false}
+                onClear={handlePlaceDetailClear}
                 tabIndex="4"
             />
             <S.LabelWrapper>
@@ -147,13 +187,12 @@ const Form = () => {
 
                 <S.ImageContainer>
                     <S.FileLabel htmlFor="file" />
-                    <S.ImageBox />
-                    <S.ImageBox />
-                    <S.ImageBox />
-                    <S.ImageBox />
-                    <S.ImageBox />
+                    {feedFiles.map((file) => <S.ImageBox src={file} />)}
                 </S.ImageContainer>
-                <S.FileInput type="file" id="file" />
+                <S.FileInput type="file" id="file" accept="image/*"
+                    onChange={(
+                        e: React.ChangeEvent<HTMLInputElement>
+                    ) => handleImageUpdate(e)} />
             </S.ImageWrapper>
 
             <S.ButtonWrapper>
