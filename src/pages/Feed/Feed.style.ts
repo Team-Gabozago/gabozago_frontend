@@ -3,21 +3,6 @@ import styled from '@emotion/styled';
 import { flexbox } from '@/styles/mixin';
 import theme from '@/styles/theme';
 
-export const ProfileSubText = styled.span`
-    color: ${theme.color.label};
-    font-size: ${theme.fontSize.xs};
-`;
-
-export const ProfileContent = styled.div`
-    ${flexbox({ dir: 'column' })};
-    gap: 0.2rem;
-`;
-
-export const ProfileContainer = styled.div`
-    ${flexbox({})};
-    gap: 0.5rem;
-`;
-
 export const FeedHeader = styled.header`
     ${flexbox({ jc: 'space-between', ai: 'center' })};
     padding: 1.5rem;

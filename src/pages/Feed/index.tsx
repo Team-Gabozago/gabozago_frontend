@@ -5,21 +5,24 @@ import * as S from './Feed.style';
 
 import { getFeed, likeFeed } from '@/apis/feeds';
 import I from '@/components/common/Icons';
+import CreateComment from '@/components/Feed/Comment';
+import CommentList from '@/components/Feed/Comment/CommentList';
+import FeedProfile from '@/components/Feed/Profile';
 import Header from '@/components/MyPage/Header';
 import theme from '@/styles/theme';
 
 const dummyFeedImages = [
     {
         id: 1,
-        url: 'https://pbs.twimg.com/media/E5icr1KVoAIS1tI?format=jpg&name=medium',
+        url: process.env.GABOZAGO_DEFAULT_IMAGE,
     },
     {
         id: 2,
-        url: 'https://pbs.twimg.com/media/E5icr1KVoAIS1tI?format=jpg&name=medium',
+        url: process.env.GABOZAGO_DEFAULT_IMAGE,
     },
     {
         id: 3,
-        url: 'https://pbs.twimg.com/media/E5icr1KVoAIS1tI?format=jpg&name=medium',
+        url: process.env.GABOZAGO_DEFAULT_IMAGE,
     },
 ];
 
@@ -31,6 +34,8 @@ const FeedPage = () => {
         if (id) return getFeed(+id);
         return true;
     });
+
+    const { data: comments } = useQuery(['feedComments']);
 
     const fetchLikeFeed = useMutation(likeFeed, {
         onSuccess: async () => {
@@ -51,13 +56,7 @@ const FeedPage = () => {
             <>
                 <Header title={feed.title} />
                 <S.FeedHeader>
-                    <S.ProfileContainer>
-                        <img alt="프로필 이미지" />
-                        <S.ProfileContent>
-                            <span>달팽이</span>
-                            <S.ProfileSubText>11.10</S.ProfileSubText>
-                        </S.ProfileContent>
-                    </S.ProfileContainer>
+                    <FeedProfile />
                     <I.Toggle fontSize={1.5} color={theme.color.gray} />
                 </S.FeedHeader>
                 <S.FeedContainer>
@@ -82,6 +81,8 @@ const FeedPage = () => {
                         />
                         <span>관심있어요</span>
                     </S.LikeButton>
+                    <CreateComment feedId={feed.id} />
+                    <CommentList />
                 </S.FeedContainer>
             </>
         )
