@@ -1,8 +1,7 @@
-import Form from '../Form';
-
 import { CreateFeedPage } from './Create.style';
 import * as S from './Create.style';
 
+import Form from '@/components/Feed/Form';
 import Header from '@/components/MyPage/Header';
 
 const Create = () => (

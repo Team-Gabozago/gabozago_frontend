@@ -28,6 +28,7 @@ const MyCommentPage = lazy(() => import('@/pages/MyPage/MyComment'));
 const LikePage = lazy(() => import('@/pages/InterestedPost'));
 
 const CreateFeedPage = lazy(() => import('@/pages/Feed/Create'));
+const FeedPage = lazy(() => import('@/pages/Feed'));
 export default function App() {
     return (
         <BrowserRouter>
@@ -65,6 +66,7 @@ export default function App() {
                                 element={<MySecessionPage />}
                             />
                             <Route path="/feed/create" element={<CreateFeedPage />} />
+                            <Route path="/feed/:id" element={<FeedPage />} />
                         </Route>
                     </Route>
 
