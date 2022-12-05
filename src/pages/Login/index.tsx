@@ -116,7 +116,7 @@ const LoginPage = () => {
                         value={password}
                         onChange={handleChangePassword}
                         tabIndex="2"
-                        onFocus={false}
+                        autoFocus={false}
                     />
                     {password.length > 0 && !checkPassword(password) && (
                         <DirectiveMsg active={checkPassword(password)}>
@@ -136,8 +136,9 @@ const LoginPage = () => {
                                 !isDisabled ? theme.color.gradient : ''
                             }
                             disabled={isDisabled}
-
-                            onClick={(e: React.MouseEvent<HTMLFormElement>) => handleLogin(e)}
+                            onClick={(e: React.MouseEvent<HTMLFormElement>) =>
+                                handleLogin(e)
+                            }
                         >
                             <S.ButtonText isDisabled={isDisabled}>
                                 로그인
