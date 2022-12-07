@@ -1,5 +1,5 @@
 
-import React, { SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 
 import * as S from './Form.style';
 
@@ -9,7 +9,11 @@ import { PlaceType } from '@/types/place';
 
 
 interface SelectPlaceBoxProps {
-    setPlace: (name: SetStateAction<string>) => void
+    setPlace: Dispatch<SetStateAction<{
+        name: string;
+        longitude: number;
+        latitude: number;
+    }>>
 }
 
 declare global {
@@ -65,7 +69,11 @@ const SelectPlaceBox = ({ setPlace }: SelectPlaceBoxProps) => {
 
     const handleSubmit = () => {
         if (clickedPlace) {
-            setPlace(`${clickedPlace.address} ${clickedPlace.name}`);
+            setPlace({
+                name: `${clickedPlace.address} ${clickedPlace.name}`,
+                latitude: clickedPlace.latitude,
+                longitude: clickedPlace.longitude
+            });
         }
         setIsModal(false);
     }
