@@ -31,7 +31,7 @@ export const SelectSportLi = styled.li`
 `;
 
 export const CheckBox = styled.div<{ clickedSport: boolean }>`
-    ${flexbox({})};
+    ${flexbox({ jc: 'center', ai: 'center' })};
     width: 1rem;
     height: 1rem;
     border: 1px solid ${theme.color.gray};
