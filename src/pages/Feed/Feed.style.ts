@@ -3,6 +3,28 @@ import styled from '@emotion/styled';
 import { flexbox } from '@/styles/mixin';
 import theme from '@/styles/theme';
 
+export const ToggleModal = styled.div`
+    ${flexbox({ dir: 'column', jc: 'center', ai: 'center' })};
+    gap: 1rem;
+    width: 6.125rem;
+    height: 5.5rem;
+    position: absolute;
+    top: 7rem;
+    right: 1rem;
+    padding: 1rem 0.75rem;
+    border-radius: 5px;
+    z-index: 999;
+    background-color: ${theme.color.white};
+`;
+
+export const ToggleModalBox = styled.button`
+    font-size: ${theme.fontSize.xs};
+`;
+
+export const ToggleButton = styled.button`
+    position: relative;
+`;
+
 export const FeedHeader = styled.header`
     ${flexbox({ jc: 'space-between', ai: 'center' })};
     padding: 1.5rem;

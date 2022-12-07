@@ -17,8 +17,6 @@ const MyEditProfilePage = lazy(() => import('@/pages/MyPage/MyEditProfile'));
 const MyPasswordPage = lazy(() => import('@/pages/MyPage/MyPassword'));
 const MySecessionPage = lazy(() => import('@/pages/MyPage/MySecession'));
 
-const PostViewPage = lazy(() => import('@/pages/post/View'));
-const PostEditPage = lazy(() => import('@/pages/post/Edit'));
 const LogoutPage = lazy(() => import('@/pages/Logout'));
 
 const MyLikePage = lazy(() => import('@/pages/MyPage/MyLike'));
@@ -28,6 +26,7 @@ const MyCommentPage = lazy(() => import('@/pages/MyPage/MyComment'));
 const LikePage = lazy(() => import('@/pages/InterestedPost'));
 
 const CreateFeedPage = lazy(() => import('@/pages/Feed/Create'));
+const PutFeedPage = lazy(() => import('@/pages/Feed/Put'));
 const FeedPage = lazy(() => import('@/pages/Feed'));
 export default function App() {
     return (
@@ -43,12 +42,18 @@ export default function App() {
                         <Route path="/" element={<AfterLoginLayout />}>
                             <Route path="/like" element={<LikePage />} />
                             <Route path="/home" element={<HomePage />} />
-                            <Route path="/mypage/board" element={<MyBoardPage />} />
+                            <Route
+                                path="/mypage/board"
+                                element={<MyBoardPage />}
+                            />
                             <Route
                                 path="/mypage/comment"
                                 element={<MyCommentPage />}
                             />
-                            <Route path="/mypage/like" element={<MyLikePage />} />
+                            <Route
+                                path="/mypage/like"
+                                element={<MyLikePage />}
+                            />
                         </Route>
 
                         <Route path="/" element={<MypageLayout />}>
@@ -65,7 +70,14 @@ export default function App() {
                                 path="/mypage/secession"
                                 element={<MySecessionPage />}
                             />
-                            <Route path="/feed/create" element={<CreateFeedPage />} />
+                            <Route
+                                path="/feed/form"
+                                element={<CreateFeedPage />}
+                            />
+                            <Route
+                                path="/feed/form/:id"
+                                element={<PutFeedPage />}
+                            />
                             <Route path="/feed/:id" element={<FeedPage />} />
                         </Route>
                     </Route>
@@ -74,11 +86,6 @@ export default function App() {
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/signup" element={<SignupPage />} />
                         <Route path="/icons" element={<IconPage />} />
-                        <Route
-                            path="/post:postSeq"
-                            element={<PostViewPage />}
-                        />
-                        <Route path="/edit" element={<PostEditPage />} />
                         <Route path="/logout" element={<LogoutPage />} />
                     </Route>
                 </Routes>

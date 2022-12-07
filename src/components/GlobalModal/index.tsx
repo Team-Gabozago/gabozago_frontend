@@ -2,6 +2,8 @@ import ReactDom from 'react-dom';
 
 import * as S from './GlobalModal.style';
 
+import Overlayout from '@/components/OverLayout'
+
 interface GlobalModalProps {
     size: 'small' | 'medium' | 'large';
     handleCancelClick: () => void;
@@ -15,7 +17,7 @@ const GlobalModal = ({
 }: GlobalModalProps) =>
     ReactDom.createPortal(
         <>
-            <S.Overlay onClick={handleCancelClick} />
+            <Overlayout handleCancelClick={handleCancelClick} />
             <S.GlobalModal size={size} id="modal-wrapper">
                 {children}
             </S.GlobalModal>

@@ -1,14 +1,17 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import * as S from './Feed.style';
 
-import { getFeed, likeFeed } from '@/apis/feeds';
+import { getFeed, unLikeFeed, likeFeed, deleteFeed } from '@/apis/feeds';
 import I from '@/components/common/Icons';
-import CreateComment from '@/components/Feed/Comment';
-import CommentList from '@/components/Feed/Comment/CommentList';
+import Comments from '@/components/Feed/Comments';
 import FeedProfile from '@/components/Feed/Profile';
+import GlobalModal from '@/components/GlobalModal';
+import ModalContent from '@/components/ModalContent';
 import Header from '@/components/MyPage/Header';
+import Overlayout from '@/components/OverLayout';
 import theme from '@/styles/theme';
 
 const dummyFeedImages = [
@@ -24,18 +27,31 @@ const dummyFeedImages = [
         id: 3,
         url: process.env.GABOZAGO_DEFAULT_IMAGE,
     },
+    {
+        id: 4,
+        url: process.env.GABOZAGO_DEFAULT_IMAGE,
+    },
 ];
 
 const FeedPage = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
+    const [isToggleModal, setIsToggleModal] = useState(false);
+    const [isDeleteModal, setIsDeleteModal] = useState(false);
 
-    // useQuery.
     const { data: feed, refetch: refetchFeed } = useQuery(['feed'], () => {
         if (id) return getFeed(+id);
         return true;
     });
 
-    const { data: comments } = useQuery(['feedComments']);
+    const fetchUnLikeFeed = useMutation(unLikeFeed, {
+        onSuccess: async () => {
+            refetchFeed();
+        },
+        onError: (error: unknown) => {
+            throw new Error(`error is ${error}`);
+        },
+    });
 
     const fetchLikeFeed = useMutation(likeFeed, {
         onSuccess: async () => {
@@ -46,32 +62,103 @@ const FeedPage = () => {
         },
     });
 
-    const handleLike = () => {
-        // refetch
-        fetchLikeFeed.mutate(id);
+    const fetchDeleteFeed = useMutation(deleteFeed, {
+        onSuccess: async () => {
+            navigate('/home');
+        },
+        onError: (error: unknown) => {
+            throw new Error(`error is ${error}`);
+        },
+    });
+
+    const handleLike = (liked: boolean) => {
+        if (liked) {
+            fetchUnLikeFeed.mutate(id);
+        } else {
+            fetchLikeFeed.mutate(id);
+        }
     };
+
+    const handleToggle = () => {
+        setIsToggleModal(!isToggleModal);
+    };
+
+    const handleDeleteFeed = () => {
+        // delete mutation
+        fetchDeleteFeed.mutate(id);
+    };
+
+    useEffect(() => {
+        // 한 번 받아온 데이터도 계속 요청하고 있는데... 수정할 순 없을까?
+        refetchFeed();
+    }, [id]);
 
     return (
         feed && (
             <>
                 <Header title={feed.title} />
                 <S.FeedHeader>
-                    <FeedProfile />
-                    <I.Toggle fontSize={1.5} color={theme.color.gray} />
+                    <FeedProfile
+                        author={feed.author}
+                        updatedAt={feed.updated_at}
+                    />
+                    <S.ToggleButton onClick={handleToggle}>
+                        <I.Toggle fontSize={1.5} color={theme.color.gray} />
+                    </S.ToggleButton>
+                    {isToggleModal && (
+                        <>
+                            <Overlayout
+                                handleCancelClick={() =>
+                                    setIsToggleModal(false)
+                                }
+                            />
+                            <S.ToggleModal>
+                                <Link to={`/feed/form/${feed.id}`}>
+                                    <S.ToggleModalBox>
+                                        <I.Edit /> 수정하기
+                                    </S.ToggleModalBox>
+                                </Link>
+                                <S.ToggleModalBox
+                                    onClick={() => setIsDeleteModal(true)}
+                                >
+                                    <I.Edit /> 삭제하기
+                                </S.ToggleModalBox>
+                            </S.ToggleModal>
+                        </>
+                    )}
+                    {isDeleteModal && (
+                        <GlobalModal
+                            size="small"
+                            handleCancelClick={() => setIsDeleteModal(false)}
+                        >
+                            <ModalContent
+                                title="해당 피드를 삭제하시겠습니까?"
+                                description="삭제된 피드는 복구 불가능합니다."
+                                buttonText="삭제"
+                                handleButtonClick={handleDeleteFeed}
+                            />
+                        </GlobalModal>
+                    )}
                 </S.FeedHeader>
                 <S.FeedContainer>
-                    <S.FeedAddress>피드 주소가 들어갈 곳</S.FeedAddress>
+                    <S.FeedAddress>
+                        {feed.location.place} {feed.location.placeDetail}
+                    </S.FeedAddress>
                     <S.FeedContent>{feed.content}</S.FeedContent>
                     <S.FeedImages>
-                        {dummyFeedImages.map(file => (
-                            <S.FeedImageBox
-                                src={file.url}
-                                alt="피드 이미지"
-                                key={`image-${file.id}`}
-                            />
-                        ))}
+                        {feed.images ||
+                            dummyFeedImages.map(file => (
+                                <S.FeedImageBox
+                                    src={file.url}
+                                    alt="피드 이미지"
+                                    key={`image-${file.id}`}
+                                />
+                            ))}
                     </S.FeedImages>
-                    <S.LikeButton liked={feed.liked} onClick={handleLike}>
+                    <S.LikeButton
+                        liked={feed.liked}
+                        onClick={() => handleLike(feed.liked)}
+                    >
                         <I.Heart
                             color={
                                 feed.liked
@@ -81,8 +168,12 @@ const FeedPage = () => {
                         />
                         <span>관심있어요</span>
                     </S.LikeButton>
-                    <CreateComment feedId={feed.id} />
-                    <CommentList />
+                    <Comments
+                        id={feed.id}
+                        profileImageUrl={
+                            feed.author && feed.author.profile_image_url
+                        }
+                    />
                 </S.FeedContainer>
             </>
         )

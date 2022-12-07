@@ -1,40 +1,48 @@
 import { useMutation } from '@tanstack/react-query';
 import React, { useState } from 'react';
 
-import * as S from './CreateComment.style';
+import * as S from './Comments.style';
 
-import { postComment } from '@/apis/comment';
+import { postComment } from '@/apis/comments';
 
 interface CommentProps {
-    feedId: number;
+    id: number;
+    profileImageUrl: string;
+    refetchComments: () => void;
 }
 
-const CreateComment = ({ feedId }: CommentProps) => {
-    const [comment, setComment] = useState('');
+const CreateComment = ({
+    id,
+    profileImageUrl,
+    refetchComments,
+}: CommentProps) => {
+    const [content, setcontent] = useState('');
 
     const fetchPostComment = useMutation(postComment, {
-        onSuccess: async () => {},
+        onSuccess: async () => {
+            refetchComments();
+        },
         onError: (error: unknown) => {
             throw new Error(`error is ${error}`);
         },
     });
 
     const handleChangeComment = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setComment(e.target.value);
+        setcontent(e.target.value);
     };
 
     const handleAddComment = () => {
-        fetchPostComment(feedId, comment);
+        fetchPostComment.mutate({ id, content });
     };
 
     return (
         <S.CreateComment>
             <S.CommentImg
-                src={process.env.GABOZAGO_DEFAULT_IMAGE}
+                src={profileImageUrl || process.env.GABOZAGO_DEFAULT_IMAGE}
                 alt="프로필 이미지"
             />
             <S.CommentInput
-                value={comment}
+                value={content}
                 placeholder="댓글을 입력해주세요."
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     handleChangeComment(e)

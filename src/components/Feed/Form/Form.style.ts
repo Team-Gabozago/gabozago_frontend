@@ -31,7 +31,7 @@ export const SelectSportLi = styled.li`
 `;
 
 export const CheckBox = styled.div<{ clickedSport: boolean }>`
-    ${flexbox({})};
+    ${flexbox({ jc: 'center', ai: 'center' })};
     width: 1rem;
     height: 1rem;
     border: 1px solid ${theme.color.gray};
@@ -62,6 +62,16 @@ export const Asterisk = styled.span`
     font-size: ${theme.fontSize.xs};
 `;
 
+export const FeedInput = styled.input`
+    width: 20.375rem;
+    padding: 0 0 0.5rem 0.5rem;
+    border-bottom: 1px solid ${theme.color.gray};
+    animation: ${fadeInDown} 1s;
+    &:focus {
+        border-bottom: 1px solid ${theme.color.blue};
+    }
+`;
+
 export const ContentTextArea = styled.textarea`
     width: 20.375rem;
     height: 17.5rem;
@@ -73,10 +83,11 @@ export const ContentTextArea = styled.textarea`
 `;
 
 export const FileLabel = styled.label`
-    display: inline-block;
+    ${flexbox({ jc: 'center', ai: 'center' })}
     width: 4.5rem;
     height: 4.5rem;
     background-color: ${theme.color.navy};
+    color: ${theme.color.white};
     border-radius: 5px;
     cursor: pointer;
 `;
