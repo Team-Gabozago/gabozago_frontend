@@ -103,9 +103,9 @@ export const postFeed = async (postFeedType: PostFeedType) => {
 
     const response = await fetch(`${process.env.GABOZAGO_URL}/feeds`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
             Authorization: accessToken,
-            'Content-Type': 'application/json',
         },
         body: JSON.stringify(postFeedType),
     });

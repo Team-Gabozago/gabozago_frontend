@@ -24,6 +24,10 @@ const dummyFeedImages = [
         id: 3,
         url: process.env.GABOZAGO_DEFAULT_IMAGE,
     },
+    {
+        id: 4,
+        url: process.env.GABOZAGO_DEFAULT_IMAGE,
+    },
 ];
 
 const FeedPage = () => {
@@ -56,14 +60,14 @@ const FeedPage = () => {
             <>
                 <Header title={feed.title} />
                 <S.FeedHeader>
-                    <FeedProfile />
+                    <FeedProfile author={feed.author} updatedAt={feed.updatedAt} />
                     <I.Toggle fontSize={1.5} color={theme.color.gray} />
                 </S.FeedHeader>
                 <S.FeedContainer>
-                    <S.FeedAddress>피드 주소가 들어갈 곳</S.FeedAddress>
+                    <S.FeedAddress>{feed.location.place} {feed.location.placeDetail}</S.FeedAddress>
                     <S.FeedContent>{feed.content}</S.FeedContent>
                     <S.FeedImages>
-                        {dummyFeedImages.map(file => (
+                        {feed.images || dummyFeedImages.map(file => (
                             <S.FeedImageBox
                                 src={file.url}
                                 alt="피드 이미지"
@@ -81,8 +85,8 @@ const FeedPage = () => {
                         />
                         <span>관심있어요</span>
                     </S.LikeButton>
-                    <CreateComment feedId={feed.id} />
-                    <CommentList />
+                    <CreateComment feedId={feed.id} profileImage={feed.author && feed.author.path} />
+                    <CommentList author={feed.author} updatedAt={feed.updatedAt} />
                 </S.FeedContainer>
             </>
         )

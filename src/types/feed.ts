@@ -8,3 +8,9 @@ export type PostFeedType = {
     placeDetail: string;
     images: string[];
 };
+
+export type FeedProfileType = {
+    id: number;
+    nickname: string;
+    path: string;
+};

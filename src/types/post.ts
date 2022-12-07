@@ -1,11 +1,13 @@
+import { FeedProfileType } from './feed';
+
 export type IPost = {
     id: number;
     title: string;
     content: string;
-    writer: string;
+    author: FeedProfileType;
     likes: number;
     comments: number;
-    time: string;
+    updatedAt: string;
     image: string;
 };
 
