@@ -140,6 +140,28 @@ export const getFeed = async (id: number) => {
     }
 };
 
+export const unLikeFeed = async (id: number) => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) throw new Error('accessToken is undefined');
+
+    const response = await fetch(
+        `${process.env.GABOZAGO_URL}/feeds/${id}/unlike`,
+        {
+            method: 'POST',
+            headers: {
+                Authorization: accessToken,
+                'Content-Type': 'application/json',
+            },
+        }
+    );
+
+    try {
+        return response.ok;
+    } catch (err) {
+        throw new Error(`postFeed get api fail err: ${err}`);
+    }
+};
+
 export const likeFeed = async (id: number) => {
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) throw new Error('accessToken is undefined');
