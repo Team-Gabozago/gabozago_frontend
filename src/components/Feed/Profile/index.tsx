@@ -1,14 +1,22 @@
 import * as S from './Profile.style';
 
-const FeedProfile = () => (
-    <S.ProfileContainer>
+import { FeedProfileType } from '@/types/feed'
+import { calculateDate } from '@/utils/date';
+
+interface FeedProfileProps {
+    author: FeedProfileType,
+    updatedAt: string
+}
+
+const FeedProfile = ({ author, updatedAt }: FeedProfileProps) => (
+    author && <S.ProfileContainer>
         <S.ProfileImg
-            src={process.env.GABOZAGO_DEFAULT_IMAGE}
+            src={author.path}
             alt="프로필 이미지"
         />
         <S.ProfileContent>
-            <span>달팽이</span>
-            <S.ProfileSubText>11.10</S.ProfileSubText>
+            <span>{author.nickname}</span>
+            <S.ProfileSubText>{calculateDate(updatedAt)}</S.ProfileSubText>
         </S.ProfileContent>
     </S.ProfileContainer>
 );

@@ -7,13 +7,14 @@ import { postComment } from '@/apis/comment';
 
 interface CommentProps {
     feedId: number;
+    profileImage: string;
 }
 
-const CreateComment = ({ feedId }: CommentProps) => {
+const CreateComment = ({ feedId, profileImage }: CommentProps) => {
     const [comment, setComment] = useState('');
 
     const fetchPostComment = useMutation(postComment, {
-        onSuccess: async () => {},
+        onSuccess: async () => { },
         onError: (error: unknown) => {
             throw new Error(`error is ${error}`);
         },
@@ -30,7 +31,7 @@ const CreateComment = ({ feedId }: CommentProps) => {
     return (
         <S.CreateComment>
             <S.CommentImg
-                src={process.env.GABOZAGO_DEFAULT_IMAGE}
+                src={profileImage || process.env.GABOZAGO_DEFAULT_IMAGE}
                 alt="프로필 이미지"
             />
             <S.CommentInput
