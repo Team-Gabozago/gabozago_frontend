@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useLongPress } from 'use-long-press';
 
 import * as S from './MyBoard.style';
@@ -30,7 +31,9 @@ const MyBoardPage = () => {
                 <S.MyLikeContent>
                     <S.SubTitle>길게 눌러 삭제</S.SubTitle>
                     {feeds && feeds.length > 0 ? feeds.map((post: IPost) => (
-                        <Post post={post} />
+                        <Link to={`/feed/${post.id}`}>
+                            <Post post={post} />
+                        </Link>
                     )) : <LoadingSpinner size="large" />}
                 </S.MyLikeContent>
                 <S.EndPointWrapper>
