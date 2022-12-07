@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import * as S from './Form.style';
 import SelectPlaceBox from './SelectPlaceBox';
@@ -7,9 +7,8 @@ import SelectSportBox from './SelectSportBox';
 
 import { postFeed, postImageFile } from '@/apis/feeds';
 import Button from '@/components/common/Button';
-import Input from '@/components/common/Input';
-import { useInput } from '@/hooks/useInput';
 import theme from '@/styles/theme';
+import { CategoryType } from '@/types/sport';
 
 const Form = () => {
     const [isDisabled, setIsDisabled] = useState(true);
@@ -38,51 +37,26 @@ const Form = () => {
         },
     });
 
-    const {
-        value: sport,
-        setValue: setSport,
-        onClear: handleSportClear,
-    } = useInput('', (targetValue: string) => {
-        setSport(targetValue);
-    });
+    const [sport, setSport] = useState<CategoryType>({ id: 0, name: '' });
+    const [title, setTitle] = useState('');
+    const [place, setPlace] = useState({ name: '', longitude: 0, latitude: 0 });
+    const [placeDetail, setPlaceDetail] = useState('');
+    const [content, setContent] = useState('');
 
-    const {
-        value: title,
-        setValue: setTitle,
-        onChange: handleChangeTitle,
-        onClear: handleTitleClear,
-    } = useInput('', (targetValue: string) => {
-        setTitle(targetValue);
-    });
+    const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.target.value);
+    }
 
-    const {
-        value: place,
-        setValue: setPlace,
-        onChange: handleChangePlace,
-        onClear: handlePlaceClear,
-    } = useInput('', (targetValue: string) => {
-        setPlace(targetValue);
-    });
+    const handleChangePlaceDetail = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setPlaceDetail(e.target.value);
+    }
 
-    const {
-        value: placeDetail,
-        setValue: setPlaceDetail,
-        onChange: handleChangePlaceDetail,
-        onClear: handlePlaceDetailClear,
-    } = useInput('', (targetValue: string) => {
-        setPlaceDetail(targetValue);
-    });
-
-    const {
-        value: content,
-        setValue: setContent,
-        onChange: handleChangeContent,
-    } = useInput('', (targetValue: string) => {
-        setContent(targetValue);
-    });
+    const handleChangeContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setContent(e.target.value);
+    }
 
     const handleSportFocus = () => {
-        setSport('');
+        setSport({ id: 0, name: '' });
         setSelectSport(true);
     };
 
@@ -92,15 +66,26 @@ const Form = () => {
 
     const handleCreateFeed = (e: React.MouseEvent<HTMLFormElement>) => {
         e.preventDefault();
-        fetchPostFeed.mutate();
+        const newFeed = {
+            categoryId: sport.id,
+            title,
+            content,
+            longitude: place.longitude,
+            latitude: place.latitude,
+            place: place.name,
+            placeDetail,
+            images: feedFiles
+        }
+
+        fetchPostFeed.mutate(newFeed);
     };
 
     const checkForm = (params: {
-        sport: string;
+        sport: CategoryType;
         title: string;
         content: string;
     }) => {
-        if (params.sport && params.title && params.content)
+        if (params.sport.name && params.title && params.content)
             setIsDisabled(false);
         else setIsDisabled(true);
     };
@@ -120,17 +105,17 @@ const Form = () => {
 
     return (
         <S.Form>
-            <Input
-                width={20.375}
+            <S.LabelWrapper>
+                <S.Label htmlFor={sport.name}>운동</S.Label>
+                <S.Asterisk>*</S.Asterisk>
+            </S.LabelWrapper>
+            <S.FeedInput
+                id={sport.name}
                 name="운동"
                 type="text"
                 placeholder="함께 할 운동을 선택해 주세요"
-                value={sport}
+                value={sport.name}
                 onFocus={handleSportFocus}
-                tabIndex="1"
-                autoFocus={false}
-                onClear={handleSportClear}
-                essential
             />
             {selectSport && (
                 <SelectSportBox
@@ -138,47 +123,44 @@ const Form = () => {
                     setSelectSport={setSelectSport}
                 />
             )}
-            <Input
-                width={20.375}
+            <S.LabelWrapper>
+                <S.Label htmlFor={title}>제목</S.Label>
+                <S.Asterisk>*</S.Asterisk>
+            </S.LabelWrapper>
+            <S.FeedInput
                 name="제목"
                 type="text"
                 placeholder="운동 이름, 구하는 친구 수, 장소 등이 드러나면 좋아요"
                 value={title}
-                onChange={handleChangeTitle}
-                tabIndex="2"
-                autoFocus={false}
-                onClear={handleTitleClear}
-                essential
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChangeTitle(e)}
             />
-            <Input
-                width={20.375}
+            <S.LabelWrapper>
+                <S.Label htmlFor={place.name}>운동 장소</S.Label>
+            </S.LabelWrapper>
+            <S.FeedInput
                 name="운동 장소"
                 type="text"
                 placeholder="운동 장소를 검색해 보세요"
-                value={place}
+                value={place.name}
                 onFocus={handlePlaceFocus}
-                onChange={handleChangePlace}
-                autoFocus={false}
-                onClear={handlePlaceClear}
-                tabIndex="3"
             />
             {selectPlace && <SelectPlaceBox setPlace={setPlace} />}
-            <Input
-                width={20.375}
+            <S.LabelWrapper>
+                <S.Label htmlFor={placeDetail}>장소 상세</S.Label>
+            </S.LabelWrapper>
+            <S.FeedInput
                 name="장소 상세"
                 type="text"
                 placeholder="호수, ⃝⃝ 앞 등 상세 장소 정보를 적어주세요"
                 value={placeDetail}
                 onChange={handleChangePlaceDetail}
-                autoFocus={false}
-                onClear={handlePlaceDetailClear}
-                tabIndex="4"
             />
             <S.LabelWrapper>
                 <S.Label htmlFor={content}>내용</S.Label>
                 <S.Asterisk>*</S.Asterisk>
             </S.LabelWrapper>
             <S.ContentTextArea
+                id={content}
                 placeholder="약속 시간, 준비물, 실력 등 플레이를 위한 정보를 적어주세요"
                 value={content}
                 onChange={handleChangeContent}
@@ -190,7 +172,7 @@ const Form = () => {
                 </S.ImageHeader>
 
                 <S.ImageContainer>
-                    <S.FileLabel htmlFor="file" />
+                    <S.FileLabel htmlFor="file">추가</S.FileLabel>
                     {feedFiles.map(file => (
                         <S.ImageBox src={file} />
                     ))}
