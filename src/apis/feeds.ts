@@ -1,5 +1,3 @@
-import { PostFeedType } from '@/types/feed';
-
 export const getCategories = async () => {
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) throw new Error('accessToken is undefined');
@@ -53,7 +51,7 @@ export const getAllFeeds = async (sortType: string) => {
     if (!accessToken) throw new Error('accessToken is undefined');
 
     const response = await fetch(
-        `${process.env.GABOZAGO_URL}/feeds/recent?categoryName=''&sortType=${sortType}`,
+        `${process.env.GABOZAGO_URL}/feeds/recent?sortType=${sortType}`,
         {
             method: 'GET',
             headers: {
@@ -97,7 +95,7 @@ export const postImageFile = async (files: any) => {
     }
 };
 
-export const postFeed = async (postFeedType: PostFeedType) => {
+export const postFeed = async (postFeedType: FormData) => {
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) throw new Error('accessToken is undefined');
 
@@ -106,13 +104,11 @@ export const postFeed = async (postFeedType: PostFeedType) => {
         headers: {
             Authorization: accessToken,
         },
-        body: JSON.stringify(postFeedType),
+        body: postFeedType,
     });
 
-    const data = await response.json();
-
     try {
-        return data;
+        return response.ok;
     } catch (err) {
         throw new Error(`postFeed get api fail err: ${err}`);
     }
@@ -123,7 +119,7 @@ export const putFeed = async ({
     putFeedType,
 }: {
     id: number;
-    putFeedType: PostFeedType;
+    putFeedType: FormData;
 }) => {
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) throw new Error('accessToken is undefined');
@@ -133,16 +129,15 @@ export const putFeed = async ({
         credentials: 'include',
         headers: {
             Authorization: accessToken,
+            'Content-Type': 'application/json',
         },
-        body: JSON.stringify(putFeedType),
+        body: putFeedType,
     });
 
-    const data = await response.json();
-
     try {
-        return data;
+        return response.ok;
     } catch (err) {
-        throw new Error(`postFeed get api fail err: ${err}`);
+        throw new Error(`putFeed get api fail err: ${err}`);
     }
 };
 
@@ -163,7 +158,7 @@ export const getFeed = async (id: number) => {
     try {
         return data;
     } catch (err) {
-        throw new Error(`postFeed get api fail err: ${err}`);
+        throw new Error(`getFeed api fail err: ${err}`);
     }
 };
 
@@ -185,7 +180,7 @@ export const unLikeFeed = async (id: number) => {
     try {
         return response.ok;
     } catch (err) {
-        throw new Error(`postFeed get api fail err: ${err}`);
+        throw new Error(`unLikeFeed api fail err: ${err}`);
     }
 };
 
@@ -207,7 +202,7 @@ export const likeFeed = async (id: number) => {
     try {
         return response.ok;
     } catch (err) {
-        throw new Error(`postFeed get api fail err: ${err}`);
+        throw new Error(`likeFeed  api fail err: ${err}`);
     }
 };
 
@@ -226,6 +221,6 @@ export const deleteFeed = async (id: number) => {
     try {
         return response.ok;
     } catch (err) {
-        throw new Error(`postFeed get api fail err: ${err}`);
+        throw new Error(`deleteFeed api fail err: ${err}`);
     }
 };
