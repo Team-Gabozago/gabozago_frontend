@@ -1,5 +1,29 @@
 import { PostFeedType } from '@/types/feed';
 
+export const getCategories = async () => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) throw new Error('accessToken is undefined');
+
+    const response = await fetch(
+        `${process.env.GABOZAGO_URL}/feeds/categories`,
+        {
+            method: 'GET',
+            headers: {
+                Authorization: accessToken,
+                'Content-Type': 'application/json',
+            },
+        }
+    );
+
+    const categories = await response.json();
+
+    try {
+        return categories;
+    } catch (err) {
+        throw new Error(`getFeeds api fail err: ${err}`);
+    }
+};
+
 export const getFeeds = async (categoryName: string, sortType: string) => {
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) throw new Error('accessToken is undefined');
