@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import * as S from './Feed.style';
 
-import { getFeed, likeFeed } from '@/apis/feeds';
+import { getFeed, unLikeFeed, likeFeed } from '@/apis/feeds';
 import I from '@/components/common/Icons';
 import CreateComment from '@/components/Feed/Comment';
 import CommentList from '@/components/Feed/Comment/CommentList';
@@ -41,6 +41,15 @@ const FeedPage = () => {
 
     const { data: comments } = useQuery(['feedComments']);
 
+    const fetchUnLikeFeed = useMutation(unLikeFeed, {
+        onSuccess: async () => {
+            refetchFeed();
+        },
+        onError: (error: unknown) => {
+            throw new Error(`error is ${error}`);
+        },
+    })
+
     const fetchLikeFeed = useMutation(likeFeed, {
         onSuccess: async () => {
             refetchFeed();
@@ -50,9 +59,13 @@ const FeedPage = () => {
         },
     });
 
-    const handleLike = () => {
-        // refetch
-        fetchLikeFeed.mutate(id);
+
+    const handleLike = (liked: boolean) => {
+        if (liked) {
+            fetchUnLikeFeed.mutate(id);
+        } else {
+            fetchLikeFeed.mutate(id);
+        }
     };
 
     return (
@@ -75,7 +88,7 @@ const FeedPage = () => {
                             />
                         ))}
                     </S.FeedImages>
-                    <S.LikeButton liked={feed.liked} onClick={handleLike}>
+                    <S.LikeButton liked={feed.liked} onClick={() => handleLike(feed.liked)}>
                         <I.Heart
                             color={
                                 feed.liked
