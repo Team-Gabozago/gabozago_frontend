@@ -1,5 +1,5 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import * as S from './Feed.style';
@@ -40,7 +40,6 @@ const FeedPage = () => {
     const [isToggleModal, setIsToggleModal] = useState(false);
     const [isDeleteModal, setIsDeleteModal] = useState(false);
 
-    // useQuery.
     const { data: feed, refetch: refetchFeed } = useQuery(['feed'], () => {
         if (id) return getFeed(+id);
         return true;
@@ -93,6 +92,11 @@ const FeedPage = () => {
         fetchDeleteFeed.mutate(id);
     }
 
+    useEffect(() => {
+        // 한 번 받아온 데이터도 계속 요청하고 있는데... 수정할 순 없을까?
+        refetchFeed();
+    }, [id])
+
     return (
         feed && (
             <>
@@ -106,7 +110,7 @@ const FeedPage = () => {
                         <>
                             <Overlayout handleCancelClick={() => setIsToggleModal(false)} />
                             <S.ToggleModal>
-                                <Link to="/feed/put">
+                                <Link to={`/feed/form/${feed.id}`}>
                                     <S.ToggleModalBox><I.Edit /> 수정하기</S.ToggleModalBox>
                                 </Link>
                                 <S.ToggleModalBox onClick={() => setIsDeleteModal(true)}><I.Edit /> 삭제하기</S.ToggleModalBox>

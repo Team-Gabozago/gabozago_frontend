@@ -1,20 +1,27 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import * as S from './Form.style';
 import SelectPlaceBox from './SelectPlaceBox';
 import SelectSportBox from './SelectSportBox';
 
-import { postFeed, postImageFile } from '@/apis/feeds';
+import { getFeed, postFeed, putFeed, postImageFile } from '@/apis/feeds';
 import Button from '@/components/common/Button';
 import theme from '@/styles/theme';
 import { CategoryType } from '@/types/sport';
 
 const Form = () => {
+    const { id } = useParams();
     const [isDisabled, setIsDisabled] = useState(true);
     const [selectSport, setSelectSport] = useState(false);
     const [selectPlace, setSelectPlace] = useState(false);
     const [feedFiles, setFeedFiles] = useState<string[]>([]);
+
+    const { data: feed, refetch: refetchFeed } = useQuery(['feed'], () => {
+        if (id) return getFeed(+id);
+        return true;
+    });
 
     const fetchPostImageFile = useMutation(postImageFile, {
         onSuccess: async (url: string) => {
@@ -36,6 +43,15 @@ const Form = () => {
             throw new Error(`error is ${error}`);
         },
     });
+
+    const fetchPutFeed = useMutation(putFeed, {
+        onSuccess: async () => {
+            // Success Popup.
+        },
+        onError: (error: unknown) => {
+            throw new Error(`error is ${error}`);
+        },
+    })
 
     const [sport, setSport] = useState<CategoryType>({ id: 0, name: '' });
     const [title, setTitle] = useState('');
@@ -80,6 +96,24 @@ const Form = () => {
         fetchPostFeed.mutate(newFeed);
     };
 
+    const handlePutFeed = (e: React.MouseEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const newFeed = {
+            categoryId: sport.id,
+            title,
+            content,
+            longitude: place.longitude,
+            latitude: place.latitude,
+            place: place.name,
+            placeDetail,
+            images: feedFiles
+        }
+
+        if (id && newFeed) {
+            fetchPutFeed.mutate({ id: +id, putFeedType: newFeed });
+        }
+    }
+
     const checkForm = (params: {
         sport: CategoryType;
         title: string;
@@ -102,6 +136,16 @@ const Form = () => {
     useEffect(() => {
         checkForm({ sport, title, content });
     }, [sport, title, content]);
+
+    useEffect(() => {
+        if (feed) {
+            setSport({ id: feed.category.id, name: feed.category.text })
+            setTitle(feed.title);
+            setPlace({ name: feed.location.place, latitude: feed.location.latitude, longitude: feed.location.longitude });
+            setPlaceDetail(feed.location.placeDetail);
+            setContent(feed.content);
+        }
+    }, [feed])
 
     return (
         <S.Form>
@@ -196,10 +240,10 @@ const Form = () => {
                     }
                     disabled={isDisabled}
                     onClick={(e: React.MouseEvent<HTMLFormElement>) =>
-                        handleCreateFeed(e)
+                        id ? handlePutFeed(e) : handleCreateFeed(e)
                     }
                 >
-                    <S.ButtonText isDisabled={isDisabled}>완료</S.ButtonText>
+                    <S.ButtonText isDisabled={isDisabled}>{id ? '수정' : '완료'}</S.ButtonText>
                 </Button>
             </S.ButtonWrapper>
         </S.Form>

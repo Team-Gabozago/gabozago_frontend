@@ -103,11 +103,38 @@ export const postFeed = async (postFeedType: PostFeedType) => {
 
     const response = await fetch(`${process.env.GABOZAGO_URL}/feeds`, {
         method: 'POST',
-        credentials: 'include',
         headers: {
             Authorization: accessToken,
         },
         body: JSON.stringify(postFeedType),
+    });
+
+    const data = await response.json();
+
+    try {
+        return data;
+    } catch (err) {
+        throw new Error(`postFeed get api fail err: ${err}`);
+    }
+};
+
+export const putFeed = async ({
+    id,
+    putFeedType,
+}: {
+    id: number;
+    putFeedType: PostFeedType;
+}) => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) throw new Error('accessToken is undefined');
+
+    const response = await fetch(`${process.env.GABOZAGO_URL}/feeds/${id}`, {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+            Authorization: accessToken,
+        },
+        body: JSON.stringify(putFeedType),
     });
 
     const data = await response.json();
