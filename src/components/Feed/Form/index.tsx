@@ -82,6 +82,7 @@ const Form = () => {
     });
 
     const handleSportFocus = () => {
+        setSport('');
         setSelectSport(true);
     };
 
