@@ -12,5 +12,5 @@ export type PostFeedType = {
 export type FeedProfileType = {
     id: number;
     nickname: string;
-    path: string;
+    profile_image_url: string;
 };
