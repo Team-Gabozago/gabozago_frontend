@@ -100,33 +100,35 @@ const Form = () => {
 
     const handleCreateFeed = (e: React.MouseEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const newFormData = new FormData();
-        newFormData.append('categoryId', sport.id.toString());
-        newFormData.append('title', title);
-        newFormData.append('content', content);
-        newFormData.append('longitude', place.longitude.toString());
-        newFormData.append('latitude', place.latitude.toString());
-        newFormData.append('place', place.name);
-        newFormData.append('placeDetail', placeDetail);
-        // newFormData.append('images', feedFiles);
+        const newFeed = {
+            categoryId: sport.id,
+            title,
+            content,
+            longitude: place.longitude,
+            latitude: place.latitude,
+            place: place.name,
+            placeDetail,
+            images: feedFiles
+        }
 
-        fetchPostFeed.mutate(newFormData);
+        fetchPostFeed.mutate(newFeed);
     };
 
     const handlePutFeed = (e: React.MouseEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const newFormData = new FormData();
-        newFormData.append('categoryId', sport.id.toString());
-        newFormData.append('title', title);
-        newFormData.append('content', content);
-        newFormData.append('longitude', place.longitude.toString());
-        newFormData.append('latitude', place.latitude.toString());
-        newFormData.append('place', place.name);
-        newFormData.append('placeDetail', placeDetail);
-        // newFormData.append('images', feedFiles);
+        const newFeed = {
+            categoryId: sport.id,
+            title,
+            content,
+            longitude: place.longitude,
+            latitude: place.latitude,
+            place: place.name,
+            placeDetail,
+            images: feedFiles
+        }
 
-        if (id && newFormData) {
-            fetchPutFeed.mutate({ id: +id, putFeedType: newFormData });
+        if (id) {
+            fetchPutFeed.mutate({ id: +id, putFeedType: newFeed });
         }
     };
 
