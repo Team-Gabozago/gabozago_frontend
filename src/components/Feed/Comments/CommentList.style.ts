@@ -13,15 +13,14 @@ export const Content = styled.div`
     padding: 0.75rem 0;
 `;
 
-export const TextWrapper = styled.div`
+export const ButtonWrapper = styled.div`
     ${flexbox({})};
     gap: 1rem;
 `;
 
-export const Text = styled.span`
+export const Button = styled.button`
     font-size: ${theme.fontSize.xs};
     color: ${theme.color.label};
-    cursor: pointer;
 `;
 
 export const Header = styled.header`
