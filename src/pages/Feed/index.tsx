@@ -14,25 +14,6 @@ import Header from '@/components/MyPage/Header';
 import Overlayout from '@/components/OverLayout';
 import theme from '@/styles/theme';
 
-const dummyFeedImages = [
-    {
-        id: 1,
-        url: process.env.GABOZAGO_DEFAULT_IMAGE,
-    },
-    {
-        id: 2,
-        url: process.env.GABOZAGO_DEFAULT_IMAGE,
-    },
-    {
-        id: 3,
-        url: process.env.GABOZAGO_DEFAULT_IMAGE,
-    },
-    {
-        id: 4,
-        url: process.env.GABOZAGO_DEFAULT_IMAGE,
-    },
-];
-
 const FeedPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -146,12 +127,12 @@ const FeedPage = () => {
                     </S.FeedAddress>
                     <S.FeedContent>{feed.content}</S.FeedContent>
                     <S.FeedImages>
-                        {feed.images ||
-                            dummyFeedImages.map(file => (
+                        {feed.images &&
+                            feed.images.map((image: { id: number, filePath: string }) => (
                                 <S.FeedImageBox
-                                    src={file.url}
+                                    src={image.filePath}
                                     alt="피드 이미지"
-                                    key={`image-${file.id}`}
+                                    key={`image-${image.id}`}
                                 />
                             ))}
                     </S.FeedImages>
