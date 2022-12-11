@@ -24,7 +24,6 @@ export const Time = styled.p`
 `;
 export const Title = styled.h3`
     font-size: ${theme.fontSize.sm};
-    color: ${theme.color.inputFocus};
     font-weight: 600;
     text-overflow: ellipsis;
 `;
@@ -49,7 +48,7 @@ export const WriterUl = styled.ul`
     }
 `;
 
-export const ImageContainer = styled.div`
+export const ImageContainer = styled.img`
     height: 100%;
     max-height: 200px;
     min-height: 190px;
@@ -57,7 +56,3 @@ export const ImageContainer = styled.div`
     width: 100%;
     background: #999;
 `;
-// export const Writer = styled.span`
-//     font-size: 8px;
-//     color: ${theme.color.label};
-// `;

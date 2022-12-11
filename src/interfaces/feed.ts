@@ -1,9 +1,12 @@
+import { FeedProfileType } from '@/types/feed';
+
 export interface Feed {
-    id: number;
-    updatedAt: string;
-    nickname: string;
-    title: string;
-    content: string;
-    likes: number;
+    author: FeedProfileType;
     comments: number;
+    content: string;
+    id: number;
+    likes: number;
+    title: string;
+    updated_at: string;
+    images: string[];
 }

@@ -1,19 +1,18 @@
-import * as S from './post.style';
+import * as S from './Post.style';
 
-import { IPost } from '@/types/post';
+import { Feed } from '@/interfaces/feed';
 import { calculateDate } from '@/utils/date'
 
-interface IPostProps {
-    post: IPost;
-}
-const Post = ({ post }: IPostProps) => {
-    const { title, content, author, likes, comments, updatedAt, image } = post;
+
+const Post = ({ post }: { post: Feed }) => {
+    // eslint-disable-next-line camelcase
+    const { author, comments, content, id, likes, title, updated_at, images } = post;
 
     return (
         <S.PostContainer>
-            {image && <S.ImageContainer />}
+            {images && <S.ImageContainer />}
             <S.Post>
-                <S.Time>{calculateDate(updatedAt)}</S.Time>
+                <S.Time>{calculateDate(updated_at)}</S.Time>
                 <S.Title>{title}</S.Title>
                 <S.Content>{content}</S.Content>
                 <S.WriterContainer>
