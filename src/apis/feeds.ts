@@ -1,3 +1,5 @@
+import { PostFeedType } from '@/types/feed';
+
 export const getCategories = async () => {
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) throw new Error('accessToken is undefined');
@@ -95,7 +97,7 @@ export const postImageFile = async (files: any) => {
     }
 };
 
-export const postFeed = async (postFeedType: FormData) => {
+export const postFeed = async (postFeedType: PostFeedType) => {
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) throw new Error('accessToken is undefined');
 
@@ -103,8 +105,9 @@ export const postFeed = async (postFeedType: FormData) => {
         method: 'POST',
         headers: {
             Authorization: accessToken,
+            'Content-Type': 'application/json',
         },
-        body: postFeedType,
+        body: JSON.stringify(postFeedType),
     });
 
     try {
@@ -119,19 +122,18 @@ export const putFeed = async ({
     putFeedType,
 }: {
     id: number;
-    putFeedType: FormData;
+    putFeedType: PostFeedType;
 }) => {
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) throw new Error('accessToken is undefined');
 
     const response = await fetch(`${process.env.GABOZAGO_URL}/feeds/${id}`, {
         method: 'PUT',
-        credentials: 'include',
         headers: {
             Authorization: accessToken,
             'Content-Type': 'application/json',
         },
-        body: putFeedType,
+        body: JSON.stringify(putFeedType),
     });
 
     try {
