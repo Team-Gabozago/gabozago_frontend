@@ -10,6 +10,6 @@ const CreateFeed = () => (
             <I.Create fontSize={1.8} />
         </S.CreateFeedWrapper>
     </Link>
-)
+);
 
 export default CreateFeed;

@@ -20,7 +20,10 @@ export default function HomePage() {
         getAllFeeds(sortType)
     );
 
-    const { data: area, refetch: refetchArea } = useQuery(['myArea'], getMyArea);
+    const { data: myArea, refetch: refetchMyArea } = useQuery(
+        ['myArea'],
+        getMyArea
+    );
 
     const handleNaviLi = (value: string) => {
         setSortType(value);
@@ -32,25 +35,36 @@ export default function HomePage() {
 
     return (
         <S.HomePage>
-            <Header />
+            <Header myArea={myArea} refetchMyArea={refetchMyArea} />
             <S.Title>
                 우리 동네의
                 <br /> 새 제안이에요.
             </S.Title>
-            {area && area.code === USER_LOCATION_NOT_FOUND ? <S.NotFoundArea>아직 동네가 설정되지 않았어요.<br />
-                보고 싶은 동네를 설정해보세요.</S.NotFoundArea> :
+            {myArea && myArea.code === USER_LOCATION_NOT_FOUND ? (
+                <S.NotFoundArea>
+                    아직 동네가 설정되지 않았어요.
+                    <br />
+                    보고 싶은 동네를 설정해보세요.
+                </S.NotFoundArea>
+            ) : (
                 <>
-                    <Navigation sortType={sortType} handleNaviLi={handleNaviLi} />
+                    <Navigation
+                        sortType={sortType}
+                        handleNaviLi={handleNaviLi}
+                    />
                     {feeds &&
                         feeds.length > 0 &&
                         feeds.map((feed: IPost) => (
-                            <Link to={`/feed/${feed.id}`} key={`post-${feed.id}`}>
+                            <Link
+                                to={`/feed/${feed.id}`}
+                                key={`post-${feed.id}`}
+                            >
                                 <Post post={feed} />
                             </Link>
                         ))}
                     <CreateFeed />
                 </>
-            }
+            )}
         </S.HomePage>
     );
 }

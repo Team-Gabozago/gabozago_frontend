@@ -24,7 +24,6 @@ export const Title = styled.h3`
 `;
 
 export const Divider = styled.div`
-    width: 18rem;
     height: 1px;
     margin: 0.75rem 0;
     background-color: ${theme.color.silver};

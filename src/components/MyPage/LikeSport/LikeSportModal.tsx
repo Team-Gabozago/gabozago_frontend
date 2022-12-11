@@ -5,7 +5,6 @@ import * as S from './LikeSportModal.style';
 
 import { deleteSport, patchSport } from '@/apis/sport';
 import Button from '@/components/common/Button';
-import I from '@/components/common/Icons';
 import {
     SUCCESS_FAVORITE_DELETED,
     SUCCESS_FAVORITE_UPDATED,
