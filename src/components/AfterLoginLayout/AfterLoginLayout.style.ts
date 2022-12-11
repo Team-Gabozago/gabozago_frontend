@@ -10,4 +10,9 @@ export const AfterLoginLayout = styled.section`
     padding: 0 1.75rem;
     position: relative;
     background-color: ${theme.color.navy};
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    ::-webkit-scrollbar {
+        display: none;
+    }
 `;
