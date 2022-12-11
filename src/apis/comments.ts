@@ -52,3 +52,31 @@ export const postComment = async ({
         throw new Error(`postComment api fail err: ${err}`);
     }
 };
+
+export const deleteComment = async ({
+    feedId,
+    commentId,
+}: {
+    feedId: number;
+    commentId: number;
+}) => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) throw new Error('accessToken is undefined');
+
+    const response = await fetch(
+        `${process.env.GABOZAGO_URL}/feeds/${feedId}/comments/${commentId}`,
+        {
+            method: 'DELETE',
+            headers: {
+                Authorization: accessToken,
+                'Content-Type': 'application/json',
+            },
+        }
+    );
+
+    try {
+        return response.ok;
+    } catch (err) {
+        throw new Error(`deleteComment api fail err: ${err}`);
+    }
+};

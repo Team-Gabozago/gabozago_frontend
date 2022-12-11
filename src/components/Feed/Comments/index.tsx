@@ -29,7 +29,11 @@ const Comments = ({ id, profileImageUrl }: CommentProps) => {
                     refetchComments={refetchComments}
                 />
                 <S.CommentTotalText>댓글 {comments.length}</S.CommentTotalText>
-                <CommentList comments={comments} />
+                <CommentList
+                    feedId={id}
+                    comments={comments}
+                    refetchComments={refetchComments}
+                />
             </>
         )
     );
