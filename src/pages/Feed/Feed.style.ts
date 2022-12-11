@@ -38,6 +38,11 @@ export const FeedAddress = styled.span`
 
 export const FeedContent = styled.div``;
 
+export const FeedZoomImageBox = styled.img`
+    width: 20rem;
+    height: 28.25rem;
+`;
+
 export const FeedImageBox = styled.img`
     width: 11.25rem;
     height: 11.25rem;
@@ -48,6 +53,7 @@ export const FeedImageBox = styled.img`
 export const FeedImages = styled.div`
     ${flexbox({})};
     overflow: hidden;
+    overflow-x: scroll;
     gap: 0.75rem;
 `;
 
