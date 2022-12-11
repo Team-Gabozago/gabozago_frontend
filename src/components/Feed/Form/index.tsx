@@ -11,6 +11,7 @@ import Button from '@/components/common/Button';
 import GlobalModal from '@/components/GlobalModal';
 import ModalContent from '@/components/ModalContent';
 import theme from '@/styles/theme';
+import { AreaType } from '@/types/place';
 import { CategoryType } from '@/types/sport';
 
 const Form = () => {
@@ -95,7 +96,7 @@ const Form = () => {
     };
 
     const handlePlaceFocus = () => {
-        setIsSelectBoxModal(true)
+        setIsSelectBoxModal(true);
     };
 
     const handleCreateFeed = (e: React.MouseEvent<HTMLFormElement>) => {
@@ -108,8 +109,8 @@ const Form = () => {
             latitude: place.latitude,
             place: place.name,
             placeDetail,
-            images: feedFiles
-        }
+            images: feedFiles,
+        };
 
         fetchPostFeed.mutate(newFeed);
     };
@@ -124,8 +125,8 @@ const Form = () => {
             latitude: place.latitude,
             place: place.name,
             placeDetail,
-            images: feedFiles
-        }
+            images: feedFiles,
+        };
 
         if (id) {
             fetchPutFeed.mutate({ id: +id, putFeedType: newFeed });
@@ -217,11 +218,19 @@ const Form = () => {
                     value={place.name}
                     onFocus={handlePlaceFocus}
                 />
-                {isSelectBoxModal &&
-                    <GlobalModal size="large" handleCancelClick={() => setIsSelectBoxModal(false)}>
-                        <SelectPlaceBox setPlace={setPlace} setIsSelectBoxModal={setIsSelectBoxModal} />
+                {isSelectBoxModal && (
+                    <GlobalModal
+                        size="large"
+                        handleCancelClick={() => setIsSelectBoxModal(false)}
+                    >
+                        <SelectPlaceBox
+                            handlePlaceArea={(placeinfo: AreaType) =>
+                                setPlace(placeinfo)
+                            }
+                            setIsSelectBoxModal={setIsSelectBoxModal}
+                        />
                     </GlobalModal>
-                }
+                )}
                 <S.LabelWrapper>
                     <S.Label htmlFor={placeDetail}>장소 상세</S.Label>
                 </S.LabelWrapper>

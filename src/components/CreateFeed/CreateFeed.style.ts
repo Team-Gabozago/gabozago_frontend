@@ -7,8 +7,9 @@ export const CreateFeedWrapper = styled.div`
     ${flexbox({ jc: 'center', ai: 'center' })};
     width: 4rem;
     height: 4rem;
-    position: absolute;
-    right: 1.5rem;
+    position: fixed;
+    left: 58%;
+    transform: translateX(-58%);
     bottom: 5rem;
     border-radius: 50%;
     background-image: ${theme.color.gradient};

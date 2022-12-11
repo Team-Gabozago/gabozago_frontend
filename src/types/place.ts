@@ -5,3 +5,9 @@ export type PlaceType = {
     latitude: number;
     longitude: number;
 };
+
+export type AreaType = {
+    name: string;
+    longitude: number;
+    latitude: number;
+};

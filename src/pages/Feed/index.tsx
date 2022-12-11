@@ -128,13 +128,15 @@ const FeedPage = () => {
                     <S.FeedContent>{feed.content}</S.FeedContent>
                     <S.FeedImages>
                         {feed.images &&
-                            feed.images.map((image: { id: number, filePath: string }) => (
-                                <S.FeedImageBox
-                                    src={image.filePath}
-                                    alt="피드 이미지"
-                                    key={`image-${image.id}`}
-                                />
-                            ))}
+                            feed.images.map(
+                                (image: { id: number; filePath: string }) => (
+                                    <S.FeedImageBox
+                                        src={image.filePath}
+                                        alt="피드 이미지"
+                                        key={`image-${image.id}`}
+                                    />
+                                )
+                            )}
                     </S.FeedImages>
                     <S.LikeButton
                         liked={feed.liked}
