@@ -4,6 +4,7 @@ export interface Comment {
     id: number;
     author: FeedProfileType;
     content: string;
+    feed_id: number;
     feed_author: boolean;
-    updated_at: string;
+    created_at: string;
 }

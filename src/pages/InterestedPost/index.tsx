@@ -12,7 +12,7 @@ import CreateFeed from '@/components/CreateFeed';
 import GlobalModal from '@/components/GlobalModal';
 import LikeSportModal from '@/components/MyPage/LikeSport/LikeSportModal';
 import Post from '@/components/Post';
-import { IPost } from '@/types/post';
+import { Feed } from '@/interfaces/feed';
 
 const LikePage = () => {
     const [clickedSport, setClickedSport] = useState({ idx: 0, name: '' });
@@ -64,6 +64,7 @@ const LikePage = () => {
                                 },
                                 idx: number
                             ) => (
+                                category.favorite &&
                                 <S.SportButton
                                     clicked={idx === clickedSport.idx}
                                     key={category.id}
@@ -87,7 +88,7 @@ const LikePage = () => {
                         handleNaviLi={handleNaviLi}
                     />
                     {feeds && feeds.length > 0 ? (
-                        feeds.map((feed: IPost) => <Post post={feed} />)
+                        feeds.map((feed: Feed) => <Post post={feed} />)
                     ) : (
                         <S.BlankLike>No Data...</S.BlankLike>
                     )}
