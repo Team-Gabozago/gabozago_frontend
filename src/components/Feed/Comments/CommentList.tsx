@@ -94,7 +94,7 @@ const CommentList = ({
                         <S.CommentBox>
                             <FeedProfile
                                 author={comment.author}
-                                updatedAt={comment.updated_at}
+                                updatedAt={comment.created_at}
                             />
                             {user.id === comment.author.id && (
                                 <>

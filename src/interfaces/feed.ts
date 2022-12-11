@@ -1,4 +1,5 @@
 export interface Feed {
+    id: number;
     updatedAt: string;
     nickname: string;
     title: string;
