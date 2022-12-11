@@ -16,7 +16,7 @@ import { Feed } from '@/interfaces/feed';
 export default function HomePage() {
     const [sortType, setSortType] = useState('NEWEST');
 
-    const { data: feeds, refetch: refetchFeeds } = useQuery(['feeds'], () =>
+    const { data: feeds, refetch: refetchFeeds } = useQuery(['allFeeds'], () =>
         getAllFeeds(sortType)
     );
 
@@ -32,6 +32,8 @@ export default function HomePage() {
     useEffect(() => {
         refetchFeeds();
     }, [sortType]);
+
+    console.log(feeds);
 
     return (
         <S.HomePage>

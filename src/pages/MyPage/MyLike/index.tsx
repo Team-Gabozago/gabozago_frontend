@@ -10,7 +10,7 @@ import GlobalModal from '@/components/GlobalModal';
 import ModalContent from '@/components/ModalContent';
 import Header from '@/components/MyPage/Header';
 import Post from '@/components/Post';
-import { IPost } from '@/types/post';
+import { Feed } from '@/interfaces/feed';
 
 const MyLikePage = () => {
     const [isModal, setIsModal] = useState(false);
@@ -29,7 +29,7 @@ const MyLikePage = () => {
                 <Header title="관심 보낸 글" />
                 <S.MyLikeContent>
                     <S.SubTitle>길게 눌러 관심 해제</S.SubTitle>
-                    {likes && likes.length > 0 ? likes.map((post: IPost) => (
+                    {likes && likes.length > 0 ? likes.map((post: Feed) => (
                         <Post post={post} />
                     )) : <LoadingSpinner size="large" />}
                 </S.MyLikeContent>
