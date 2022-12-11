@@ -11,7 +11,7 @@ import GlobalModal from '@/components/GlobalModal';
 import ModalContent from '@/components/ModalContent';
 import Header from '@/components/MyPage/Header';
 import Post from '@/components/Post';
-import { IPost } from '@/types/post';
+import { Feed } from '@/interfaces/feed';
 
 const MyBoardPage = () => {
     const [isModal, setIsModal] = useState(false);
@@ -30,9 +30,12 @@ const MyBoardPage = () => {
                 <Header title="내가 쓴 게시글" />
                 <S.MyLikeContent>
                     <S.SubTitle>길게 눌러 삭제</S.SubTitle>
-                    {feeds && feeds.length > 0 ? feeds.map((post: IPost) => (
-                        <Link to={`/feed/${post.id}`}>
-                            <Post post={post} />
+                    {feeds && feeds.length > 0 ? feeds.map((feed: Feed) => (
+                        <Link
+                            to={`/feed/${feed.id}`}
+                            key={`post-${feed.id}`}
+                        >
+                            <Post post={feed} />
                         </Link>
                     )) : <LoadingSpinner size="large" />}
                 </S.MyLikeContent>

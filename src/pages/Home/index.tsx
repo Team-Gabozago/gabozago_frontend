@@ -11,12 +11,12 @@ import Navigation from '@/components/common/Navigation';
 import CreateFeed from '@/components/CreateFeed';
 import Post from '@/components/Post';
 import { USER_LOCATION_NOT_FOUND } from '@/constants/code';
-import { IPost } from '@/types/post';
+import { Feed } from '@/interfaces/feed';
 
 export default function HomePage() {
     const [sortType, setSortType] = useState('NEWEST');
 
-    const { data: feeds, refetch: refetchFeeds } = useQuery(['feeds'], () =>
+    const { data: feeds, refetch: refetchFeeds } = useQuery(['allFeeds'], () =>
         getAllFeeds(sortType)
     );
 
@@ -32,6 +32,8 @@ export default function HomePage() {
     useEffect(() => {
         refetchFeeds();
     }, [sortType]);
+
+    console.log(feeds);
 
     return (
         <S.HomePage>
@@ -54,7 +56,7 @@ export default function HomePage() {
                     />
                     {feeds &&
                         feeds.length > 0 &&
-                        feeds.map((feed: IPost) => (
+                        feeds.map((feed: Feed) => (
                             <Link
                                 to={`/feed/${feed.id}`}
                                 key={`post-${feed.id}`}
