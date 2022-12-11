@@ -5,8 +5,9 @@ import { useRecoilValue } from 'recoil';
 import FeedProfile from '../Profile';
 
 import * as S from './CommentList.style';
+import CommentPatch from './CommentPatch';
 
-import { deleteComment } from '@/apis/comments';
+import { deleteComment, patchComment } from '@/apis/comments';
 import GlobalModal from '@/components/GlobalModal';
 import ModalContent from '@/components/ModalContent';
 import { Comment } from '@/interfaces/comment';
@@ -25,6 +26,7 @@ const CommentList = ({
 }: CommentListProps) => {
     const user = useRecoilValue(userState);
     const [isModal, setIsModal] = useState(false);
+    const [isPatch, setIsPatch] = useState(false);
     const [modalText, setModalText] = useState({
         title: '',
         description: '',
@@ -39,6 +41,8 @@ const CommentList = ({
                     description: '댓글 삭제 완료',
                     handleButtonClick: () => {
                         refetchComments();
+                        setIsPatch(false);
+                        setIsModal(false);
                     },
                 });
                 setIsModal(true);
@@ -49,13 +53,28 @@ const CommentList = ({
         },
     });
 
-    const handlePutComment = (commentId: number) => {
-        // setModalText({
-        //     title: '서비스 준비중입니다.',
-        //     description: '댓글 수정 기능 준비중',
-        // });
-        // setIsModal(true);
-    };
+    const fetchPatchComment = useMutation(patchComment, {
+        onSuccess: async (ok: boolean) => {
+            if (ok) {
+                setModalText({
+                    title: '정상적으로 수정되었습니다.',
+                    description: '댓글 수정 완료',
+                    handleButtonClick: () => {
+                        refetchComments();
+                        setIsPatch(false);
+                        setIsModal(false);
+                    },
+                });
+                setIsModal(true);
+            }
+        },
+        onError: (error: unknown) => {
+            throw new Error(`error is ${error}`);
+        },
+    });
+
+    const handlePutComment = (commentId: number, content: string) => fetchPatchComment.mutate({ feedId, commentId, content })
+
 
     const handleDeleteComment = (commentId: number) => {
         setModalText({
@@ -72,7 +91,7 @@ const CommentList = ({
             {comments &&
                 comments.map((comment: Comment) => (
                     <S.Comment key={`comment-${comment.id}`}>
-                        <S.Header>
+                        <S.CommentBox>
                             <FeedProfile
                                 author={comment.author}
                                 updatedAt={comment.updated_at}
@@ -80,11 +99,7 @@ const CommentList = ({
                             {user.id === comment.author.id && (
                                 <>
                                     <S.ButtonWrapper>
-                                        <S.Button
-                                            onClick={() =>
-                                                handlePutComment(comment.id)
-                                            }
-                                        >
+                                        <S.Button onClick={() => setIsPatch(!isPatch)}>
                                             수정
                                         </S.Button>
                                         <S.Button
@@ -116,11 +131,12 @@ const CommentList = ({
                                     )}
                                 </>
                             )}
-                        </S.Header>
-                        <S.Content>{comment.content}</S.Content>
+                        </S.CommentBox>
+                        <S.Content>{isPatch ? <CommentPatch key={`comment-${comment.id}`} comment={comment} setIsPatch={setIsPatch} handlePutComment={(commentId: number, content: string) => handlePutComment(commentId, content)} /> : comment.content}</S.Content>
                     </S.Comment>
-                ))}
-        </S.CommentList>
+                ))
+            }
+        </S.CommentList >
     );
 };
 
