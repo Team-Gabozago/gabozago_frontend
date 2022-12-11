@@ -6,7 +6,7 @@ import { calculateDate } from '@/utils/date'
 
 const Post = ({ post }: { post: Feed }) => {
     // eslint-disable-next-line camelcase
-    const { title, content, author, likes, comments, updated_at, images } = post;
+    const { author, comments, content, id, likes, title, updated_at, images } = post;
 
     return (
         <S.PostContainer>

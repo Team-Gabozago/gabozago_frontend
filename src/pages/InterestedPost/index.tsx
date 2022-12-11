@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import * as S from './Like.style';
 
@@ -20,7 +21,7 @@ const LikePage = () => {
 
     const [isSportModal, setIsSportModal] = useState(false);
     const { data: me, refetch: refetchMyPage } = useQuery(
-        ['myPage'],
+        ['myInfo'],
         getMyPage
     );
 
@@ -88,7 +89,13 @@ const LikePage = () => {
                         handleNaviLi={handleNaviLi}
                     />
                     {feeds && feeds.length > 0 ? (
-                        feeds.map((feed: Feed) => <Post post={feed} />)
+                        feeds.map((feed: Feed) =>
+                            <Link
+                                to={`/feed/${feed.id}`}
+                                key={`post-${feed.id}`}
+                            >
+                                <Post post={feed} />
+                            </Link>)
                     ) : (
                         <S.BlankLike>No Data...</S.BlankLike>
                     )}
