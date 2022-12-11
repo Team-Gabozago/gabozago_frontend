@@ -18,9 +18,9 @@ const Form = () => {
     const navigate = useNavigate();
     const [isDisabled, setIsDisabled] = useState(true);
     const [selectSport, setSelectSport] = useState(false);
-    const [selectPlace, setSelectPlace] = useState(false);
     const [feedFiles, setFeedFiles] = useState<string[]>([]);
     const [isSuccessModal, setIsSucessModal] = useState(false);
+    const [isSelectBoxModal, setIsSelectBoxModal] = useState(false);
     const [modalText, setModalText] = useState({
         title: '',
         description: '',
@@ -95,7 +95,7 @@ const Form = () => {
     };
 
     const handlePlaceFocus = () => {
-        setSelectPlace(true);
+        setIsSelectBoxModal(true)
     };
 
     const handleCreateFeed = (e: React.MouseEvent<HTMLFormElement>) => {
@@ -217,7 +217,11 @@ const Form = () => {
                     value={place.name}
                     onFocus={handlePlaceFocus}
                 />
-                {selectPlace && <SelectPlaceBox setPlace={setPlace} />}
+                {isSelectBoxModal &&
+                    <GlobalModal size="large" handleCancelClick={() => setIsSelectBoxModal(false)}>
+                        <SelectPlaceBox setPlace={setPlace} setIsSelectBoxModal={setIsSelectBoxModal} />
+                    </GlobalModal>
+                }
                 <S.LabelWrapper>
                     <S.Label htmlFor={placeDetail}>장소 상세</S.Label>
                 </S.LabelWrapper>

@@ -4,8 +4,10 @@ import { flexbox } from '@/styles/mixin';
 import theme from '@/styles/theme';
 
 export const Title = styled.h1`
+    ${flexbox({ ai: 'center' })};
+    gap: 0.5rem;
     color: ${theme.color.white};
-    margin-left: 1rem;
+    cursor: pointer;
 `;
 
 export const Box = styled.div`

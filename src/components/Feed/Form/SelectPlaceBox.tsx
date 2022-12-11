@@ -14,6 +14,7 @@ interface SelectPlaceBoxProps {
         longitude: number;
         latitude: number;
     }>>
+    setIsSelectBoxModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 declare global {
@@ -26,8 +27,7 @@ const { kakao } = window;
 
 const defaultCoords = { lat: 37.491583, lng: 127.031352 };
 
-const SelectPlaceBox = ({ setPlace }: SelectPlaceBoxProps) => {
-    const [isModal, setIsModal] = useState(true);
+const SelectPlaceBox = ({ setPlace, setIsSelectBoxModal }: SelectPlaceBoxProps) => {
     const [searchPlaceText, setSearchPlaceText] = useState('');
     const [placeInfos, setPlaceInfos] = useState<PlaceType[]>([]);
     const [clickedPlace, setClickedPlace] = useState<PlaceType>({ place_id: 0, name: '', address: '', latitude: 0, longitude: 0 });
@@ -75,26 +75,20 @@ const SelectPlaceBox = ({ setPlace }: SelectPlaceBoxProps) => {
                 longitude: clickedPlace.longitude
             });
         }
-        setIsModal(false);
+        setIsSelectBoxModal(false);
     }
 
     return (
-        // eslint-disable-next-line react/jsx-no-useless-fragment
-        <>{
-            isModal &&
-            <GlobalModal size="large" handleCancelClick={() => setIsModal(false)}>
-                <S.SearchModalContent>
-                    <S.SearchHeader>
-                        <S.SearchInput value={searchPlaceText} placeholder="운동 장소를 검색해 보세요" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChangeSearch(e)} />
-                        <S.SearchButton onClick={() => searchAddressToCoordinate(searchPlaceText)}>찾기</S.SearchButton>
-                    </S.SearchHeader>
-                    <S.SearchContent>
-                        {placeInfos.map((placeInfo: PlaceType) => <S.PlaceInfo clickedPlace={clickedPlace.place_id === placeInfo.place_id} onClick={() => handlePlaceInfo(placeInfo)}>{placeInfo.address} {placeInfo.name}</S.PlaceInfo>)}
-                    </S.SearchContent>
-                    <S.SubmitButton type="submit" onClick={handleSubmit}>선택</S.SubmitButton>
-                </S.SearchModalContent>
-            </GlobalModal>
-        }</>
+        <S.SearchModalContent>
+            <S.SearchHeader>
+                <S.SearchInput value={searchPlaceText} placeholder="운동 장소를 검색해 보세요" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChangeSearch(e)} />
+                <S.SearchButton onClick={() => searchAddressToCoordinate(searchPlaceText)}>찾기</S.SearchButton>
+            </S.SearchHeader>
+            <S.SearchContent>
+                {placeInfos.map((placeInfo: PlaceType) => <S.PlaceInfo clickedPlace={clickedPlace.place_id === placeInfo.place_id} onClick={() => handlePlaceInfo(placeInfo)}>{placeInfo.address} {placeInfo.name}</S.PlaceInfo>)}
+            </S.SearchContent>
+            <S.SubmitButton type="submit" onClick={handleSubmit}>선택</S.SubmitButton>
+        </S.SearchModalContent>
     )
 }
 
