@@ -21,6 +21,7 @@ const CreateComment = ({
     const fetchPostComment = useMutation(postComment, {
         onSuccess: async () => {
             refetchComments();
+            setcontent('');
         },
         onError: (error: unknown) => {
             throw new Error(`error is ${error}`);

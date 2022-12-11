@@ -9,6 +9,12 @@ export const Comment = styled.div`
     border-bottom: 1px solid ${theme.color.silver};
 `;
 
+export const PatchCommentInput = styled.input`
+    width: 15.375rem;
+    padding: 0.85rem;
+    border-bottom: 1px solid ${theme.color.silver};
+`;
+
 export const Content = styled.div`
     padding: 0.75rem 0;
 `;
@@ -23,7 +29,7 @@ export const Button = styled.button`
     color: ${theme.color.label};
 `;
 
-export const Header = styled.header`
+export const CommentBox = styled.div`
     ${flexbox({ jc: 'space-between', ai: 'center' })};
 `;
 
