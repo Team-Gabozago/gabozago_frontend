@@ -19,6 +19,11 @@ const FeedPage = () => {
     const navigate = useNavigate();
     const [isToggleModal, setIsToggleModal] = useState(false);
     const [isDeleteModal, setIsDeleteModal] = useState(false);
+    const [isImageModal, setIsImageModal] = useState(false);
+    const [zoomImage, setZoomImage] = useState({
+        id: 0,
+        imageUrl: ''
+    });
 
     const { data: feed, refetch: refetchFeed } = useQuery(['feed'], () => {
         if (id) return getFeed(+id);
@@ -65,7 +70,6 @@ const FeedPage = () => {
     };
 
     const handleDeleteFeed = () => {
-        // delete mutation
         fetchDeleteFeed.mutate(id);
     };
 
@@ -134,10 +138,16 @@ const FeedPage = () => {
                                         src={image.filePath}
                                         alt="피드 이미지"
                                         key={`image-${image.id}`}
+                                        onClick={() => { setZoomImage({ id: image.id, imageUrl: image.filePath }); setIsImageModal(true); }}
                                     />
                                 )
                             )}
                     </S.FeedImages>
+                    {zoomImage.id > 0 && isImageModal &&
+                        <GlobalModal size="medium" handleCancelClick={() => setIsImageModal(false)}>
+                            <S.FeedZoomImageBox src={zoomImage.imageUrl} />
+                        </GlobalModal>
+                    }
                     <S.LikeButton
                         liked={feed.liked}
                         onClick={() => handleLike(feed.liked)}
