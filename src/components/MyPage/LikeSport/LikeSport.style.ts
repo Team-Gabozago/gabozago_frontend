@@ -9,11 +9,15 @@ export const Title = styled.h1`
 `;
 
 export const Sport = styled.div`
-    ${flexbox({ ai: 'center' })};
+    ${flexbox({ jc: 'center', ai: 'center' })};
     padding: 0.75rem;
+    max-width: 3.75rem;
     height: 1.75rem;
     border-radius: 1.25rem;
+    font-size: ${theme.fontSize.xs};
     border: 1px solid ${theme.color.gray};
+    text-overflow: ellipsis;
+    white-space: nowrap;
 `;
 
 export const SportWrapper = styled.div`
