@@ -20,7 +20,7 @@ export default function HomePage() {
         getAllFeeds(sortType)
     );
 
-    const { data: myArea, refetch: refetchMyArea } = useQuery(
+    const { data: myArea } = useQuery(
         ['myArea'],
         getMyArea
     );
@@ -31,13 +31,11 @@ export default function HomePage() {
 
     useEffect(() => {
         refetchFeeds();
-    }, [sortType]);
-
-    console.log(feeds);
+    }, [sortType, refetchFeeds]);
 
     return (
         <S.HomePage>
-            <Header myArea={myArea} refetchMyArea={refetchMyArea} />
+            <Header myArea={myArea} refetchFeeds={refetchFeeds} />
             <S.Title>
                 우리 동네의
                 <br /> 새 제안이에요.
