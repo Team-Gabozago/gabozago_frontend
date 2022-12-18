@@ -48,7 +48,7 @@ const LikePage = () => {
 
     return (
         <S.LikePage>
-            <Header myArea={myArea} refetchMyArea={refetchMyArea} />
+            <Header myArea={myArea} refetchMyArea={refetchMyArea} refetchFeeds={refetchFeeds} />
             {me && me.categories.length > 0 ? (
                 <>
                     <S.Title>

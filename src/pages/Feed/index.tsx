@@ -50,7 +50,7 @@ const FeedPage = () => {
 
     const fetchDeleteFeed = useMutation(deleteFeed, {
         onSuccess: async () => {
-            navigate('/home');
+            navigate('/mypage');
         },
         onError: (error: unknown) => {
             throw new Error(`error is ${error}`);

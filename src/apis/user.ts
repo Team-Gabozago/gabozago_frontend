@@ -21,7 +21,6 @@ export const postSignupUser = async (
             if (headers.get('authorization')) {
                 localStorage.setItem(
                     'accessToken',
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                     headers.get('authorization')!
                 );
             }

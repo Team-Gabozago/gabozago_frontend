@@ -14,10 +14,11 @@ import { AreaType } from '@/types/place';
 
 interface HeaderProps {
     myArea: MyAreaInfo;
-    refetchMyArea: () => void;
+    refetchMyArea?: () => void;
+    refetchFeeds: () => void
 }
 
-const Header = ({ myArea, refetchMyArea }: HeaderProps) => {
+const Header = ({ myArea, refetchMyArea, refetchFeeds }: HeaderProps) => {
     const [isAreaBox, setIsAreaBox] = useState(false);
     const [place, setPlace] = useState<AreaType>({
         name: '동네설정',
@@ -28,7 +29,8 @@ const Header = ({ myArea, refetchMyArea }: HeaderProps) => {
     const fetchPostAreaInfo = useMutation(postAreaInfo, {
         onSuccess: async (ok: boolean) => {
             if (ok) {
-                refetchMyArea();
+                if (refetchMyArea) refetchMyArea();
+                if (refetchFeeds) refetchFeeds();
                 setIsAreaBox(false);
             }
         },
