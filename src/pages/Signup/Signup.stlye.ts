@@ -20,6 +20,7 @@ export const EmailCheckButton = styled.button`
     height: 1.875rem;
     border-radius: 5px;
     padding: 0.5rem;
+    font-size: ${theme.fontSize.xs};
     color: ${theme.color.white};
     background-color: ${theme.color.gray};
 `;
