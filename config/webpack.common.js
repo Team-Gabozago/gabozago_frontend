@@ -42,6 +42,7 @@ module.exports = {
                                         'DEV_[dirname]_[filename]_[local]',
                                 },
                             ],
+                            'babel-plugin-macros',
                             isDevelopment &&
                                 require.resolve('react-refresh/babel'),
                         ].filter(Boolean),
