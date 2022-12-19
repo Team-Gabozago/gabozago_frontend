@@ -3,8 +3,6 @@ import { useMutation } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import * as S from './Signup.stlye';
-
 import { postSignupUser, duplicateEmail } from '@/apis/user';
 import Button from '@/components/common/Button';
 import DirectiveMsg from '@/components/common/DirectiveMsg';
@@ -235,17 +233,19 @@ const SignupPage = () => {
 
     return (
         <>
-            <S.SignupWrapper>
+            <section>
                 <ProgressBar
                     width={62.5 * (level + 1)}
                     backgroundColor={!checkAllForm() ? theme.color.silver : ''}
                     backgroundImage={checkAllForm() ? theme.color.gradient : ''}
                 />
-                <S.ContentWrapper>
-                    <S.TitleWrapper>
-                        <S.Title>{signupFormData[level]?.title}</S.Title>
-                    </S.TitleWrapper>
-                    <S.SignupForm>
+                <div className="pt-28 pb-15 pl-3">
+                    <div className="flex justify-center mb-8">
+                        <h1 className="w-72 text-title font-Spoqa-Han-Sans-Neo font-weight">
+                            {signupFormData[level]?.title}
+                        </h1>
+                    </div>
+                    <form className="flex flex-col items-center gap-4">
                         {level >= 5 && (
                             <>
                                 <Input
@@ -372,15 +372,16 @@ const SignupPage = () => {
                                         {signupFormData[2].directive}
                                     </DirectiveMsg>
                                 )}
-                                <S.EmailButtonWrapper>
-                                    <S.EmailCheckButton
+                                <div className="w-72 flex mb-4">
+                                    <button
+                                        className="w-20 h-7 p-1 text-xs rounded-md text-white bg-gray"
                                         type="button"
                                         onClick={handleDuplicateEmailClick}
                                         tabIndex={-1}
                                     >
                                         중복 확인
-                                    </S.EmailCheckButton>
-                                </S.EmailButtonWrapper>
+                                    </button>
+                                </div>
                             </>
                         )}
                         {level >= 1 && (
@@ -416,30 +417,28 @@ const SignupPage = () => {
                                 )}
                             </>
                         )}
-                        <>
-                            <Input
-                                name="이름"
-                                type="text"
-                                placeholder="한글, 영문만 입력해주세요."
-                                value={name}
-                                tabIndex="6"
-                                onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>
-                                ) => handleChangeName(e)}
-                                onKeyUp={(e: React.KeyboardEvent) =>
-                                    handleOnKeyUp(e)
-                                }
-                                success={name.length > 0 && checkName(name)}
-                                error={name.length > 0 && !checkName(name)}
-                                onClear={handleNameClear}
-                            />
-                            {name.length > 0 && (
-                                <DirectiveMsg active={checkName(name)}>
-                                    {signupFormData[0].directive}
-                                </DirectiveMsg>
-                            )}
-                        </>
-                        <S.ButtonWrapper>
+                        <Input
+                            name="이름"
+                            type="text"
+                            placeholder="한글, 영문만 입력해주세요."
+                            value={name}
+                            tabIndex="6"
+                            onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                            ) => handleChangeName(e)}
+                            onKeyUp={(e: React.KeyboardEvent) =>
+                                handleOnKeyUp(e)
+                            }
+                            success={name.length > 0 && checkName(name)}
+                            error={name.length > 0 && !checkName(name)}
+                            onClear={handleNameClear}
+                        />
+                        {name.length > 0 && (
+                            <DirectiveMsg active={checkName(name)}>
+                                {signupFormData[0].directive}
+                            </DirectiveMsg>
+                        )}
+                        <div className="mt-8">
                             <Button
                                 type="submit"
                                 size="md"
@@ -458,20 +457,18 @@ const SignupPage = () => {
                                           ) => handleSignup(e)
                                 }
                             >
-                                <S.ButtonText
-                                    color={
-                                        isDisabled
-                                            ? theme.color.black
-                                            : theme.color.white
+                                <span
+                                    className={
+                                        isDisabled ? 'text-black' : 'text-white'
                                     }
                                 >
                                     {level < 5 ? '다음' : '가입완료'}
-                                </S.ButtonText>
+                                </span>
                             </Button>
-                        </S.ButtonWrapper>
-                    </S.SignupForm>
-                </S.ContentWrapper>
-            </S.SignupWrapper>
+                        </div>
+                    </form>
+                </div>
+            </section>
             {isModal && (
                 <GlobalModal
                     size="small"

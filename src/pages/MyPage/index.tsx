@@ -4,8 +4,6 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 
-import * as S from './MyPage.style';
-
 import { getMyPage } from '@/apis/mypage';
 import Button from '@/components/common/Button';
 import I from '@/components/common/Icons';
@@ -14,7 +12,6 @@ import LikeSport from '@/components/MyPage/LikeSport';
 import Profile from '@/components/MyPage/Profile';
 import { UNAUTHENTICATED, PROFILE_FETCHED } from '@/constants/code';
 import { userState } from '@/recoil/atoms/user';
-import { flexbox } from '@/styles/mixin';
 import theme from '@/styles/theme';
 
 const MyPage = () => {
@@ -47,62 +44,58 @@ const MyPage = () => {
 
     return (
         me && (
-            <S.MyPage>
+            <section>
                 <Header title="마이페이지" />
                 <Profile me={me} />
                 <LikeSport
                     categories={me.categories}
                     refetchMyPage={refetchMyPage}
                 />
-                <S.Box>
+                <div className="h-20 flex items-center border-b border-solid border-silver">
                     <Link to="/mypage/password">
-                        <S.MoveText>비밀번호 변경</S.MoveText>
+                        <span className="px-4">비밀번호 변경</span>
                     </Link>
-                </S.Box>
-                <S.Box>
-                    <S.MyWriteContent onClick={handleMyWrite}>
-                        <S.MoveText>내가 쓴 글</S.MoveText>
+                </div>
+                <div className="h-20 flex items-center border-b border-solid border-silver">
+                    <button
+                        type="button"
+                        className="w-full h-full flex justify-between items-center cursor-pointer pr-7"
+                        onClick={handleMyWrite}
+                    >
+                        <span className="px-4">내가 쓴 글</span>
                         {clickedArrow ? (
-                            <I.ArrowUp fontSize={0.5} color={theme.color.navy} />
+                            <I.ArrowUp
+                                fontSize={0.5}
+                                color={theme.color.navy}
+                            />
                         ) : (
-                            <I.ArrowDown fontSize={0.5} color={theme.color.navy} />
+                            <I.ArrowDown
+                                fontSize={0.5}
+                                color={theme.color.navy}
+                            />
                         )}
-                    </S.MyWriteContent>
-                </S.Box>
+                    </button>
+                </div>
                 {clickedArrow && (
-                    <S.MoveSubContent>
+                    <div className="flex flex-col border-b border-solid border-silver">
                         <Link to="/mypage/board">
-                            <S.MoveText
-                                css={css`
-                                    ${flexbox({ ai: 'center' })};
-                                    height: 5rem;
-                                    margin-left: 1rem;
-                                    color: ${theme.color.label};
-                                `}
-                            >
+                            <span className="px-4 h-20 flex items-center ml-4 text-label">
                                 게시글
-                            </S.MoveText>
+                            </span>
                         </Link>
                         <Link to="/mypage/comment">
-                            <S.MoveText
-                                css={css`
-                                    ${flexbox({ ai: 'center' })};
-                                    height: 5rem;
-                                    margin-left: 1rem;
-                                    color: ${theme.color.label};
-                                `}
-                            >
+                            <span className="px-4 h-20 flex items-center ml-4 text-label">
                                 댓글 / 답글
-                            </S.MoveText>
+                            </span>
                         </Link>
-                    </S.MoveSubContent>
+                    </div>
                 )}
-                <S.Box>
+                <div className="h-20 flex items-center border-b border-solid border-silver">
                     <Link to="/mypage/like">
-                        <S.MoveText>관심 보낸 글</S.MoveText>
+                        <span className="px-4">관심 보낸 글</span>
                     </Link>
-                </S.Box>
-                <S.ButtonWrapper>
+                </div>
+                <div className="flex justify-center">
                     <Link to="/logout">
                         <Button
                             size="md"
@@ -114,19 +107,12 @@ const MyPage = () => {
                             로그아웃
                         </Button>
                     </Link>
-                </S.ButtonWrapper>
+                </div>
 
-                <S.MoveText
-                    css={css`
-                        color: ${theme.color.lightGray};
-                        margin-top: 6.6rem;
-                        position: absolute;
-                        bottom: 5rem;
-                    `}
-                >
+                <span className="px-4 mt-24 absolute bottom-20 text-lightGray">
                     <Link to="/mypage/secession">탈퇴하기</Link>
-                </S.MoveText>
-            </S.MyPage>
+                </span>
+            </section>
         )
     );
 };

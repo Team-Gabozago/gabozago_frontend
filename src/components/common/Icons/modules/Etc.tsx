@@ -1,6 +1,7 @@
 import * as S from './style';
 
 interface Props {
+    className?: string;
     fontSize?: number;
     color?: string;
 }

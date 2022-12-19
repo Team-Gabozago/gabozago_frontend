@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes rolling {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY((-100% / 6) * (5));
+    }
+}

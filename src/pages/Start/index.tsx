@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import * as S from './Start.style';
-
 import Button from '@/components/common/Button';
 import Logo from '@/components/common/Icons/modules/Logo';
 import { startSports } from '@/constants/sports';
@@ -21,41 +19,53 @@ const StartPage = () => {
     }, []);
 
     return (
-        <S.StartWrapper>
+        <section className="h-screen flex flex-col justify-between items-center pt-28 pb-8 bg-navy">
             {isLogo ? (
-                <S.LogoWrapper>
+                <div className="h-screen flex flex-col justify-center items-center">
                     <Logo.Big />
-                </S.LogoWrapper>
+                </div>
             ) : (
                 <>
-                    <S.TitleWrppaer>
-                        <S.Title>동료는</S.Title>
-                        <S.Title>WANTU가 모을게,</S.Title>
-                        <S.Title data-id="like">
-                            <S.SportWrapper>
-                                <S.SportUL>
+                    <div className="flex flex-col gap-6 px-10">
+                        <div className="text-white text-display font-weight font-GangwonEduPower">
+                            동료는
+                        </div>
+                        <div className="text-white text-display font-weight font-GangwonEduPower">
+                            WANTU가 모을게,
+                        </div>
+                        <div data-id="like">
+                            <div className="h-12 overflow-hidden">
+                                <ul className="animate-rolling text-white text-display font-weight font-GangwonEduPower">
                                     {startSports.map(sport => (
-                                        <S.SportLI key={sport.id}>
-                                            {sport.name}{sport.emoji}
-                                        </S.SportLI>
+                                        <li
+                                            key={sport.id}
+                                            className="h-4 flex items-center py-6"
+                                        >
+                                            {sport.name}
+                                            {sport.emoji}
+                                        </li>
                                     ))}
-                                    <S.SportLI>
+                                    <li className="h-4 flex items-center py-6">
                                         {startSports[0].name}
                                         {startSports[0].emoji}
-                                    </S.SportLI>
-                                </S.SportUL>
-                            </S.SportWrapper>
-                        </S.Title>
-                        <S.Title>누가 할래?</S.Title>
-                    </S.TitleWrppaer>
-                    <S.ButtonWrapper>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div className="text-white text-display font-weight font-GangwonEduPower">
+                            누가 할래?
+                        </div>
+                    </div>
+                    <div className="flex flex-col gap-2 py-6">
                         <Link to="/signup">
                             <Button
                                 size="md"
                                 backgroundColor={theme.color.gray}
                                 backgroundImage={theme.color.gradient}
                             >
-                                <S.StartText>시작하기</S.StartText>
+                                <span className="font-weight text-sm text-green">
+                                    시작하기
+                                </span>
                             </Button>
                         </Link>
                         <Link to="/login">
@@ -63,15 +73,15 @@ const StartPage = () => {
                                 size="md"
                                 backgroundColor={theme.color.transparent}
                             >
-                                <S.LoginText>
+                                <span className="text-sm text-gray">
                                     이미 계정이 있나요? 로그인
-                                </S.LoginText>
+                                </span>
                             </Button>
                         </Link>
-                    </S.ButtonWrapper>
+                    </div>
                 </>
             )}
-        </S.StartWrapper>
+        </section>
     );
 };
 

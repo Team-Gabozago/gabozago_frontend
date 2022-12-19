@@ -23,7 +23,6 @@ module.exports = {
       'GangwonEduPower' : 'GangwonEduPower',
       'Spoqa-Han-Sans-Neo': 'Spoqa-Han-Sans-Neo',
       'Pretendard-Regular': 'Pretendard-Regular'
-
     },
     colors: {
       black: '#000',
@@ -46,6 +45,9 @@ module.exports = {
       gradient: `linear-gradient(to right, rgb(152, 255, 236) , rgb(0, 255, 56))`,
       greenSpeech: '#00FF38',
     },
+    animation: {
+      'rolling': 'rolling 6s infinite forwards'
+    }
   },
   plugins: [],
 };

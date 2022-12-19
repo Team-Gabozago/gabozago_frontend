@@ -2,8 +2,6 @@ import { useQuery, useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
-import * as S from './Feed.style';
-
 import { getFeed, unLikeFeed, likeFeed, deleteFeed } from '@/apis/feeds';
 import I from '@/components/common/Icons';
 import Comments from '@/components/Feed/Comments';
@@ -22,11 +20,11 @@ const FeedPage = () => {
     const [isImageModal, setIsImageModal] = useState(false);
     const [zoomImage, setZoomImage] = useState({
         id: 0,
-        imageUrl: ''
+        imageUrl: '',
     });
 
     const { data: feed, refetch: refetchFeed } = useQuery(['feed'], () => {
-        if (id) return getFeed(+id);
+        if (id) getFeed(+id);
         return true;
     });
 
@@ -76,20 +74,24 @@ const FeedPage = () => {
     useEffect(() => {
         // 한 번 받아온 데이터도 계속 요청하고 있는데... 수정할 순 없을까?
         refetchFeed();
-    }, [id]);
+    }, [id, refetchFeed]);
 
     return (
         feed && (
             <>
                 <Header title={feed.title} />
-                <S.FeedHeader>
+                <header className="flex justify-between items-center p-6">
                     <FeedProfile
                         author={feed.author}
                         updatedAt={feed.updated_at}
                     />
-                    <S.ToggleButton onClick={handleToggle}>
+                    <button
+                        type="button"
+                        className="relative"
+                        onClick={handleToggle}
+                    >
                         <I.Toggle fontSize={1.5} color={theme.color.gray} />
-                    </S.ToggleButton>
+                    </button>
                     {isToggleModal && (
                         <>
                             <Overlayout
@@ -97,18 +99,25 @@ const FeedPage = () => {
                                     setIsToggleModal(false)
                                 }
                             />
-                            <S.ToggleModal>
-                                <Link to={`/feed/form/${feed.id}`}>
-                                    <S.ToggleModalBox>
-                                        <I.Edit /> 수정하기
-                                    </S.ToggleModalBox>
-                                </Link>
-                                <S.ToggleModalBox
-                                    onClick={() => setIsDeleteModal(true)}
-                                >
-                                    <I.Edit /> 삭제하기
-                                </S.ToggleModalBox>
-                            </S.ToggleModal>
+                            <section className="w-24 h-20 absolute top-28 right-4 py-4 px-3 rounded-md z-[999] bg-white">
+                                <div className="flex flex-col justify-center imtes-center gap-4">
+                                    <Link to={`/feed/form/${feed.id}`}>
+                                        <button
+                                            type="button"
+                                            className="w-full text-xs"
+                                        >
+                                            <I.Edit /> 수정하기
+                                        </button>
+                                    </Link>
+                                    <button
+                                        type="button"
+                                        className="w-full text-xs"
+                                        onClick={() => setIsDeleteModal(true)}
+                                    >
+                                        <I.Edit /> 삭제하기
+                                    </button>
+                                </div>
+                            </section>
                         </>
                     )}
                     {isDeleteModal && (
@@ -124,32 +133,53 @@ const FeedPage = () => {
                             />
                         </GlobalModal>
                     )}
-                </S.FeedHeader>
-                <S.FeedContainer>
-                    <S.FeedAddress>
-                        {feed.location.place} {feed.location.placeDetail}
-                    </S.FeedAddress>
-                    <S.FeedContent>{feed.content}</S.FeedContent>
-                    <S.FeedImages>
+                </header>
+                <div className="flex flex-col gap-6 pt-8 px-6">
+                    <span className="text-gray text-xs">
+                        {/* {feed.location.place} {feed.location.placeDetail} */}
+                    </span>
+                    <div>{feed.content}</div>
+                    <div className="flex gap-3 overflow-x-scroll">
                         {feed.images &&
                             feed.images.map(
                                 (image: { id: number; filePath: string }) => (
-                                    <S.FeedImageBox
+                                    <input
+                                        type="image"
+                                        className="w-44 h-44 cursor-pointer rounded-xl"
                                         src={image.filePath}
-                                        alt="피드 이미지"
+                                        alt="Feed Image"
                                         key={`image-${image.id}`}
-                                        onClick={() => { setZoomImage({ id: image.id, imageUrl: image.filePath }); setIsImageModal(true); }}
+                                        onClick={() => {
+                                            setZoomImage({
+                                                id: image.id,
+                                                imageUrl: image.filePath,
+                                            });
+                                            setIsImageModal(true);
+                                        }}
                                     />
                                 )
                             )}
-                    </S.FeedImages>
-                    {zoomImage.id > 0 && isImageModal &&
-                        <GlobalModal size="medium" handleCancelClick={() => setIsImageModal(false)}>
-                            <S.FeedZoomImageBox src={zoomImage.imageUrl} />
+                    </div>
+                    {zoomImage.id > 0 && isImageModal && (
+                        <GlobalModal
+                            size="medium"
+                            handleCancelClick={() => setIsImageModal(false)}
+                        >
+                            <input
+                                type="image"
+                                className="w-80 h-full"
+                                alt="zoom Feed Image"
+                                src={zoomImage.imageUrl}
+                            />
                         </GlobalModal>
-                    }
-                    <S.LikeButton
-                        liked={feed.liked}
+                    )}
+                    <button
+                        type="button"
+                        className={`w-80 h-12 flex justify-center items-center gap-2 rounded-[50px] cursor-pointer
+                        border
+                        border-solid
+                        border-gray
+                        ${feed.liked ? 'bg-gray' : 'bg-white'}`}
                         onClick={() => handleLike(feed.liked)}
                     >
                         <I.Heart
@@ -159,15 +189,21 @@ const FeedPage = () => {
                                     : theme.color.gray
                             }
                         />
-                        <span>관심있어요</span>
-                    </S.LikeButton>
+                        <span
+                            className={`${
+                                feed.liked ? 'text-white' : 'text-gray'
+                            }`}
+                        >
+                            관심있어요
+                        </span>
+                    </button>
                     <Comments
                         id={feed.id}
                         profileImageUrl={
                             feed.author && feed.author.profile_image_url
                         }
                     />
-                </S.FeedContainer>
+                </div>
             </>
         )
     );
