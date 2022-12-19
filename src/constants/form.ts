@@ -17,7 +17,7 @@ export const signupFormData = [
     {
         id: 3,
         title: '비밀번호는 뭘로 할까요?',
-        directive: '대소문자, 숫자 포함 6자리 이상 입력해주세요',
+        directive: '대소문자, 숫자, 특수문자 포함 6자리 이상 입력해주세요',
     },
     {
         id: 4,

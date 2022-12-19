@@ -2,6 +2,7 @@ import { Global, css } from '@emotion/react';
 
 import { flexbox } from '@/styles/mixin';
 
+import '../tailwind/index.css';
 import './reset.css';
 import './font.css';
 

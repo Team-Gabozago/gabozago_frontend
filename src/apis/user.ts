@@ -15,15 +15,10 @@ export const postSignupUser = async (
     const data = await response.json();
 
     try {
-        if (data) {
-            const { headers } = response;
-
-            if (headers.get('authorization')) {
-                localStorage.setItem(
-                    'accessToken',
-                    headers.get('authorization')!
-                );
-            }
+        const { headers } = response;
+        const accessToken = headers.get('Authorization');
+        if (accessToken) {
+            localStorage.setItem('accessToken', accessToken);
         }
 
         return data.code;
@@ -67,12 +62,9 @@ export const postLoginUser = async (postLoginBodyType: PostLoginBodyType) => {
 
     try {
         const { headers } = response;
-        if (headers.get('Authorization')) {
-            localStorage.setItem(
-                'accessToken',
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                headers.get('Authorization')!
-            );
+        const accessToken = headers.get('Authorization');
+        if (accessToken) {
+            localStorage.setItem('accessToken', accessToken);
         }
 
         return data.code;

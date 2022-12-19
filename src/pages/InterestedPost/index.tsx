@@ -2,13 +2,12 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import * as S from './Like.style';
-
 import { getMyArea } from '@/apis/area';
 import { getFeeds } from '@/apis/feeds';
 import { getMyPage } from '@/apis/mypage';
 import Header from '@/components/common/Header';
 import Navigation from '@/components/common/Navigation';
+import Title from '@/components/common/Title';
 import CreateFeed from '@/components/CreateFeed';
 import GlobalModal from '@/components/GlobalModal';
 import LikeSportModal from '@/components/MyPage/LikeSport/LikeSportModal';
@@ -47,15 +46,19 @@ const LikePage = () => {
     }, [clickedSport, refetchFeeds, sortType]);
 
     return (
-        <S.LikePage>
-            <Header myArea={myArea} refetchMyArea={refetchMyArea} refetchFeeds={refetchFeeds} />
+        <section>
+            <Header
+                myArea={myArea}
+                refetchMyArea={refetchMyArea}
+                refetchFeeds={refetchFeeds}
+            />
             {me && me.categories.length > 0 ? (
                 <>
-                    <S.Title>
+                    <Title>
                         관심 운동의
                         <br /> 새 제안이에요.
-                    </S.Title>
-                    <S.SportWrapper>
+                    </Title>
+                    <div className="flex gap-2 flex-wrap">
                         {me.categories.map(
                             (
                                 category: {
@@ -64,53 +67,76 @@ const LikePage = () => {
                                     favorite: boolean;
                                 },
                                 idx: number
-                            ) => (
-                                category.favorite &&
-                                <S.SportButton
-                                    clicked={idx === clickedSport.idx}
-                                    key={category.id}
-                                    onClick={() =>
-                                        setClickedSport({
-                                            idx,
-                                            name: category.name,
-                                        })
-                                    }
-                                >
-                                    {category.name}
-                                </S.SportButton>
-                            )
+                            ) =>
+                                category.favorite && (
+                                    <button
+                                        type="button"
+                                        className={`h-7 rounded-2xl px-3 text-silver font-xs 
+                                        border
+                                        border-solid
+                                        ${
+                                            idx === clickedSport.idx
+                                                ? 'border-blue'
+                                                : 'border-gray'
+                                        }
+                                        ${
+                                            idx === clickedSport.idx &&
+                                            'bg-blue'
+                                        }`}
+                                        key={category.id}
+                                        onClick={() =>
+                                            setClickedSport({
+                                                idx,
+                                                name: category.name,
+                                            })
+                                        }
+                                    >
+                                        {category.name}
+                                    </button>
+                                )
                         )}
-                        <S.PlusSportButton onClick={handlePlusClick}>
+                        <button
+                            type="button"
+                            className="w-8 h-7 rounded-2xl bg-lightNavy text-white"
+                            onClick={handlePlusClick}
+                        >
                             +
-                        </S.PlusSportButton>
-                    </S.SportWrapper>
+                        </button>
+                    </div>
                     <Navigation
                         sortType={sortType}
                         handleNaviLi={handleNaviLi}
                     />
                     {feeds && feeds.length > 0 ? (
-                        feeds.map((feed: Feed) =>
+                        feeds.map((feed: Feed) => (
                             <Link
                                 to={`/feed/${feed.id}`}
                                 key={`post-${feed.id}`}
                             >
                                 <Post post={feed} />
-                            </Link>)
+                            </Link>
+                        ))
                     ) : (
-                        <S.BlankLike>No Data...</S.BlankLike>
+                        <div className="w-full mt-8 text-center text-lightGray">
+                            No Data...
+                        </div>
                     )}
                 </>
             ) : (
-                <S.NoLikeContent>
-                    <S.NoLikeText>
+                <div className="h-full flex flex-col justify-center items-ccenter">
+                    <div className="text-center text-silver text-xs mb-4">
                         아직 등록된 관심 운동이 없어요.
                         <br />
                         좋아하는 운동 종목을 설정해보세요.
-                    </S.NoLikeText>
-                    <S.LikeAddButton onClick={handlePlusClick}>
+                    </div>
+                    <button
+                        type="button"
+                        className="w-24 h-8 bg-silver text-xs font-weight rounded-2xl"
+                        onClick={handlePlusClick}
+                    >
                         관심운동 추가
-                    </S.LikeAddButton>
-                </S.NoLikeContent>
+                    </button>
+                </div>
             )}
             <CreateFeed />
             {isSportModal && (
@@ -125,7 +151,7 @@ const LikePage = () => {
                     />
                 </GlobalModal>
             )}
-        </S.LikePage>
+        </section>
     );
 };
 

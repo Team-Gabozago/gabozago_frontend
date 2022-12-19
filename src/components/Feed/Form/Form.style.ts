@@ -43,6 +43,7 @@ export const CheckBox = styled.div<{ clickedSport: boolean }>`
 `;
 
 export const LabelWrapper = styled.div`
+    width: 20.375rem;
     animation: ${fadeInDown} 1s;
 `;
 
@@ -115,6 +116,7 @@ export const ImageBox = styled.img`
 `;
 
 export const ImageHeader = styled.header`
+    width: 20.375rem;
     ${flexbox({ jc: 'space-between' })};
     margin-bottom: 0.5rem;
 `;
@@ -178,7 +180,7 @@ export const SearchContent = styled.div`
 `;
 
 export const Form = styled.form`
-    ${flexbox({ dir: 'column' })};
+    ${flexbox({ dir: 'column', ai: 'center' })};
     gap: 1.5rem;
     padding: 1.5rem;
 `;

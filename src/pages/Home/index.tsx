@@ -2,8 +2,6 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import * as S from './Home.style';
-
 import { getMyArea } from '@/apis/area';
 import { getAllFeeds } from '@/apis/feeds';
 import Header from '@/components/common/Header';
@@ -13,17 +11,14 @@ import Post from '@/components/Post';
 import { USER_LOCATION_NOT_FOUND } from '@/constants/code';
 import { Feed } from '@/interfaces/feed';
 
-export default function HomePage() {
+const HomePage: React.FC = () => {
     const [sortType, setSortType] = useState('NEWEST');
 
     const { data: feeds, refetch: refetchFeeds } = useQuery(['allFeeds'], () =>
         getAllFeeds(sortType)
     );
 
-    const { data: myArea } = useQuery(
-        ['myArea'],
-        getMyArea
-    );
+    const { data: myArea } = useQuery(['myArea'], getMyArea);
 
     const handleNaviLi = (value: string) => {
         setSortType(value);
@@ -34,18 +29,18 @@ export default function HomePage() {
     }, [sortType, refetchFeeds]);
 
     return (
-        <S.HomePage>
+        <section className="h-screen">
             <Header myArea={myArea} refetchFeeds={refetchFeeds} />
-            <S.Title>
+            <h1 className="my-8 font-bold text-silver text-title font-GangwonEduPower">
                 우리 동네의
                 <br /> 새 제안이에요.
-            </S.Title>
+            </h1>
             {myArea && myArea.code === USER_LOCATION_NOT_FOUND ? (
-                <S.NotFoundArea>
+                <div className="sflex justify-center items-center text-silver text-xs">
                     아직 동네가 설정되지 않았어요.
                     <br />
                     보고 싶은 동네를 설정해보세요.
-                </S.NotFoundArea>
+                </div>
             ) : (
                 <>
                     <Navigation
@@ -65,6 +60,8 @@ export default function HomePage() {
                     <CreateFeed />
                 </>
             )}
-        </S.HomePage>
+        </section>
     );
-}
+};
+
+export default HomePage;
