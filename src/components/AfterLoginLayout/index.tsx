@@ -1,14 +1,12 @@
 import { Outlet } from 'react-router-dom';
 
-import * as S from './AfterLoginLayout.style';
-
 import Footer from '@/components/common/Footer';
 
 const AfterLoginLayout = () => (
     <>
-        <S.AfterLoginLayout>
+        <section className="h-full w-96 flex flex-col px-7 relative bg-navy overflow-y-auto">
             <Outlet />
-        </S.AfterLoginLayout>
+        </section>
         <Footer />
     </>
 );

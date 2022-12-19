@@ -133,7 +133,7 @@ const PasswordPage = () => {
                                 <Input
                                     name="새 비밀번호"
                                     type="password"
-                                    placeholder="대소문자, 숫자 포함 6자리 이상 입력해주세요."
+                                    placeholder="대소문자, 숫자, 특수문자 포함 6자리 이상 입력해주세요."
                                     value={newPassword}
                                     onChange={(
                                         e: React.ChangeEvent<HTMLInputElement>
