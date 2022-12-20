@@ -2,8 +2,6 @@ import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import * as S from './Header.style';
-
 import { postAreaInfo } from '@/apis/area';
 import I from '@/components/common/Icons';
 import SelectAreaBox from '@/components/common/SelectAreaBox';
@@ -15,7 +13,7 @@ import { AreaType } from '@/types/place';
 interface HeaderProps {
     myArea: MyAreaInfo;
     refetchMyArea?: () => void;
-    refetchFeeds: () => void
+    refetchFeeds?: () => void;
 }
 
 const Header = ({ myArea, refetchMyArea, refetchFeeds }: HeaderProps) => {
@@ -56,21 +54,27 @@ const Header = ({ myArea, refetchMyArea, refetchFeeds }: HeaderProps) => {
 
     return (
         <>
-            <S.Header>
-                <I.Logo.Small />
-                <S.Title onClick={() => setIsAreaBox(!isAreaBox)}>
+            <header className="w-80 flex justify-between items-center py-5 border-b border-solid border-lightNavy bg-navy">
+                <Link to="/home">
+                    <I.Logo.Small />
+                </Link>
+                <button
+                    type="button"
+                    className="flex items-center gap-2 text-white cursor-pointer"
+                    onClick={() => setIsAreaBox(!isAreaBox)}
+                >
                     {place.name}{' '}
                     <I.ArrowDown
                         fontSize={0.5}
                         color={theme.color.greenSpeech}
                     />
-                </S.Title>
-                <S.Box>
+                </button>
+                <div className="flex gap-4">
                     <Link to="/mypage">
                         <I.Profile fontSize={1.2} color={theme.color.white} />
                     </Link>
-                </S.Box>
-            </S.Header>
+                </div>
+            </header>
             {isAreaBox && (
                 <>
                     <Overlayout handleCancelClick={() => setIsAreaBox(false)} />
