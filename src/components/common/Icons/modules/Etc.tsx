@@ -13,7 +13,7 @@ export const Asterisk = (props: Props) => (
     <S.Icon className="ic-asterisk" {...props} />
 );
 
-export const Comment = (props: Props) => (
+export const ReplyComment = (props: Props) => (
     <S.Icon className="ic-comment" {...props} />
 );
 

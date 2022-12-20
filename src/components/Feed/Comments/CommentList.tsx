@@ -1,36 +1,26 @@
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useParams } from 'react-router-dom';
 
-import FeedProfile from '../Profile';
-
-import * as S from './CommentList.style';
-import CommentPatch from './CommentPatch';
+import Comment from './Comment';
 
 import { deleteComment, patchComment } from '@/apis/comments';
 import GlobalModal from '@/components/GlobalModal';
-import ModalContent from '@/components/ModalContent';
-import { Comment } from '@/interfaces/comment';
-import { userState } from '@/recoil/atoms/user';
+import ModalContents from '@/components/ModalContent';
+import { AllCommentType, CommentType } from '@/types/comment';
 
 interface CommentListProps {
-    feedId: number;
-    comments: Comment[];
+    allComments: AllCommentType[];
     refetchComments: () => void;
 }
 
-const CommentList = ({
-    feedId,
-    comments,
-    refetchComments,
-}: CommentListProps) => {
-    const user = useRecoilValue(userState);
+const CommentList = ({ allComments, refetchComments }: CommentListProps) => {
+    const { id } = useParams();
     const [isModal, setIsModal] = useState(false);
-    const [isPatch, setIsPatch] = useState(false);
     const [modalText, setModalText] = useState({
         title: '',
         description: '',
-        handleButtonClick: () => any,
+        handleButtonClick: () => true,
     });
 
     const fetchDeleteComment = useMutation(deleteComment, {
@@ -41,8 +31,8 @@ const CommentList = ({
                     description: '댓글 삭제 완료',
                     handleButtonClick: () => {
                         refetchComments();
-                        setIsPatch(false);
                         setIsModal(false);
+                        return true;
                     },
                 });
                 setIsModal(true);
@@ -61,8 +51,8 @@ const CommentList = ({
                     description: '댓글 수정 완료',
                     handleButtonClick: () => {
                         refetchComments();
-                        setIsPatch(false);
                         setIsModal(false);
+                        return true;
                     },
                 });
                 setIsModal(true);
@@ -73,70 +63,57 @@ const CommentList = ({
         },
     });
 
-    const handlePutComment = (commentId: number, content: string) => fetchPatchComment.mutate({ feedId, commentId, content })
-
+    const handlePutComment = (commentId: number, content: string) =>
+        fetchPatchComment.mutate({ id, commentId, content });
 
     const handleDeleteComment = (commentId: number) => {
         setModalText({
             title: '댓글을 삭제하시겠습니까 ?',
             description: '댓글을 삭제하면 복구할 수 없습니다.',
             handleButtonClick: () =>
-                fetchDeleteComment.mutate({ feedId, commentId }),
+                fetchDeleteComment.mutate({ id, commentId }),
         });
         setIsModal(true);
     };
 
     return (
-        <S.CommentList>
-            {comments &&
-                comments.map((comment: Comment) => (
-                    <S.Comment key={`comment-${comment.id}`}>
-                        <S.CommentBox>
-                            <FeedProfile
-                                author={comment.author}
-                                updatedAt={comment.created_at}
-                            />
-                            {user.id === comment.author.id && (
-                                <>
-                                    <S.ButtonWrapper>
-                                        <S.Button onClick={() => setIsPatch(!isPatch)}>
-                                            수정
-                                        </S.Button>
-                                        <S.Button
-                                            onClick={() =>
-                                                handleDeleteComment(comment.id)
-                                            }
-                                        >
-                                            삭제
-                                        </S.Button>
-                                    </S.ButtonWrapper>
-                                    {isModal && (
-                                        <GlobalModal
-                                            size="small"
-                                            handleCancelClick={() =>
-                                                setIsModal(false)
-                                            }
-                                        >
-                                            <ModalContent
-                                                title={modalText.title}
-                                                description={
-                                                    modalText.description
-                                                }
-                                                buttonText="확인"
-                                                handleButtonClick={
-                                                    modalText.handleButtonClick
-                                                }
-                                            />
-                                        </GlobalModal>
-                                    )}
-                                </>
-                            )}
-                        </S.CommentBox>
-                        <S.Content>{isPatch ? <CommentPatch key={`comment-${comment.id}`} comment={comment} setIsPatch={setIsPatch} handlePutComment={(commentId: number, content: string) => handlePutComment(commentId, content)} /> : comment.content}</S.Content>
-                    </S.Comment>
-                ))
-            }
-        </S.CommentList >
+        <section className="flex flex-col gap-6">
+            {allComments &&
+                allComments.map((comment: AllCommentType) => (
+                    <>
+                        <Comment
+                            key={`comment-${comment.id}`}
+                            comment={comment}
+                            handlePutComment={handlePutComment}
+                            handleDeleteComment={handleDeleteComment}
+                            refetchComments={refetchComments}
+                        />
+                        {comment.replies.length > 0 &&
+                            comment.replies.map((replyComment: CommentType) => (
+                                <Comment
+                                    key={`comment-${replyComment.id}`}
+                                    comment={replyComment}
+                                    handlePutComment={handlePutComment}
+                                    handleDeleteComment={handleDeleteComment}
+                                    refetchComments={refetchComments}
+                                />
+                            ))}
+                    </>
+                ))}
+            {isModal && (
+                <GlobalModal
+                    size="small"
+                    handleCancelClick={() => setIsModal(false)}
+                >
+                    <ModalContents
+                        title={modalText.title}
+                        description={modalText.description}
+                        buttonText="확인"
+                        handleButtonClick={modalText.handleButtonClick}
+                    />
+                </GlobalModal>
+            )}
+        </section>
     );
 };
 

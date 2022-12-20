@@ -1,4 +1,3 @@
-import { css } from '@emotion/react';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -98,11 +97,8 @@ const MyPage = () => {
                 <div className="flex justify-center">
                     <Link to="/logout">
                         <Button
+                            className="mt-7 border border-solid border-gray"
                             size="md"
-                            css={css`
-                                border: 1px solid ${theme.color.gray};
-                                margin-top: 1.75rem;
-                            `}
                         >
                             로그아웃
                         </Button>

@@ -1,37 +1,56 @@
 import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import CommentList from './CommentList';
-import * as S from './Comments.style';
-import CreateComment from './CreateComment';
+import CreateComment from './Create';
 
-import { getComments } from '@/apis/comments';
+import { getComments, getReplyComments } from '@/apis/comments';
+import { AllCommentType, CommentType } from '@/types/comment';
 
-interface CommentProps {
-    id: number;
-    profileImageUrl: string;
-}
+const Comments = () => {
+    const { id: feedId } = useParams();
+    const [allComments, setAllComments] = useState<AllCommentType[]>([]);
 
-const Comments = ({ id, profileImageUrl }: CommentProps) => {
     const { data: comments, refetch: refetchComments } = useQuery(
         ['feedComments'],
         () => {
-            if (id) return getComments(id);
+            if (feedId) return getComments(+feedId);
             return false;
         }
     );
 
+    useEffect(() => {
+        async function createComments() {
+            const newComments = await comments.reduce(
+                async (acc: Promise<Response[]>, comment: AllCommentType) => {
+                    // 댓글 + 대댓글 데이터 파싱하기.
+                    const replyComment: CommentType[] = await getReplyComments(
+                        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                        +feedId!,
+                        comment.id
+                    );
+                    // eslint-disable-next-line no-param-reassign
+                    comment.replies = replyComment;
+                    return [...(await acc), comment];
+                },
+                []
+            );
+            setAllComments(newComments);
+        }
+
+        if (comments) createComments();
+    }, [comments, feedId]);
+
     return (
-        comments && (
+        allComments && (
             <>
-                <CreateComment
-                    id={id}
-                    profileImageUrl={profileImageUrl}
-                    refetchComments={refetchComments}
-                />
-                <S.CommentTotalText>댓글 {comments.length}</S.CommentTotalText>
+                <CreateComment refetchComments={refetchComments} />
+                <span className="pt-3 border-t-1 border-solid border-gray text-xs text-label">
+                    댓글 {allComments.length}
+                </span>
                 <CommentList
-                    feedId={id}
-                    comments={comments}
+                    allComments={allComments}
                     refetchComments={refetchComments}
                 />
             </>

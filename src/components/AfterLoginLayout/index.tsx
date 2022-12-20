@@ -4,7 +4,7 @@ import Footer from '@/components/common/Footer';
 
 const AfterLoginLayout = () => (
     <>
-        <section className="h-full w-96 flex flex-col px-7 relative bg-navy overflow-y-auto">
+        <section className="h-screen w-96 flex flex-col px-7 relative bg-navy overflow-y-auto">
             <Outlet />
         </section>
         <Footer />

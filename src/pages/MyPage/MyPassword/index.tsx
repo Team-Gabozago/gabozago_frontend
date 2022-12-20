@@ -245,6 +245,7 @@ const PasswordPage = () => {
                                 navigate('/login');
                             }
                             setIsModal(false);
+                            return true;
                         }}
                     />
                 </GlobalModal>

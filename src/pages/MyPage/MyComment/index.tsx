@@ -10,7 +10,7 @@ import LoadingSpinner from '@/components/common/LoadingSpinner';
 import GlobalModal from '@/components/GlobalModal';
 import ModalContent from '@/components/ModalContent';
 import Header from '@/components/MyPage/Header';
-import { Comment } from '@/interfaces/comment';
+import { CommentType } from '@/types/comment';
 import { calculateDate } from '@/utils/date';
 
 const MyCommentPage = () => {
@@ -20,7 +20,7 @@ const MyCommentPage = () => {
         isOpen: false,
         title: '',
         description: '',
-        handleButtonClick: () => any,
+        handleButtonClick: () => true,
     });
     const { data: comments, refetch: refetchMyComments } = useQuery(
         ['myPage'],
@@ -38,6 +38,7 @@ const MyCommentPage = () => {
                     description: '댓글 삭제 완료',
                     handleButtonClick: () => {
                         refetchMyComments();
+                        return true;
                     },
                 });
             }
@@ -56,7 +57,10 @@ const MyCommentPage = () => {
             title: '서비스 준비중입니다...',
             description: '삭제한 답글은 되돌릴 수 없어요.',
             // handleButtonClick: () => fetchDeleteComment.mutate({ feedId: modalData.feedId, commentId: modalData.commentId })
-            handleButtonClick: () => setModalData({ ...modalData, isOpen: false })
+            handleButtonClick: () => {
+                setModalData({ ...modalData, isOpen: false });
+                return true;
+            },
         });
     });
 
@@ -66,13 +70,22 @@ const MyCommentPage = () => {
                 <Header title="내가 쓴 댓글/답글" />
                 <S.MyCommentContent>
                     <S.SubTitle>길게 눌러 삭제</S.SubTitle>
-                    {comments && comments.length > 0 ? comments.map((comment: Comment) => (
-                        <S.PostContainer key={`comment-${comment.id}`} {...bind()}>
-                            <S.Time>{calculateDate(comment.created_at)}</S.Time>
-                            <S.Divider />
-                            <S.Content>{comment.content}</S.Content>
-                        </S.PostContainer>
-                    )) : <LoadingSpinner size="large" />}
+                    {comments && comments.length > 0 ? (
+                        comments.map((comment: CommentType) => (
+                            <S.PostContainer
+                                key={`comment-${comment.id}`}
+                                {...bind()}
+                            >
+                                <S.Time>
+                                    {calculateDate(comment.updated_at)}
+                                </S.Time>
+                                <S.Divider />
+                                <S.Content>{comment.content}</S.Content>
+                            </S.PostContainer>
+                        ))
+                    ) : (
+                        <LoadingSpinner size="large" />
+                    )}
                 </S.MyCommentContent>
                 <S.EndPointWrapper>
                     <S.EndPoint />
@@ -81,7 +94,9 @@ const MyCommentPage = () => {
             {modalData.isOpen && (
                 <GlobalModal
                     size="small"
-                    handleCancelClick={() => setModalData({ ...modalData, isOpen: false })}
+                    handleCancelClick={() =>
+                        setModalData({ ...modalData, isOpen: false })
+                    }
                 >
                     <ModalContent
                         title={modalData.title}

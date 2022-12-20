@@ -19,7 +19,7 @@ export default function IconPage() {
             <div>
                 <I.BackButton />
                 <I.Asterisk />
-                <I.Comment />
+                <I.ReplyComment />
                 <I.Create color={theme.color.navy} />
                 <I.Edit />
                 <I.Profile />
