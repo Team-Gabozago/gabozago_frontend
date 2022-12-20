@@ -24,7 +24,7 @@ const FeedPage = () => {
     });
 
     const { data: feed, refetch: refetchFeed } = useQuery(['feed'], () => {
-        if (id) getFeed(+id);
+        if (id) return getFeed(+id);
         return true;
     });
 
