@@ -182,8 +182,8 @@ const MySecessionPage = () => {
                             onClick={
                                 isComplete
                                     ? (
-                                        e: React.SyntheticEvent<HTMLFormElement>
-                                    ) => handleSecession(e)
+                                          e: React.SyntheticEvent<HTMLFormElement>
+                                      ) => handleSecession(e)
                                     : handleNextButton
                             }
                         >
@@ -203,7 +203,10 @@ const MySecessionPage = () => {
                         title="안녕히 가세요, 또 만나요!"
                         description="계정 탈퇴가 완료되었어요."
                         buttonText="완료"
-                        handleButtonClick={() => navigate('/home')}
+                        handleButtonClick={() => {
+                            navigate('/home');
+                            return true;
+                        }}
                     />
                 </GlobalModal>
             )}

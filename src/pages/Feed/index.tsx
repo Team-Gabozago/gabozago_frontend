@@ -197,12 +197,7 @@ const FeedPage = () => {
                             관심있어요
                         </span>
                     </button>
-                    <Comments
-                        id={feed.id}
-                        profileImageUrl={
-                            feed.author && feed.author.profile_image_url
-                        }
-                    />
+                    <Comments />
                 </div>
             </>
         )

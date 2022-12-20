@@ -4,7 +4,7 @@ import { flexbox } from '@/styles/mixin';
 import theme from '@/styles/theme';
 
 export const Footer = styled.footer`
-    min-width: 23.4375rem;
+    min-width: 24rem;
     height: 3.5rem;
     position: fixed;
     bottom: 0;
