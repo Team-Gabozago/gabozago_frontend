@@ -83,7 +83,7 @@ const FeedPage = () => {
                 <header className="flex justify-between items-center p-6">
                     <FeedProfile
                         author={feed.author}
-                        updatedAt={feed.updated_at}
+                        updated_at={feed.updated_at}
                     />
                     <button
                         type="button"
@@ -190,9 +190,8 @@ const FeedPage = () => {
                             }
                         />
                         <span
-                            className={`${
-                                feed.liked ? 'text-white' : 'text-gray'
-                            }`}
+                            className={`${feed.liked ? 'text-white' : 'text-gray'
+                                }`}
                         >
                             관심있어요
                         </span>

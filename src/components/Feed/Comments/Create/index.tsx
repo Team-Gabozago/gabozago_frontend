@@ -58,7 +58,7 @@ const CreateComment = ({
         <div className="flex items-center gap-6 relative">
             <img
                 className="w-8 h-8 rounded-full"
-                src={user.profile_image || process.env.GABOZAGO_DEFAULT_IMAGE}
+                src={user.profile_image}
                 alt="프로필 이미지"
             />
             <input

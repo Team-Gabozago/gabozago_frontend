@@ -6,7 +6,7 @@ import Comment from './Comment';
 
 import { deleteComment, patchComment } from '@/apis/comments';
 import GlobalModal from '@/components/GlobalModal';
-import ModalContents from '@/components/ModalContent';
+import ModalContent from '@/components/ModalContent';
 import { AllCommentType, CommentType } from '@/types/comment';
 
 interface CommentListProps {
@@ -105,7 +105,7 @@ const CommentList = ({ allComments, refetchComments }: CommentListProps) => {
                     size="small"
                     handleCancelClick={() => setIsModal(false)}
                 >
-                    <ModalContents
+                    <ModalContent
                         title={modalText.title}
                         description={modalText.description}
                         buttonText="확인"

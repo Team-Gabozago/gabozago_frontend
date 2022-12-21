@@ -37,7 +37,8 @@ module.exports = {
         'no-nested-ternary': 'off', // 삼항연산자 2개이상 허용
         'react-hooks/exhaustive-deps': ['warn'],
         'jsx-a11y/tabindex-no-positive': 'off', // tabIndex string 형 허용하기.
-        "react/no-unknown-property": ['error', { ignore: ['css'] }],
+        'react/no-unknown-property': ['error', { ignore: ['css'] }],
+        camelcase: 'off',
         'react/function-component-definition': [
             // 함수형 컴포넌트 선언방식
             2,

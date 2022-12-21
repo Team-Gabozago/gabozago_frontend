@@ -7,7 +7,7 @@ import { getAllFeeds } from '@/apis/feeds';
 import Header from '@/components/common/Header';
 import Navigation from '@/components/common/Navigation';
 import CreateFeed from '@/components/CreateFeed';
-import Post from '@/components/Post';
+import FeedComponent from '@/components/Feed';
 import { USER_LOCATION_NOT_FOUND } from '@/constants/code';
 import { Feed } from '@/interfaces/feed';
 
@@ -54,7 +54,7 @@ const HomePage: React.FC = () => {
                                 to={`/feed/${feed.id}`}
                                 key={`post-${feed.id}`}
                             >
-                                <Post post={feed} />
+                                <FeedComponent post={feed} />
                             </Link>
                         ))}
                     <CreateFeed />
