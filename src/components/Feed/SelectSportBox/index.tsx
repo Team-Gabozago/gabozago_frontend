@@ -1,21 +1,21 @@
-import { useQuery } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useState } from 'react';
 
-import * as S from './Form.style';
-
-import { getCategories } from '@/apis/feeds';
 import I from '@/components/common/Icons';
 import theme from '@/styles/theme';
 import { CategoryType } from '@/types/sport';
 
 interface SelectSportBoxProps {
+    sportCategories: { id: number; name: string }[];
     setSelectSport: Dispatch<SetStateAction<boolean>>;
     setSport: Dispatch<SetStateAction<CategoryType>>;
 }
 
-const SelectSportBox = ({ setSelectSport, setSport }: SelectSportBoxProps) => {
+const SelectSportBox = ({
+    sportCategories,
+    setSelectSport,
+    setSport,
+}: SelectSportBoxProps) => {
     const [clickedSportIdx, setClickedSportIdx] = useState(0);
-    const { data: sportCategories } = useQuery(['categories'], getCategories);
 
     const handleClickCategory = (category: CategoryType) => {
         setClickedSportIdx(category.id);
@@ -24,17 +24,25 @@ const SelectSportBox = ({ setSelectSport, setSport }: SelectSportBoxProps) => {
             setSport({ id: category.id, name: category.name });
         }, 500);
     };
+
     return (
-        <S.SelectSportWrapper>
-            <S.SelectSportUl>
+        <div className="w-[20.375rem] h-[22rem] absolute top-40 p-6 bg-lightSilver rounded-lg z-[999] overflow-y-auto">
+            <ul>
                 {sportCategories &&
                     sportCategories.map((category: CategoryType) => (
-                        <S.SelectSportLi
+                        <li
+                            aria-hidden="true"
+                            className="flex items-center gap-2 px-3 py-4 border-b-[1px] border-solid border-silver cursor-pointer"
                             key={`sport-${category.id}`}
                             onClick={() => handleClickCategory(category)}
                         >
-                            <S.CheckBox
-                                clickedSport={clickedSportIdx === category.id}
+                            <div
+                                className={`w-4 h-4 flex justify-center items-center border-[1px] border-solid border-gray rounded-full
+                                ${
+                                    clickedSportIdx === category.id
+                                        ? 'text-white bg-navy'
+                                        : 'text-gray bg-lightSilver'
+                                }`}
                             >
                                 <I.Check
                                     fontSize={0.4}
@@ -44,12 +52,12 @@ const SelectSportBox = ({ setSelectSport, setSport }: SelectSportBoxProps) => {
                                             : theme.color.gray
                                     }
                                 />
-                            </S.CheckBox>
-                            {category.name}
-                        </S.SelectSportLi>
+                            </div>
+                            <span className="text-xs">{category.name}</span>
+                        </li>
                     ))}
-            </S.SelectSportUl>
-        </S.SelectSportWrapper>
+            </ul>
+        </div>
     );
 };
 

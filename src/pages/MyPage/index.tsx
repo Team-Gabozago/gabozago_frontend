@@ -19,6 +19,7 @@ const MyPage = () => {
         ['myPage'],
         getMyPage
     );
+
     const setUser = useSetRecoilState(userState);
 
     if (me && me.code === UNAUTHENTICATED) {

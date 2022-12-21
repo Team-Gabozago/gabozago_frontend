@@ -1,18 +1,45 @@
+import styled from '@emotion/styled';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import * as S from './Form.style';
-import SelectPlaceBox from './SelectPlaceBox';
-import SelectSportBox from './SelectSportBox';
-
-import { getFeed, postFeed, putFeed, postImageFile } from '@/apis/feeds';
+import {
+    getFeed,
+    postFeed,
+    putFeed,
+    postImageFile,
+    getCategories,
+} from '@/apis/feeds';
 import Button from '@/components/common/Button';
+import SelectPlaceBox from '@/components/Feed/SelectPlaceBox';
+import SelectSportBox from '@/components/Feed/SelectSportBox';
 import GlobalModal from '@/components/GlobalModal';
 import ModalContent from '@/components/ModalContent';
 import theme from '@/styles/theme';
 import { AreaType } from '@/types/place';
 import { CategoryType } from '@/types/sport';
+import { fadeInDown } from '@/utils/animation';
+
+const Label = styled.label`
+    color: ${theme.color.label};
+    font-size: ${theme.fontSize.xs};
+    margin-right: 5px;
+`;
+
+const Asterisk = styled.span`
+    color: ${theme.color.blue};
+    font-size: ${theme.fontSize.xs};
+`;
+
+const FeedInput = styled.input`
+    width: 20.375rem;
+    padding: 0 0 0.5rem 0.5rem;
+    border-bottom: 1px solid ${theme.color.gray};
+    animation: ${fadeInDown} 1s;
+    &:focus {
+        border-bottom: 1px solid ${theme.color.blue};
+    }
+`;
 
 const Form = () => {
     const { id } = useParams();
@@ -26,6 +53,8 @@ const Form = () => {
         title: '',
         description: '',
     });
+
+    const { data: sportCategories } = useQuery(['categories'], getCategories);
 
     const { data: feed } = useQuery(['feed'], () => {
         if (id) return getFeed(+id);
@@ -176,12 +205,12 @@ const Form = () => {
 
     return (
         <>
-            <S.Form>
-                <S.LabelWrapper>
-                    <S.Label htmlFor={sport.name}>운동</S.Label>
-                    <S.Asterisk>*</S.Asterisk>
-                </S.LabelWrapper>
-                <S.FeedInput
+            <form className="flex flex-col items-center gap-6 p-6">
+                <div className="w-[20.375rem] animate-fadeInDown duration-100">
+                    <Label htmlFor={sport.name}>운동</Label>
+                    <Asterisk>*</Asterisk>
+                </div>
+                <FeedInput
                     id={sport.name}
                     name="운동"
                     type="text"
@@ -191,15 +220,16 @@ const Form = () => {
                 />
                 {selectSport && (
                     <SelectSportBox
+                        sportCategories={sportCategories}
                         setSport={setSport}
                         setSelectSport={setSelectSport}
                     />
                 )}
-                <S.LabelWrapper>
-                    <S.Label htmlFor={title}>제목</S.Label>
-                    <S.Asterisk>*</S.Asterisk>
-                </S.LabelWrapper>
-                <S.FeedInput
+                <div className="w-[20.375rem] animate-fadeInDown duration-100">
+                    <Label htmlFor={title}>제목</Label>
+                    <Asterisk>*</Asterisk>
+                </div>
+                <FeedInput
                     name="제목"
                     type="text"
                     placeholder="운동 이름, 구하는 친구 수, 장소 등이 드러나면 좋아요"
@@ -208,10 +238,10 @@ const Form = () => {
                         handleChangeTitle(e)
                     }
                 />
-                <S.LabelWrapper>
-                    <S.Label htmlFor={place.name}>운동 장소</S.Label>
-                </S.LabelWrapper>
-                <S.FeedInput
+                <div className="w-[20.375rem] animate-fadeInDown duration-100">
+                    <Label htmlFor={place.name}>운동 장소</Label>
+                </div>
+                <FeedInput
                     name="운동 장소"
                     type="text"
                     placeholder="운동 장소를 검색해 보세요"
@@ -231,49 +261,61 @@ const Form = () => {
                         />
                     </GlobalModal>
                 )}
-                <S.LabelWrapper>
-                    <S.Label htmlFor={placeDetail}>장소 상세</S.Label>
-                </S.LabelWrapper>
-                <S.FeedInput
+                <div className="w-[20.375rem] animate-fadeInDown duration-100">
+                    <Label htmlFor={placeDetail}>장소 상세</Label>
+                </div>
+                <FeedInput
                     name="장소 상세"
                     type="text"
                     placeholder="호수, ⃝⃝ 앞 등 상세 장소 정보를 적어주세요"
                     value={placeDetail}
                     onChange={handleChangePlaceDetail}
                 />
-                <S.LabelWrapper>
-                    <S.Label htmlFor={content}>내용</S.Label>
-                    <S.Asterisk>*</S.Asterisk>
-                </S.LabelWrapper>
-                <S.ContentTextArea
+                <div className="w-[20.375rem]">
+                    <Label htmlFor={content}>내용</Label>
+                    <Asterisk>*</Asterisk>
+                </div>
+                <textarea
                     id={content}
+                    className="w-[20.375rem] h-[17.5rem] px-3 py-2 border-[1px] border-solid border-gray rounded resize-none animate-fadeInDown duration-100"
                     placeholder="약속 시간, 준비물, 실력 등 플레이를 위한 정보를 적어주세요"
                     value={content}
                     onChange={handleChangeContent}
                 />
-                <S.ImageWrapper>
-                    <S.ImageHeader>
-                        <S.Label>이미지 첨부</S.Label>
-                        <S.SubText>최대 5장</S.SubText>
-                    </S.ImageHeader>
+                <div className="mb-16">
+                    <header className="w-[20.375rem] flex justify-between mb-2">
+                        <Label>이미지 첨부</Label>
+                        <span className="text-xs text-lightGray">최대 5장</span>
+                    </header>
 
-                    <S.ImageContainer>
-                        <S.FileLabel htmlFor="file">추가</S.FileLabel>
+                    <article className="flex flex-wrap gap-3">
+                        <label
+                            htmlFor="file"
+                            className="w-[4.5rem] h-[4.5rem] flex justify-center items-center bg-navy text-white rounded cursor-pointer"
+                        >
+                            추가
+                        </label>
                         {feedFiles.map(file => (
-                            <S.ImageBox src={file} />
+                            <img
+                                aria-hidden="true"
+                                className="w-[4.5rem] h-[4.5rem] rounded cursor-pointer"
+                                src={file}
+                                alt="FeedImage"
+                            />
                         ))}
-                    </S.ImageContainer>
-                    <S.FileInput
+                    </article>
+                    <input
                         type="file"
                         id="file"
+                        className="w-0 h-0 absolute overflow-hidden"
                         accept="image/*"
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                             handleImageUpdate(e)
                         }
                     />
-                </S.ImageWrapper>
+                </div>
 
-                <S.ButtonWrapper>
+                <div className="mb-16">
                     <Button
                         type="submit"
                         size="md"
@@ -285,12 +327,16 @@ const Form = () => {
                             id ? handlePutFeed(e) : handleCreateFeed(e)
                         }
                     >
-                        <S.ButtonText isDisabled={isDisabled}>
+                        <span
+                            className={`${
+                                isDisabled ? 'text-black' : 'text-white'
+                            }`}
+                        >
                             {id ? '수정' : '완료'}
-                        </S.ButtonText>
+                        </span>
                     </Button>
-                </S.ButtonWrapper>
-            </S.Form>
+                </div>
+            </form>
             {isSuccessModal && (
                 <GlobalModal
                     size="small"
