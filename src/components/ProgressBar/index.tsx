@@ -1,23 +1,17 @@
-import * as S from './ProgressBar.style';
+import 'twin.macro';
 
 export interface ProgressBarprops {
     width: number;
     backgroundColor: string;
-    backgroundImage: string;
 }
 
-export const ProgressBar = ({
-    width,
-    backgroundColor,
-    backgroundImage,
-}: ProgressBarprops) => (
-    <S.ProgressBarWrapper>
-        <S.Foreground
-            width={width}
-            backgroundColor={backgroundColor}
-            backgroundImage={backgroundImage}
+export const ProgressBar = ({ width, backgroundColor }: ProgressBarprops) => (
+    <div className="w-96 h-2 mt-2 rounded-lg overflow-hidden">
+        <div
+            css={{ width: `${width}px` }}
+            className={`h-2 bg-${backgroundColor} transition-[width] duration-500`}
         />
-    </S.ProgressBarWrapper>
+    </div>
 );
 
 export default ProgressBar;

@@ -236,8 +236,7 @@ const SignupPage = () => {
             <section>
                 <ProgressBar
                     width={62.5 * (level + 1)}
-                    backgroundColor={!checkAllForm() ? theme.color.silver : ''}
-                    backgroundImage={checkAllForm() ? theme.color.gradient : ''}
+                    backgroundColor={checkAllForm() ? 'gradient' : 'silver'}
                 />
                 <div className="pt-28 pb-15 pl-3">
                     <div className="flex justify-center mb-8">

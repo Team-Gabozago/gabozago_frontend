@@ -1,11 +1,12 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { postAreaInfo } from '@/apis/area';
+import { getAreaInfos, postAreaInfo } from '@/apis/area';
 import I from '@/components/common/Icons';
 import SelectAreaBox from '@/components/common/SelectAreaBox';
 import Overlayout from '@/components/OverLayout';
+import { STALE_TIME, CACHE_TIME } from '@/constants/time';
 import { MyAreaInfo } from '@/interfaces/area';
 import theme from '@/styles/theme';
 import { AreaType } from '@/types/place';
@@ -22,6 +23,11 @@ const Header = ({ myArea, refetchMyArea, refetchFeeds }: HeaderProps) => {
         name: '동네설정',
         longitude: 0,
         latitude: 0,
+    });
+
+    const { data: areaInfos } = useQuery(['areaInfos'], getAreaInfos, {
+        staleTime: STALE_TIME,
+        cacheTime: CACHE_TIME,
     });
 
     const fetchPostAreaInfo = useMutation(postAreaInfo, {
@@ -78,7 +84,10 @@ const Header = ({ myArea, refetchMyArea, refetchFeeds }: HeaderProps) => {
             {isAreaBox && (
                 <>
                     <Overlayout handleCancelClick={() => setIsAreaBox(false)} />
-                    <SelectAreaBox handlePlaceArea={handlePlaceArea} />
+                    <SelectAreaBox
+                        handlePlaceArea={handlePlaceArea}
+                        areaInfos={areaInfos}
+                    />
                 </>
             )}
         </>

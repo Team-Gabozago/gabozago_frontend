@@ -1,15 +1,16 @@
-import * as S from './DirectiveMsg.style';
-
 interface DirectiveMsgProps {
     active: boolean;
     children: React.ReactNode;
-    css?: any;
 }
 
-const DirectiveMsg = ({ active, children, css }: DirectiveMsgProps) => (
-    <S.DirectiveMsg active={active} css={css}>
+const DirectiveMsg = ({ active, children }: DirectiveMsgProps) => (
+    <span
+        className={`w-[18.5rem] mt-[-5px] text-xs ${
+            active ? 'text-gray' : 'text-errorText'
+        }`}
+    >
         {children}
-    </S.DirectiveMsg>
+    </span>
 );
 
 export default DirectiveMsg;

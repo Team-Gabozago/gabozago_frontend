@@ -23,12 +23,12 @@ export default {
             control: {
                 type: 'select',
                 options: [
-                    `${theme.color.lime}`,
+                    `${theme.color.navy}`,
                     `${theme.color.white}`,
-                    `${theme.color.lime}`,
+                    `${theme.color.navy}`,
                 ],
             },
-            defaultValue: `${theme.color.lime}`,
+            defaultValue: `${theme.color.navy}`,
         },
         disabled: {
             control: {
@@ -44,19 +44,19 @@ const Template: ComponentStory<typeof Button> = args => <Button {...args} />;
 export const Default = Template.bind({});
 
 export const LargeButton = () => (
-    <Button size="lg" backgroundColor={theme.color.lime}>
+    <Button size="lg" backgroundColor={theme.color.navy}>
         Large
     </Button>
 );
 
 export const MediumButton = () => (
-    <Button size="md" backgroundColor={theme.color.lime}>
+    <Button size="md" backgroundColor={theme.color.navy}>
         Medium
     </Button>
 );
 
 export const SmallButton = () => (
-    <Button size="sm" backgroundColor={theme.color.lime}>
+    <Button size="sm" backgroundColor={theme.color.navy}>
         Small
     </Button>
 );
@@ -70,7 +70,7 @@ LargeButton.parameters = {
     controls: {
         disabled: true,
     },
-}
+};
 
 MediumButton.parameters = {
     docs: {
