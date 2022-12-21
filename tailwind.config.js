@@ -45,8 +45,12 @@ module.exports = {
       gradient: `linear-gradient(to right, rgb(152, 255, 236) , rgb(0, 255, 56))`,
       greenSpeech: '#00FF38',
     },
+    backgroundImage: {
+      gradient: `linear-gradient(to right, rgb(152, 255, 236) , rgb(0, 255, 56))`,
+    },
     animation: {
-      'rolling': 'rolling 6s infinite forwards'
+      'rolling': 'rolling 6s infinite forwards',
+      'spinner': 'spinner 1s ease infinite'
     }
   },
   plugins: [],

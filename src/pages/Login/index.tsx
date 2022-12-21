@@ -92,7 +92,10 @@ const LoginPage = () => {
                 <div className="flex flex-col items-center">
                     <div className="w-72 flex flex-col gap-2">
                         {LoginTitleTexts.map((titleText: string) => (
-                            <div className="text-title font-weight font-GangwonEduPower">
+                            <div
+                                key={titleText}
+                                className="text-title font-weight font-GangwonEduPower"
+                            >
                                 {titleText}
                             </div>
                         ))}

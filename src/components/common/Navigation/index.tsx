@@ -1,7 +1,5 @@
-import * as S from './Navigation.style';
-
 import I from '@/components/common/Icons';
-import theme from "@/styles/theme";
+import theme from '@/styles/theme';
 
 interface NavigationProps {
     sortType: string;
@@ -9,21 +7,56 @@ interface NavigationProps {
 }
 
 const Navigation = ({ sortType, handleNaviLi }: NavigationProps) => (
-    <S.Navigation>
-        <S.NaviUL>
-            <S.NaviLi sortType={sortType === 'NEWEST'} onClick={() => handleNaviLi('NEWEST')}>
-                <S.NaviText>최신순</S.NaviText>
-                {sortType && <S.NaviBorder sortType={sortType === 'NEWEST'} />}
-            </S.NaviLi>
-            <S.NaviLi sortType={sortType === 'LIKE'} onClick={() => handleNaviLi('LIKE')}>
-                <I.Heart color={sortType === 'LIKE' ? theme.color.greenSpeech : theme.color.lightNavy}
+    <nav className="mt-12 mb-3">
+        <ul className="flex justify-between px-24">
+            <li
+                aria-hidden="true"
+                className={`${
+                    sortType === 'NEWEST'
+                        ? 'text-greenSpeech'
+                        : 'text-lightNavy'
+                } text-xs cursor-pointer`}
+                onClick={() => handleNaviLi('NEWEST')}
+            >
+                <span className="ml-1">최신순</span>
+                {sortType && (
+                    <div
+                        className={`${
+                            sortType === 'NEWEST'
+                                ? 'text-greenSpeech'
+                                : 'text-lightNavy'
+                        } w-5 h-0.5 mt-2 mx-auto`}
+                    />
+                )}
+            </li>
+            <li
+                aria-hidden="true"
+                className={`${
+                    sortType === 'LIKE' ? 'text-greenSpeech' : 'text-lightNavy'
+                } text-xs cursor-pointer`}
+                onClick={() => handleNaviLi('LIKE')}
+            >
+                <I.Heart
+                    color={
+                        sortType === 'LIKE'
+                            ? theme.color.greenSpeech
+                            : theme.color.lightNavy
+                    }
                     fontSize={0.5}
                 />
-                <S.NaviText>많은순</S.NaviText>
-                {sortType && <S.NaviBorder sortType={sortType === 'LIKE'} />}
-            </S.NaviLi>
-        </S.NaviUL>
-    </S.Navigation>
-)
+                <span className="ml-1">많은순</span>
+                {sortType && (
+                    <div
+                        className={`${
+                            sortType === 'LIKE'
+                                ? 'text-greenSpeech'
+                                : 'text-lightNavy'
+                        } w-5 h-0.5 mt-2 mx-auto`}
+                    />
+                )}
+            </li>
+        </ul>
+    </nav>
+);
 
 export default Navigation;
