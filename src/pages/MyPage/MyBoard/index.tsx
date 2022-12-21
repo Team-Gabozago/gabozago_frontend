@@ -7,10 +7,10 @@ import * as S from './MyBoard.style';
 
 import { getMyBoardPage } from '@/apis/mypage';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
+import FeedComponent from '@/components/Feed';
 import GlobalModal from '@/components/GlobalModal';
 import ModalContent from '@/components/ModalContent';
 import Header from '@/components/MyPage/Header';
-import Post from '@/components/Post';
 import { Feed } from '@/interfaces/feed';
 
 const MyBoardPage = () => {
@@ -35,7 +35,7 @@ const MyBoardPage = () => {
                             to={`/feed/${feed.id}`}
                             key={`post-${feed.id}`}
                         >
-                            <Post post={feed} />
+                            <FeedComponent post={feed} />
                         </Link>
                     )) : <LoadingSpinner size="large" />}
                 </S.MyLikeContent>

@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import CreateFeed from '.';
 
 export default {
-    title: 'common/CreateFeed',
+    title: 'components/CreateFeed',
     component: CreateFeed,
 } as ComponentMeta<typeof CreateFeed>;
 

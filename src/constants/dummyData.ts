@@ -6,7 +6,7 @@ export const feedData = {
         id: 1,
         nickname: '봄봄',
         profile_image_url:
-            'https://wontu-images.s3.ap-northeast-2.amazonaws.com/uploads/user/profiles/15/c2b66406-64d3-4708-bca1-2716a7de4def.jpeg',
+            'https://pbs.twimg.com/media/E5icr1KVoAIS1tI?format=jpg&name=medium',
     },
     id: 1,
     category: {

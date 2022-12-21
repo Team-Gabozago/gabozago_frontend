@@ -38,7 +38,7 @@ const Comment = ({
             <div className="flex justify-between items-center">
                 <FeedProfile
                     author={comment.author}
-                    updatedAt={comment.updated_at}
+                    updated_at={comment.updated_at}
                 />
                 {user.id === comment.author.id && (
                     <div className="flex gap-4">
