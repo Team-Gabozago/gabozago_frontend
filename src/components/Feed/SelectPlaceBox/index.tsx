@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 
-import * as S from './Form.style';
-
 import { SearchPlace } from '@/interfaces/place';
 import { AreaType, PlaceType } from '@/types/place';
 
@@ -85,38 +83,48 @@ const SelectPlaceBox = ({
     };
 
     return (
-        <S.SearchModalContent>
-            <S.SearchHeader>
-                <S.SearchInput
+        <div className="flex flex-col gap-4 p-8">
+            <header className="flex gap-4">
+                <input
+                    className="w-[20.375rem] p-2 border-b-[1px] border-solid border-gray"
                     value={searchPlaceText}
                     placeholder="운동 장소를 검색해 보세요"
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         handleChangeSearch(e)
                     }
                 />
-                <S.SearchButton
+                <button
+                    type="button"
+                    className="w-12 text-white bg-navy"
                     onClick={() => searchAddressToCoordinate(searchPlaceText)}
                 >
                     찾기
-                </S.SearchButton>
-            </S.SearchHeader>
-            <S.SearchContent>
+                </button>
+            </header>
+            <div className="h-[30rem] overflow-y-auto">
                 {placeInfos.map((placeInfo: PlaceType) => (
-                    <S.PlaceInfo
-                        key={`place-${placeInfo.place_id}`}
-                        clickedPlace={
+                    <div
+                        aria-hidden="true"
+                        className={`py-4 ${
                             clickedPlace.place_id === placeInfo.place_id
-                        }
+                                ? 'bg-silver'
+                                : 'bg-white'
+                        } cursor-pointer`}
+                        key={`place-${placeInfo.place_id}`}
                         onClick={() => handlePlaceInfo(placeInfo)}
                     >
                         {placeInfo.address} {placeInfo.name}
-                    </S.PlaceInfo>
+                    </div>
                 ))}
-            </S.SearchContent>
-            <S.SubmitButton type="submit" onClick={handleSubmit}>
+            </div>
+            <button
+                type="submit"
+                className="w-40 h-8 rounded-lg m-auto text-white bg-navy"
+                onClick={handleSubmit}
+            >
                 선택
-            </S.SubmitButton>
-        </S.SearchModalContent>
+            </button>
+        </div>
     );
 };
 

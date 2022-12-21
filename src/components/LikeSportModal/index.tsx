@@ -1,8 +1,6 @@
 import { css } from '@emotion/react';
 import { useMutation } from '@tanstack/react-query';
 
-import * as S from './LikeSportModal.style';
-
 import { deleteSport, patchSport } from '@/apis/sport';
 import Button from '@/components/common/Button';
 import {
@@ -64,47 +62,61 @@ const LikeSportModal = ({
     };
 
     return (
-        <S.LikeSportModal>
-            <S.Title>관심 운동 추가/삭제</S.Title>
-            <S.CurrentLikeSport>
-                <S.SubTitle>현재 관심 운동</S.SubTitle>
-                <S.SportWrapper>
+        <div className="h-full flex flex-col items-center pt-8 px-7 pb-5">
+            <h1 className="mb-7 text-md font-weight text-navy">
+                관심 운동 추가/삭제
+            </h1>
+            <div className="h-16 flex flex-col text-center mb-5">
+                <h4 className="text-xs font-weight mb-3 text-lightNavy">
+                    현재 관심 운동
+                </h4>
+                <div className="flex gap-2 relative">
                     {filteredSports.map(sport => (
-                        <S.SportTag
+                        <div
+                            className="max-w-[4.25rem] h-7 flex items-center relative rounded-2xl px-2 py-3 text-xs border-[1px] border-solid border-gray"
                             id={`tag-${sport.id}`}
                             key={`tag-${sport.id}`}
                         >
                             {sport.name}
-                            <S.SportMinusButton
+                            <button
                                 type="button"
+                                className="w-3 h-3 flex justify-center items-center absolute top-[-3px] right-[-3px] rounded-full text-white bg-gray cursor-pointer"
                                 onClick={() => handleDeleteSport(sport.id)}
                             >
                                 -
-                            </S.SportMinusButton>
-                        </S.SportTag>
+                            </button>
+                        </div>
                     ))}
                     {filteredSports.length === 0 && (
-                        <S.SubTitle>관심운동을 추가해주세요.</S.SubTitle>
+                        <h4 className="text-xs font-weight mb-3 text-lightNavy">
+                            관심운동을 추가해주세요.
+                        </h4>
                     )}
-                </S.SportWrapper>
-            </S.CurrentLikeSport>
-            <S.SearchLikeSportForm>
-                <S.SubTitle>다른 운동 선택</S.SubTitle>
-                <S.SearchContent>
+                </div>
+            </div>
+            <form className="flex flex-col mb-7 text-center">
+                <h4 className="text-xs font-weight mb-3 text-lightNavy">
+                    다른 운동 선택
+                </h4>
+                <div className="w-[16.625rem] h-32 overflow-y-auto">
                     {searchSports.map((sport: LikeSportCategory) => (
-                        <S.KeywordBox key={sport.id}>
-                            <S.KeywordText>{sport.name}</S.KeywordText>
-                            <S.KeywordPlustButton
+                        <div
+                            className="h-8 flex justify-between items-center px-4 py-2.5 border-b-[1px] border-solid border-silver"
+                            key={sport.id}
+                        >
+                            <span className="text-xs">{sport.name}</span>
+                            <button
                                 type="button"
+                                className="w-6 h-6 rounded-full text-white bg-gray"
                                 onClick={() => handlePatchSport(sport.id)}
                             >
                                 +
-                            </S.KeywordPlustButton>
-                        </S.KeywordBox>
+                            </button>
+                        </div>
                     ))}
-                </S.SearchContent>
-            </S.SearchLikeSportForm>
-            <S.ButtonWrapper>
+                </div>
+            </form>
+            <div className="flex gap-4 mt-auto">
                 <Button
                     size="sm"
                     backgroundColor={theme.color.silver}
@@ -127,8 +139,8 @@ const LikeSportModal = ({
                 >
                     저장
                 </Button>
-            </S.ButtonWrapper>
-        </S.LikeSportModal>
+            </div>
+        </div>
     );
 };
 

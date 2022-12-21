@@ -63,7 +63,7 @@ const CreateComment = ({
             />
             <input
                 type="input"
-                className="w-80 p-3 border-b-1 border-solid border-gray"
+                className="w-80 p-3 border-b-[1px] border-solid border-gray"
                 value={content}
                 placeholder="댓글을 입력해주세요."
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>

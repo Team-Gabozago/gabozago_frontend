@@ -55,3 +55,28 @@ export const areaInfos = [
     { name: '중구', latitude: 37.563843, longitude: 126.997602 },
     { name: '종로구', latitude: 37.5735207, longitude: 126.9788345 },
 ];
+
+export const sportCategories = [
+    { id: 1, name: '테니스' },
+    { id: 2, name: '️축구' },
+    { id: 3, name: '농구' },
+    { id: 4, name: '배드민턴' },
+    { id: 5, name: '러닝' },
+    { id: 6, name: '복싱' },
+];
+
+export const meData = {
+    id: 7,
+    email: 'jinlog9@gmail.com',
+    nickname: 'Muffin',
+    profile_image:
+        'https://pbs.twimg.com/media/E5icr1KVoAIS1tI?format=jpg&name=medium',
+    categories: [
+        { id: 3, name: '농구', favorite: true },
+        { id: 5, name: '러닝', favorite: true },
+        { id: 4, name: '배드민턴', favorite: false },
+        { id: 6, name: '복싱', favorite: true },
+        { id: 2, name: '️축구', favorite: true },
+        { id: 1, name: '테니스', favorite: false },
+    ],
+};

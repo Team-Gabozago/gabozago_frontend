@@ -39,6 +39,12 @@ module.exports = {
         'jsx-a11y/tabindex-no-positive': 'off', // tabIndex string 형 허용하기.
         'react/no-unknown-property': ['error', { ignore: ['css'] }],
         camelcase: 'off',
+        "jsx-a11y/label-has-associated-control": [
+            2,
+            {
+              "labelAttributes": ["htmlFor"]
+            }
+          ],
         'react/function-component-definition': [
             // 함수형 컴포넌트 선언방식
             2,

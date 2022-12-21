@@ -11,7 +11,7 @@ import Title from '@/components/common/Title';
 import CreateFeed from '@/components/CreateFeed';
 import FeedComponent from '@/components/Feed';
 import GlobalModal from '@/components/GlobalModal';
-import LikeSportModal from '@/components/MyPage/LikeSport/LikeSportModal';
+import LikeSportModal from '@/components/LikeSportModal';
 import { Feed } from '@/interfaces/feed';
 
 const LikePage = () => {
@@ -74,13 +74,15 @@ const LikePage = () => {
                                         className={`h-7 rounded-2xl px-3 text-silver font-xs 
                                         border
                                         border-solid
-                                        ${idx === clickedSport.idx
+                                        ${
+                                            idx === clickedSport.idx
                                                 ? 'border-blue'
                                                 : 'border-gray'
-                                            }
-                                        ${idx === clickedSport.idx &&
+                                        }
+                                        ${
+                                            idx === clickedSport.idx &&
                                             'bg-blue'
-                                            }`}
+                                        }`}
                                         key={category.id}
                                         onClick={() =>
                                             setClickedSport({

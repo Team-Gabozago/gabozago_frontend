@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom';
 
-import * as S from './Profile.style';
-
 import I from '@/components/common/Icons';
 import { LikeSportCategory } from '@/interfaces/sport';
 import theme from '@/styles/theme';
@@ -15,18 +13,22 @@ interface ProfileProps {
 }
 
 const Profile = ({ me }: { me: ProfileProps }) => (
-    <S.Profile>
-        <S.ProfileImage src={me.profile_image} alt="profile" />
-        <S.ProfileContent>
-            <S.ProfileDetail>
+    <div className="flex gap-4 p-4 border-b-[1px] border-solid border-silver">
+        <img
+            className="w-16 h-16 rounded-full bg-white"
+            src={me.profile_image}
+            alt="profile"
+        />
+        <div className="flex flex-col justify-center gap-2">
+            <div className="flex gap-2">
                 <span>{me.nickname}</span>
                 <Link to="/mypage/edit">
                     <I.Edit color={theme.color.gray} />
                 </Link>
-            </S.ProfileDetail>
-            <S.ProfileEmailText>{me.email}</S.ProfileEmailText>
-        </S.ProfileContent>
-    </S.Profile>
+            </div>
+            <span className="text-lightGray">{me.email}</span>
+        </div>
+    </div>
 );
 
 export default Profile;
