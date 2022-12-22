@@ -85,6 +85,7 @@ const Comment = ({
             {isOpenCreate && (
                 <CreateComment
                     commentId={comment.id}
+                    commentAuthor={comment.author.nickname}
                     commentContent={isPatch ? comment.content : ''}
                     refetchComments={refetchComments}
                     isPatch={isPatch}

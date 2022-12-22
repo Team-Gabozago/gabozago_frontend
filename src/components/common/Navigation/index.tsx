@@ -19,14 +19,8 @@ const Navigation = ({ sortType, handleNaviLi }: NavigationProps) => (
                 onClick={() => handleNaviLi('NEWEST')}
             >
                 <span className="ml-1">최신순</span>
-                {sortType && (
-                    <div
-                        className={`${
-                            sortType === 'NEWEST'
-                                ? 'text-greenSpeech'
-                                : 'text-lightNavy'
-                        } w-5 h-0.5 mt-2 mx-auto`}
-                    />
+                {sortType === 'NEWEST' && (
+                    <hr className="text-greenSpeech w-5 h-0.5 mt-2 mx-auto" />
                 )}
             </li>
             <li
@@ -45,14 +39,8 @@ const Navigation = ({ sortType, handleNaviLi }: NavigationProps) => (
                     fontSize={0.5}
                 />
                 <span className="ml-1">많은순</span>
-                {sortType && (
-                    <div
-                        className={`${
-                            sortType === 'LIKE'
-                                ? 'text-greenSpeech'
-                                : 'text-lightNavy'
-                        } w-5 h-0.5 mt-2 mx-auto`}
-                    />
+                {sortType === 'LIKE' && (
+                    <hr className="text-greenSpeech w-5 h-0.5 mt-2 mx-auto" />
                 )}
             </li>
         </ul>
