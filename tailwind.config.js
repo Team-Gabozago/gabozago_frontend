@@ -53,5 +53,5 @@ module.exports = {
       'spinner': 'spinner 1s ease infinite'
     }
   },
-  plugins: [],
+  plugins: [require('tailwind-scrollbar-hide')],
 };

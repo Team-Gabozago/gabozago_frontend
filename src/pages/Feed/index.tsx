@@ -139,7 +139,7 @@ const FeedPage = () => {
                         {feed.location.place} {feed.location.placeDetail}
                     </span>
                     <div>{feed.content}</div>
-                    <div className="flex gap-3 overflow-x-scroll mb-12">
+                    <div className="flex gap-3 overflow-x-scroll mb-12 scrollbar-hide">
                         {feed.images &&
                             feed.images.map(
                                 (image: { id: number; filePath: string }) => (

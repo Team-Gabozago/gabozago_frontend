@@ -27,15 +27,15 @@ const StartPage = () => {
             ) : (
                 <>
                     <div className="flex flex-col gap-6 px-10">
-                        <div className="text-white text-display font-weight font-GangwonEduPower">
+                        <div className="text-white text-display font-extrabold font-GangwonEduPower">
                             동료는
                         </div>
-                        <div className="text-white text-display font-weight font-GangwonEduPower">
+                        <div className="text-white text-display font-font-extrabold font-GangwonEduPower">
                             WANTU가 모을게,
                         </div>
                         <div data-id="like">
                             <div className="h-12 overflow-hidden">
-                                <ul className="animate-rolling text-white text-display font-weight font-GangwonEduPower">
+                                <ul className="animate-rolling text-white text-display font-extrabold font-GangwonEduPower">
                                     {startSports.map(sport => (
                                         <li
                                             key={sport.id}
@@ -52,7 +52,7 @@ const StartPage = () => {
                                 </ul>
                             </div>
                         </div>
-                        <div className="text-white text-display font-weight font-GangwonEduPower">
+                        <div className="text-white text-display font-extrabold font-GangwonEduPower">
                             누가 할래?
                         </div>
                     </div>
@@ -63,7 +63,7 @@ const StartPage = () => {
                                 backgroundColor={theme.color.gray}
                                 backgroundImage={theme.color.gradient}
                             >
-                                <span className="font-weight text-sm text-green">
+                                <span className="font-extrabold text-sm text-green">
                                     시작하기
                                 </span>
                             </Button>

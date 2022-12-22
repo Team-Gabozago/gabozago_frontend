@@ -1,6 +1,7 @@
 interface CreateInputViewProps {
     profile_image: string;
     content?: string;
+    commentAuthor?: string;
     handleChangeComment?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleAddComment?: () => void;
     handleInputViewClick?: () => void;
@@ -9,6 +10,7 @@ interface CreateInputViewProps {
 const CreateInputView = ({
     profile_image,
     content,
+    commentAuthor,
     handleChangeComment,
     handleAddComment,
     handleInputViewClick,
@@ -23,7 +25,11 @@ const CreateInputView = ({
             type="input"
             className="w-80 overflow-y-scroll p-3 border-b-[1px] border-solid border-gray text-xs"
             value={content}
-            placeholder="댓글을 입력해주세요."
+            placeholder={
+                commentAuthor
+                    ? `@${commentAuthor}님에게 답글을 입력해 주세요`
+                    : '댓글을 입력해주세요'
+            }
             onChange={handleChangeComment}
             onClick={handleInputViewClick}
             autoFocus

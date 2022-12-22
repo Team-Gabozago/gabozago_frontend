@@ -49,11 +49,12 @@ const LikePage = () => {
     const isCheckFavoriteSports = () => {
         if (me) {
             const checkFavorite = me.categories.every(
-                (category: LikeSportCategory) => category.favorite === true
+                (category: LikeSportCategory) => category.favorite === false
             );
+            console.log(checkFavorite);
             return checkFavorite;
         }
-        return false;
+        return true;
     };
 
     return (

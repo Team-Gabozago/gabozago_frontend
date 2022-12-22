@@ -146,9 +146,7 @@ const LoginPage = () => {
                                 ) => handleLogin(e)}
                             >
                                 <span
-                                    className={
-                                        isDisabled ? 'text-black' : 'text-green'
-                                    }
+                                    className={`'font-extrabold' ${isDisabled ? 'text-black' : 'text-green'}`}
                                 >
                                     로그인
                                 </span>
@@ -156,7 +154,7 @@ const LoginPage = () => {
                         </div>
                     </form>
                 </div>
-            </section>
+            </section >
             {isFailModal && (
                 <GlobalModal
                     size="small"
