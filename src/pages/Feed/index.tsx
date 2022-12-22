@@ -80,7 +80,7 @@ const FeedPage = () => {
         feed && (
             <>
                 <Header title={feed.title} />
-                <header className="flex justify-between items-center p-6">
+                <header className="flex justify-between items-center p-6 border-b-[1px] border-solid border-silver">
                     <FeedProfile
                         author={feed.author}
                         updated_at={feed.updated_at}
@@ -136,16 +136,16 @@ const FeedPage = () => {
                 </header>
                 <div className="flex flex-col gap-6 pt-8 px-6">
                     <span className="text-gray text-xs">
-                        {/* {feed.location.place} {feed.location.placeDetail} */}
+                        {feed.location.place} {feed.location.placeDetail}
                     </span>
                     <div>{feed.content}</div>
-                    <div className="flex gap-3 overflow-x-scroll">
+                    <div className="flex gap-3 overflow-x-scroll mb-12">
                         {feed.images &&
                             feed.images.map(
                                 (image: { id: number; filePath: string }) => (
                                     <input
                                         type="image"
-                                        className="w-44 h-44 cursor-pointer rounded-xl"
+                                        className="w-[5rem] h-[5rem] cursor-pointer rounded-xl"
                                         src={image.filePath}
                                         alt="Feed Image"
                                         key={`image-${image.id}`}
@@ -175,7 +175,7 @@ const FeedPage = () => {
                     )}
                     <button
                         type="button"
-                        className={`w-80 h-12 flex justify-center items-center gap-2 rounded-[50px] cursor-pointer
+                        className={`w-80 min-h-[3.25rem] flex justify-center items-center gap-2 mb-8 rounded-[50px] cursor-pointer
                         border
                         border-solid
                         border-gray
@@ -190,14 +190,15 @@ const FeedPage = () => {
                             }
                         />
                         <span
-                            className={`${feed.liked ? 'text-white' : 'text-gray'
-                                }`}
+                            className={`${
+                                feed.liked ? 'text-white' : 'text-gray'
+                            }`}
                         >
                             관심있어요
                         </span>
                     </button>
-                    <Comments />
                 </div>
+                <Comments />
             </>
         )
     );

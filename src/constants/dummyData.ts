@@ -80,3 +80,75 @@ export const meData = {
         { id: 1, name: '테니스', favorite: false },
     ],
 };
+
+export const commentData = {
+    author: {
+        id: 7,
+        nickname: 'muff13',
+        profile_image_url:
+            'https://wontu-images.s3.ap-northeast-2.amazonaws.c…ofiles/7/9b0275ba-8c77-4cd6-835e-cf61c062d286.png',
+    },
+    content: '33test',
+    feed_author: true,
+    id: 185,
+    replies: [],
+    updated_at: '2022-12-22T04:53:03.035731',
+};
+
+export const allComentData = [
+    {
+        author: {
+            id: 7,
+            nickname: 'muff13',
+            profile_image_url:
+                'https://wontu-images.s3.ap-northeast-2.amazonaws.c…ofiles/7/9b0275ba-8c77-4cd6-835e-cf61c062d286.png',
+        },
+        content: '33test',
+        feed_author: true,
+        id: 185,
+        replies: [
+            {
+                author: {
+                    id: 7,
+                    nickname: 'muff13',
+                    profile_image_url:
+                        'https://wontu-images.s3.ap-northeast-2.amazonaws.c…ofiles/7/9b0275ba-8c77-4cd6-835e-cf61c062d286.png',
+                },
+                content: '33test',
+                feed_author: true,
+                id: 186,
+                comment_id: 185,
+                replies: [],
+                updated_at: '2022-12-22T04:53:03.035731',
+            },
+            {
+                author: {
+                    id: 7,
+                    nickname: 'muff13',
+                    profile_image_url:
+                        'https://wontu-images.s3.ap-northeast-2.amazonaws.c…ofiles/7/9b0275ba-8c77-4cd6-835e-cf61c062d286.png',
+                },
+                content: '33test',
+                feed_author: true,
+                id: 187,
+                comment_id: 185,
+                replies: [],
+                updated_at: '2022-12-22T04:53:03.035731',
+            },
+        ],
+        updated_at: '2022-12-22T04:53:03.035731',
+    },
+    {
+        author: {
+            id: 7,
+            nickname: 'muff13',
+            profile_image_url:
+                'https://wontu-images.s3.ap-northeast-2.amazonaws.c…ofiles/7/9b0275ba-8c77-4cd6-835e-cf61c062d286.png',
+        },
+        content: '33test',
+        feed_author: true,
+        id: 188,
+        replies: [],
+        updated_at: '2022-12-22T04:53:03.035731',
+    },
+];
