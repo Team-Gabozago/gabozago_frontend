@@ -2,15 +2,15 @@ import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import Comment from './Comment';
+import Comment from '../Comment';
 
 import { deleteComment, patchComment } from '@/apis/comments';
 import GlobalModal from '@/components/GlobalModal';
 import ModalContent from '@/components/ModalContent';
-import { AllCommentType, CommentType } from '@/types/comment';
+import { CommentType } from '@/types/comment';
 
 interface CommentListProps {
-    allComments: AllCommentType[];
+    allComments: CommentType[];
     refetchComments: () => void;
 }
 
@@ -77,9 +77,9 @@ const CommentList = ({ allComments, refetchComments }: CommentListProps) => {
     };
 
     return (
-        <section className="flex flex-col gap-6">
+        <section className="h-full flex flex-col">
             {allComments &&
-                allComments.map((comment: AllCommentType) => (
+                allComments.map((comment: CommentType) => (
                     <>
                         <Comment
                             key={`comment-${comment.id}`}
@@ -91,7 +91,7 @@ const CommentList = ({ allComments, refetchComments }: CommentListProps) => {
                         {comment.replies.length > 0 &&
                             comment.replies.map((replyComment: CommentType) => (
                                 <Comment
-                                    key={`comment-${replyComment.id}`}
+                                    key={`replyComment-${replyComment.id}`}
                                     comment={replyComment}
                                     handlePutComment={handlePutComment}
                                     handleDeleteComment={handleDeleteComment}

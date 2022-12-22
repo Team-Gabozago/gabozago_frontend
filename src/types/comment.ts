@@ -7,6 +7,5 @@ export type CommentType = {
     content: string;
     feed_author: boolean;
     updated_at: string;
+    replies: CommentType[];
 };
-
-export type AllCommentType = CommentType & { replies: CommentType[] };
