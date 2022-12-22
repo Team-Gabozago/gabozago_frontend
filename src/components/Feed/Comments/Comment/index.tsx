@@ -36,13 +36,13 @@ const Comment = ({
                     : 'h-32 border-silver bg-white'
             }`}
             >
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between">
                     <FeedProfile
                         author={comment.author}
                         updated_at={comment.updated_at}
                     />
                     {user.id === comment.author.id && (
-                        <div className="flex gap-4">
+                        <div className="flex items-start gap-4">
                             <button
                                 type="button"
                                 className="text-xs text-label"

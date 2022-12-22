@@ -3,7 +3,7 @@ import Header from '@/components/MyPage/Header';
 
 const PutFeedPage = () => (
     <section>
-        <Header title="새 글 작성" />
+        <Header title="글 수정" />
         <Form />
     </section>
 );

@@ -15,18 +15,18 @@ interface ProfileProps {
 const Profile = ({ me }: { me: ProfileProps }) => (
     <div className="flex gap-4 p-4 border-b-[1px] border-solid border-silver">
         <img
-            className="w-16 h-16 rounded-full bg-white"
+            className="w-16 h-16 rounded-full bg-silver"
             src={me.profile_image}
             alt="profile"
         />
         <div className="flex flex-col justify-center gap-2">
-            <div className="flex gap-2">
-                <span>{me.nickname}</span>
+            <div className="flex items-center gap-2">
+                <span className="text-md">{me.nickname}</span>
                 <Link to="/mypage/edit">
                     <I.Edit color={theme.color.gray} />
                 </Link>
             </div>
-            <span className="text-lightGray">{me.email}</span>
+            <span className="text-xs text-lightGray">{me.email}</span>
         </div>
     </div>
 );
