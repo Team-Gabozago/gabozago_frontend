@@ -60,7 +60,7 @@ const Header = ({ myArea, refetchMyArea, refetchFeeds }: HeaderProps) => {
 
     return (
         <>
-            <header className="w-80 flex justify-between items-center py-5 border-b border-solid border-lightNavy bg-navy">
+            <header className="w-80 flex justify-between items-center pt-5 pb-4 border-b border-solid border-lightNavy bg-navy">
                 <Link to="/home">
                     <I.Logo.Small />
                 </Link>

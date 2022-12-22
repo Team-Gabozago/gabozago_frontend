@@ -39,6 +39,7 @@ module.exports = {
         'jsx-a11y/tabindex-no-positive': 'off', // tabIndex string 형 허용하기.
         'react/no-unknown-property': ['error', { ignore: ['css'] }],
         camelcase: 'off',
+        "jsx-a11y/no-autofocus": ['off'],
         "jsx-a11y/label-has-associated-control": [
             2,
             {

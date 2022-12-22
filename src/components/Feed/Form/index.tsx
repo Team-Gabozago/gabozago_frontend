@@ -39,6 +39,7 @@ const FeedInput = styled.input`
     &:focus {
         border-bottom: 1px solid ${theme.color.blue};
     }
+    font-size: ${theme.fontSize.xs};
 `;
 
 const Form = () => {
@@ -277,7 +278,7 @@ const Form = () => {
                 </div>
                 <textarea
                     id={content}
-                    className="w-[20.375rem] h-[17.5rem] px-3 py-2 border-[1px] border-solid border-gray rounded resize-none animate-fadeInDown duration-100"
+                    className="w-[20.375rem] h-[17.5rem] px-3 py-2 border-[1px] border-solid border-gray text-xs rounded resize-none animate-fadeInDown duration-100"
                     placeholder="약속 시간, 준비물, 실력 등 플레이를 위한 정보를 적어주세요"
                     value={content}
                     onChange={handleChangeContent}

@@ -13,6 +13,7 @@ import FeedComponent from '@/components/Feed';
 import GlobalModal from '@/components/GlobalModal';
 import LikeSportModal from '@/components/LikeSportModal';
 import { Feed } from '@/interfaces/feed';
+import { LikeSportCategory } from '@/interfaces/sport';
 
 const LikePage = () => {
     const [clickedSport, setClickedSport] = useState({ idx: 0, name: '' });
@@ -45,6 +46,16 @@ const LikePage = () => {
         refetchFeeds();
     }, [clickedSport, refetchFeeds, sortType]);
 
+    const isCheckFavoriteSports = () => {
+        if (me) {
+            const checkFavorite = me.categories.every(
+                (category: LikeSportCategory) => category.favorite === true
+            );
+            return checkFavorite;
+        }
+        return false;
+    };
+
     return (
         <section>
             <Header
@@ -52,22 +63,15 @@ const LikePage = () => {
                 refetchMyArea={refetchMyArea}
                 refetchFeeds={refetchFeeds}
             />
-            {me && me.categories.length > 0 ? (
+            {me && !isCheckFavoriteSports() ? (
                 <>
                     <Title>
                         관심 운동의
-                        <br /> 새 제안이에요.
+                        <br />새 제안이에요.
                     </Title>
                     <div className="flex gap-2 flex-wrap">
                         {me.categories.map(
-                            (
-                                category: {
-                                    id: number;
-                                    name: string;
-                                    favorite: boolean;
-                                },
-                                idx: number
-                            ) =>
+                            (category: LikeSportCategory, idx: number) =>
                                 category.favorite && (
                                     <button
                                         type="button"
@@ -123,7 +127,7 @@ const LikePage = () => {
                     )}
                 </>
             ) : (
-                <div className="h-full flex flex-col justify-center items-ccenter">
+                <div className="h-screen leading-4 flex flex-col justify-center items-center">
                     <div className="text-center text-silver text-xs mb-4">
                         아직 등록된 관심 운동이 없어요.
                         <br />

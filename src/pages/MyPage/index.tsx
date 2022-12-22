@@ -44,7 +44,7 @@ const MyPage = () => {
 
     return (
         me && (
-            <section>
+            <section className="h-full">
                 <Header title="마이페이지" />
                 <Profile me={me} />
                 <LikeSport
@@ -106,9 +106,9 @@ const MyPage = () => {
                     </Link>
                 </div>
 
-                <span className="px-4 mt-24 absolute bottom-20 text-lightGray">
+                <div className="px-4 absolute text-lightGray">
                     <Link to="/mypage/secession">탈퇴하기</Link>
-                </span>
+                </div>
             </section>
         )
     );

@@ -13,7 +13,7 @@ const CreateInputView = ({
     handleAddComment,
     handleInputViewClick,
 }: CreateInputViewProps) => (
-    <div className="w-[20.4375rem] flex items-center gap-6 relative">
+    <div className="w-[20.4375rem] flex items-center gap-4 relative">
         <img
             className="w-8 h-8 rounded-full"
             src={profile_image}
@@ -21,11 +21,12 @@ const CreateInputView = ({
         />
         <input
             type="input"
-            className="w-80 p-3 border-b-[1px] border-solid border-gray text-xs"
+            className="w-80 overflow-y-scroll p-3 border-b-[1px] border-solid border-gray text-xs"
             value={content}
             placeholder="댓글을 입력해주세요."
             onChange={handleChangeComment}
             onClick={handleInputViewClick}
+            autoFocus
         />
         <button
             type="button"

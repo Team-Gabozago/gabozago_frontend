@@ -77,7 +77,7 @@ const CommentList = ({ allComments, refetchComments }: CommentListProps) => {
     };
 
     return (
-        <section className="h-full flex flex-col">
+        <section className="flex flex-col pb-[4rem]">
             {allComments &&
                 allComments.map((comment: CommentType) => (
                     <>

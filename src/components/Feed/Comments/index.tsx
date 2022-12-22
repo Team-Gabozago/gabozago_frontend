@@ -60,7 +60,7 @@ const Comments = () => {
                         handleInputViewClick={handleInputViewClick}
                     />
                 </div>
-                <span className="pt-3 border-t-[1px] border-solid border-gray text-xs text-label">
+                <span className="px-6 pt-3 border-t-[1px] border-solid border-silver text-xs text-label">
                     댓글 {allComments.length}
                 </span>
                 <CommentList
