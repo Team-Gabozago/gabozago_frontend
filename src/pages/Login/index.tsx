@@ -107,6 +107,8 @@ const LoginPage = () => {
                             placeholder="이메일을 입력해주세요"
                             value={email}
                             onChange={handleChangeEmail}
+                            success={email.length > 0 && checkEmail(email)}
+                            error={email.length > 0 && !checkEmail(email)}
                             tabIndex="1"
                         />
                         {email.length > 0 && !checkEmail(email) && (
@@ -120,6 +122,12 @@ const LoginPage = () => {
                             placeholder="비밀번호를 입력해주세요"
                             value={password}
                             onChange={handleChangePassword}
+                            success={
+                                password.length > 0 && checkPassword(password)
+                            }
+                            error={
+                                password.length > 0 && !checkPassword(password)
+                            }
                             tabIndex="2"
                             autoFocus={false}
                         />
@@ -146,7 +154,9 @@ const LoginPage = () => {
                                 ) => handleLogin(e)}
                             >
                                 <span
-                                    className={`'font-extrabold' ${isDisabled ? 'text-black' : 'text-green'}`}
+                                    className={`'font-extrabold' ${
+                                        isDisabled ? 'text-black' : 'text-green'
+                                    }`}
                                 >
                                     로그인
                                 </span>
@@ -154,7 +164,7 @@ const LoginPage = () => {
                         </div>
                     </form>
                 </div>
-            </section >
+            </section>
             {isFailModal && (
                 <GlobalModal
                     size="small"

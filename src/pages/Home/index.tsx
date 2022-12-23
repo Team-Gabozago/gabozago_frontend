@@ -29,20 +29,20 @@ const HomePage: React.FC = () => {
     }, [sortType, refetchFeeds]);
 
     return (
-        <section className="pb-[4rem]">
+        <section className="pb-[4rem] px-7">
             <Header myArea={myArea} refetchFeeds={refetchFeeds} />
-            <h1 className="my-8 font-bold text-silver text-title font-GangwonEduPower">
-                우리 동네의
-                <br /> 새 제안이에요.
-            </h1>
             {myArea && myArea.code === USER_LOCATION_NOT_FOUND ? (
-                <div className="flex justify-center items-center text-silver text-xs">
+                <div className="h-screen flex justify-center items-center text-silver text-xs">
                     아직 동네가 설정되지 않았어요.
                     <br />
                     보고 싶은 동네를 설정해보세요.
                 </div>
             ) : (
                 <>
+                    <h1 className="my-8 font-bold text-silver text-title font-GangwonEduPower">
+                        우리 동네의
+                        <br /> 새 제안이에요.
+                    </h1>
                     <Navigation
                         sortType={sortType}
                         handleNaviLi={handleNaviLi}
@@ -57,6 +57,7 @@ const HomePage: React.FC = () => {
                                 <FeedComponent post={feed} />
                             </Link>
                         ))}
+
                     <CreateFeed />
                 </>
             )}
