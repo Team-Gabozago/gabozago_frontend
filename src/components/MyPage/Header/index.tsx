@@ -11,7 +11,7 @@ const Header = ({ title = '' }: MyPageHeaderProps) => {
     const navigate = useNavigate();
 
     return (
-        <header className="h-[3.875rem] flex items-center py-4 border-b-1 border-solid border-darkGray text-white bg-navy text-center">
+        <header className="h-[3.875rem] flex items-center py-4 border-b-[1px] border-solid border-darkGray text-white bg-navy text-center">
             <button
                 type="button"
                 className="absolute left-8 cursor-pointer"

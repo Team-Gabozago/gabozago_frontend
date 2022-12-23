@@ -20,7 +20,6 @@
         "react-use": "^17.4.0",
         "recoil": "^0.7.6",
         "recoil-persist": "^4.2.0",
-        "tailwind-scrollbar-hide": "^1.1.7",
         "use-long-press": "^2.0.2"
     },
     "devDependencies": {

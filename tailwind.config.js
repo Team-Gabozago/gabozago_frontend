@@ -50,8 +50,10 @@ module.exports = {
     },
     animation: {
       'rolling': 'rolling 6s infinite forwards',
-      'spinner': 'spinner 1s ease infinite'
+      'spinner': 'spinner 1s ease infinite',
+      'fadeInDown': 'fadeInDown 1s',
+      'fadeInUp': 'fadeInUp 1s'
     }
   },
-  plugins: [require('tailwind-scrollbar-hide')],
+  plugins: [],
 };

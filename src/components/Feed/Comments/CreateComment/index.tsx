@@ -82,7 +82,7 @@ const CreateComment = ({
     return (
         <>
             <Overlayout handleCancelClick={handleCancelClick} />
-            <div className="w-[23.4375rem] h-[5.5rem] fixed bottom-0 p-6 bg-white rounded-t-lg z-[1000]">
+            <div className="w-[23.4375rem] h-[5.5rem] fixed bottom-0 p-6 bg-white rounded-t-lg z-[1000] animate-fadeInUp duration-100">
                 <CreateInputView
                     commentAuthor={!isPatch ? commentAuthor : ''}
                     profile_image={user && user.profile_image}

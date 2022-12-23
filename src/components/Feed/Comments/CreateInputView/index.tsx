@@ -23,7 +23,9 @@ const CreateInputView = ({
         />
         <input
             type="input"
-            className="w-80 overflow-y-scroll p-3 border-b-[1px] border-solid border-gray text-xs"
+            className={`w-80 overflow-y-scroll p-3 border-b-[1px] border-solid border-gray text-xs ${
+                content && content.length > 0 && 'focus-within:border-blue'
+            }`}
             value={content}
             placeholder={
                 commentAuthor
@@ -36,7 +38,9 @@ const CreateInputView = ({
         />
         <button
             type="button"
-            className="absolute top-3 right-3 text-gray text-xs"
+            className={`absolute top-3 right-3 text-xs ${
+                content && content.length > 0 ? 'text-blue' : 'text-gray'
+            }`}
             onClick={handleAddComment}
         >
             등록

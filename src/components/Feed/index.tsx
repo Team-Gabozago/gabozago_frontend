@@ -6,7 +6,7 @@ const FeedComponent = ({ post }: { post: Feed }) => {
         post;
 
     return (
-        <div className="max-w-xs flex justify-center items-center mb-2 rounded bg-white">
+        <div className="w-80 flex justify-center items-center mb-2 rounded bg-white">
             {images && (
                 <img
                     src={images[0]}

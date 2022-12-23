@@ -51,14 +51,13 @@ const LikePage = () => {
             const checkFavorite = me.categories.every(
                 (category: LikeSportCategory) => category.favorite === false
             );
-            console.log(checkFavorite);
             return checkFavorite;
         }
         return true;
     };
 
     return (
-        <section>
+        <section className="pb-[4rem] px-7">
             <Header
                 myArea={myArea}
                 refetchMyArea={refetchMyArea}

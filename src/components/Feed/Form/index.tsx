@@ -272,13 +272,13 @@ const Form = () => {
                     value={placeDetail}
                     onChange={handleChangePlaceDetail}
                 />
-                <div className="w-[20.375rem]">
+                <div className="w-[20.375rem] h-6">
                     <Label htmlFor={content}>내용</Label>
                     <Asterisk>*</Asterisk>
                 </div>
                 <textarea
                     id={content}
-                    className="w-[20.375rem] h-[17.5rem] px-3 py-2 border-[1px] border-solid border-gray text-xs rounded resize-none animate-fadeInDown duration-100"
+                    className="w-[20.375rem] h-[17.5rem] px-3 py-2 border-[1px] border-solid border-gray text-xs rounded resize-none animate-fadeInDown duration-50"
                     placeholder="약속 시간, 준비물, 실력 등 플레이를 위한 정보를 적어주세요"
                     value={content}
                     onChange={handleChangeContent}
