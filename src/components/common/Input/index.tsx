@@ -82,7 +82,13 @@ export const Input = memo(
                 />
                 <S.ClearButton type="button" onClick={onClear} tabIndex={-1}>
                     <I.Cancel
-                        color={error ? theme.color.errorText : theme.color.blue}
+                        color={
+                            error
+                                ? theme.color.errorText
+                                : success
+                                ? theme.color.blue
+                                : theme.color.gray
+                        }
                     />
                 </S.ClearButton>
                 <S.PlaceHolder>{placeholder}</S.PlaceHolder>

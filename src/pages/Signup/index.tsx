@@ -13,8 +13,9 @@ import ProgressBar from '@/components/ProgressBar';
 import {
     AVAILABLE_EMAIL,
     DUPLICATED_EMAIL,
+    DUPLICATED_NICKNAME,
     EMAIL_EXISTS,
-    USER_CREATED,
+    LOGIN_SUCCESS,
 } from '@/constants/code';
 import { signupFormData } from '@/constants/form';
 import { useInput } from '@/hooks/useInput';
@@ -75,7 +76,8 @@ const SignupPage = () => {
 
     const fetchSignupUser = useMutation(postSignupUser, {
         onSuccess: (code: string) => {
-            if (code === USER_CREATED) {
+            // LOGIN_SUCCESS -> 다른 코드로 바꿔야함.
+            if (code === LOGIN_SUCCESS) {
                 setModalInfo({
                     title: '가입이 완료되었어요!',
                     description: '우리 동네 운동 친구를 찾으러 가볼까요?',
@@ -87,6 +89,13 @@ const SignupPage = () => {
                     ...modalInfo,
                     title: '이미 사용 중인 이메일이에요.',
                     description: '다른 이메일로 다시 시도해보세요.',
+                    buttonText: '확인',
+                });
+            } else if (code === DUPLICATED_NICKNAME) {
+                setModalInfo({
+                    ...modalInfo,
+                    title: '이미 사용 중인 닉네임이에요.',
+                    description: '다른 닉네임으로 다시 시도해보세요.',
                     buttonText: '확인',
                 });
             }
@@ -238,9 +247,9 @@ const SignupPage = () => {
                     width={62.5 * (level + 1)}
                     backgroundColor={checkAllForm() ? 'gradient' : 'silver'}
                 />
-                <div className="pt-28 pb-15 pl-3">
+                <div className="pt-28 pb-15">
                     <div className="flex justify-center mb-8">
-                        <h1 className="w-72 text-title font-Spoqa-Han-Sans-Neo font-weight">
+                        <h1 className="w-[18.5rem] text-title font-Spoqa-Han-Sans-Neo font-weight">
                             {signupFormData[level]?.title}
                         </h1>
                     </div>

@@ -19,7 +19,7 @@ const StartPage = () => {
     }, []);
 
     return (
-        <section className="h-screen flex flex-col justify-between items-center pt-28 pb-8 bg-navy">
+        <section className="h-screen w-[23.4375rem] flex flex-col justify-between items-center pt-28 pb-8 bg-navy">
             {isLogo ? (
                 <div className="h-screen flex flex-col justify-center items-center">
                     <Logo.Big />

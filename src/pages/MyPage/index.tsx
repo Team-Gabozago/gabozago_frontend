@@ -44,7 +44,7 @@ const MyPage = () => {
 
     return (
         me && (
-            <section className="h-full">
+            <section className="pb-[5rem]">
                 <Header title="마이페이지" />
                 <Profile me={me} />
                 <LikeSport
@@ -90,24 +90,23 @@ const MyPage = () => {
                         </Link>
                     </div>
                 )}
-                <div className="h-20 flex items-center border-b border-solid border-silver">
+                <div className="h-20 mb-7 flex items-center border-b border-solid border-silver">
                     <Link to="/mypage/like">
                         <span className="px-4">관심 보낸 글</span>
                     </Link>
                 </div>
-                <div className="flex justify-center">
+                <div className="h-[12.75rem] flex justify-center relative">
                     <Link to="/logout">
                         <Button
-                            className="mt-7 border border-solid border-gray"
+                            className="border border-solid border-gray"
                             size="md"
                         >
                             로그아웃
                         </Button>
                     </Link>
-                </div>
-
-                <div className="px-4 absolute text-lightGray">
-                    <Link to="/mypage/secession">탈퇴하기</Link>
+                    <div className="px-4 absolute left-0 bottom-0 text-lightGray">
+                        <Link to="/mypage/secession">탈퇴하기</Link>
+                    </div>
                 </div>
             </section>
         )

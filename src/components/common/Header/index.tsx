@@ -51,7 +51,7 @@ const Header = ({ myArea, refetchMyArea, refetchFeeds }: HeaderProps) => {
     useEffect(() => {
         if (myArea) {
             setPlace({
-                name: myArea.region2depth_name,
+                name: myArea.region2depth_name || '동네설정',
                 longitude: myArea.x,
                 latitude: myArea.y,
             });
