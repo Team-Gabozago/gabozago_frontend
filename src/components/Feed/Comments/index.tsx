@@ -8,6 +8,7 @@ import CreateComment from './CreateComment';
 import CreateInputView from './CreateInputView';
 
 import { getComments, getReplyComments } from '@/apis/comments';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { userState } from '@/recoil/atoms/user';
 import { CommentType } from '@/types/comment';
 
@@ -17,13 +18,14 @@ const Comments = () => {
     const [allComments, setAllComments] = useState<CommentType[]>([]);
     const [isOpenCreate, setIsOpenCreate] = useState(false);
 
-    const { data: comments, refetch: refetchComments } = useQuery(
-        ['feedComments'],
-        () => {
-            if (feedId) return getComments(+feedId);
-            return false;
-        }
-    );
+    const {
+        data: comments,
+        isLoading,
+        refetch: refetchComments,
+    } = useQuery(['feedComments'], () => {
+        if (feedId) return getComments(+feedId);
+        return false;
+    });
 
     useEffect(() => {
         async function createComments() {
@@ -50,6 +52,8 @@ const Comments = () => {
     const handleInputViewClick = () => {
         setIsOpenCreate(true);
     };
+
+    if (isLoading) return <LoadingSpinner size="large" />;
 
     return (
         allComments && (

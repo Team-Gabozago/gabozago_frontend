@@ -11,6 +11,7 @@ import {
     getCategories,
 } from '@/apis/feeds';
 import Button from '@/components/common/Button';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
 import SelectPlaceBox from '@/components/Feed/SelectPlaceBox';
 import SelectSportBox from '@/components/Feed/SelectSportBox';
 import GlobalModal from '@/components/GlobalModal';
@@ -55,9 +56,12 @@ const Form = () => {
         description: '',
     });
 
-    const { data: sportCategories } = useQuery(['categories'], getCategories);
+    const { data: sportCategories, isLoading: categoryLoading } = useQuery(
+        ['categories'],
+        getCategories
+    );
 
-    const { data: feed } = useQuery(['feed'], () => {
+    const { data: feed, isLoading: feedLoading } = useQuery(['feed'], () => {
         if (id) return getFeed(+id);
         return false;
     });
@@ -203,6 +207,8 @@ const Form = () => {
             setContent(feed.content);
         }
     }, [feed]);
+
+    if (categoryLoading || feedLoading) return <LoadingSpinner size="large" />;
 
     return (
         <>

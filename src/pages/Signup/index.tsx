@@ -15,7 +15,7 @@ import {
     DUPLICATED_EMAIL,
     DUPLICATED_NICKNAME,
     EMAIL_EXISTS,
-    LOGIN_SUCCESS,
+    USER_CREATED,
 } from '@/constants/code';
 import { signupFormData } from '@/constants/form';
 import { useInput } from '@/hooks/useInput';
@@ -76,8 +76,8 @@ const SignupPage = () => {
 
     const fetchSignupUser = useMutation(postSignupUser, {
         onSuccess: (code: string) => {
-            // LOGIN_SUCCESS -> 다른 코드로 바꿔야함.
-            if (code === LOGIN_SUCCESS) {
+            // USER_CREATED -> 다른 코드로 바꿔야함.
+            if (code === USER_CREATED) {
                 setModalInfo({
                     title: '가입이 완료되었어요!',
                     description: '우리 동네 운동 친구를 찾으러 가볼까요?',

@@ -52,13 +52,14 @@ module.exports = {
             {
                 test: /\.(png|svg|jpg|jpeg|gif|ico|woff|woff2|eot|ttf|otf)$/i,
                 type: 'asset/resource',
-            },
+            }
         ],
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: '../public/index.html',
-            mapApiUrl: `//dapi.kakao.com/v2/maps/sdk.js?appkey=${GABOZAGO_MAP_KEY}&libraries=services`,
+            favicon: '../public/favicon.ico',
+            mapApiUrl: `//dapi.kakao.com/v2/maps/sdk.js?appkey=${GABOZAGO_MAP_KEY}&libraries=services`
         }),
         new webpack.DefinePlugin({
             'process.env': JSON.stringify(process.env),
