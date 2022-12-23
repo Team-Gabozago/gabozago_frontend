@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { getMyArea } from '@/apis/area';
 import { getAllFeeds } from '@/apis/feeds';
 import Header from '@/components/common/Header';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
 import Navigation from '@/components/common/Navigation';
 import CreateFeed from '@/components/CreateFeed';
 import FeedComponent from '@/components/Feed';
@@ -14,9 +15,11 @@ import { Feed } from '@/interfaces/feed';
 const HomePage: React.FC = () => {
     const [sortType, setSortType] = useState('NEWEST');
 
-    const { data: feeds, refetch: refetchFeeds } = useQuery(['allFeeds'], () =>
-        getAllFeeds(sortType)
-    );
+    const {
+        data: feeds,
+        isLoading: feedsLoading,
+        refetch: refetchFeeds,
+    } = useQuery(['allFeeds'], () => getAllFeeds(sortType));
 
     const { data: myArea } = useQuery(['myArea'], getMyArea);
 
@@ -27,6 +30,8 @@ const HomePage: React.FC = () => {
     useEffect(() => {
         refetchFeeds();
     }, [sortType, refetchFeeds]);
+
+    if (feedsLoading) return <LoadingSpinner size="large" />;
 
     return (
         <section className="pb-[4rem] px-7">
@@ -57,10 +62,9 @@ const HomePage: React.FC = () => {
                                 <FeedComponent post={feed} />
                             </Link>
                         ))}
-
-                    <CreateFeed />
                 </>
             )}
+            <CreateFeed />
         </section>
     );
 };

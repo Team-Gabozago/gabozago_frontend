@@ -3,9 +3,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLongPress } from 'use-long-press';
 
-import * as S from './MyBoard.style';
-
 import { getMyBoardPage } from '@/apis/mypage';
+import Blank from '@/components/Blank';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import FeedComponent from '@/components/Feed';
 import GlobalModal from '@/components/GlobalModal';
@@ -15,18 +14,22 @@ import { Feed } from '@/interfaces/feed';
 
 const MyBoardPage = () => {
     const [isModal, setIsModal] = useState(false);
-    const { data: feeds } = useQuery(['myPage'], getMyBoardPage);
+    const { data: feeds, isLoading } = useQuery(['myPage'], getMyBoardPage);
 
     const bind = useLongPress(() => {
         setIsModal(true);
     });
 
+    if (isLoading) return <LoadingSpinner size="large" />;
+
     return (
         <>
-            <S.MyLikePage {...bind()}>
+            <section {...bind()}>
                 <Header title="내가 쓴 게시글" />
-                <S.MyLikeContent>
-                    <S.SubTitle>길게 눌러 삭제</S.SubTitle>
+                <div className="px-7">
+                    <div className="flex justify-center items-center py-7 text-darkGray text-xs">
+                        길게 눌러 삭제
+                    </div>
                     {feeds && feeds.length > 0 ? (
                         feeds.map((feed: Feed) => (
                             <Link
@@ -37,13 +40,13 @@ const MyBoardPage = () => {
                             </Link>
                         ))
                     ) : (
-                        <LoadingSpinner size="large" />
+                        <Blank />
                     )}
-                </S.MyLikeContent>
-                <S.EndPointWrapper>
-                    <S.EndPoint />
-                </S.EndPointWrapper>
-            </S.MyLikePage>
+                </div>
+                <div className="w-full mt-[3.75rem] flex justify-center">
+                    <div className="w-2 h-2 rounded-full bg-gray" />
+                </div>
+            </section>
             {isModal && (
                 <GlobalModal
                     size="small"

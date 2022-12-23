@@ -9,3 +9,15 @@ export type CommentType = {
     updated_at: string;
     replies: CommentType[];
 };
+
+export type MyCommentType = {
+    id: number;
+    feed_id: number;
+    content: string;
+    feed_content: string;
+    parent_content: string;
+    created_at: string;
+    updated_at: string;
+    feed_author: boolean;
+    modified: boolean;
+};
