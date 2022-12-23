@@ -4,8 +4,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
-import * as S from './MyEditProfile.style';
-
 import { patchMyInfo, postMyImageFile } from '@/apis/mypage';
 import Button from '@/components/common/Button';
 import DirectiveMsg from '@/components/common/DirectiveMsg';
@@ -14,7 +12,11 @@ import Input from '@/components/common/Input';
 import GlobalModal from '@/components/GlobalModal';
 import ModalContent from '@/components/ModalContent';
 import Header from '@/components/MyPage/Header';
-import { PROFILE_UPDATED, IMAGE_UPLOADED } from '@/constants/code';
+import {
+    PROFILE_UPDATED,
+    IMAGE_UPLOADED,
+    COMMON_INVALID_PARAMETER,
+} from '@/constants/code';
 import { signupFormData } from '@/constants/form';
 import { useInput } from '@/hooks/useInput';
 import { userState } from '@/recoil/atoms/user';
@@ -25,6 +27,12 @@ const MyEditProfile = () => {
     const navigate = useNavigate();
 
     const [user, setUser] = useRecoilState(userState);
+    const [modalText, setModalText] = useState({
+        title: '',
+        description: '',
+        buttonText: '',
+        handleButtonClick: () => true,
+    });
     const [isModal, setIsModal] = useState(false);
     const [isDisabled, setIsDisabled] = useState(true);
 
@@ -63,10 +71,30 @@ const MyEditProfile = () => {
 
     const fetchMyInfo = useMutation(patchMyInfo, {
         onSuccess: (code: string) => {
+            if (code === COMMON_INVALID_PARAMETER) {
+                setModalText({
+                    title: '닉네임 중복입니다.',
+                    description: '닉네임이 변경 실패.',
+                    buttonText: '확인',
+                    handleButtonClick: () => {
+                        setIsModal(false);
+                        return true;
+                    },
+                });
+            }
             if (code === PROFILE_UPDATED) {
                 setUser({ ...user, nickname });
-                setIsModal(true);
+                setModalText({
+                    title: '변경이 완료되었습니다.',
+                    description: '닉네임이 성공적으로 변경 되었습니다.',
+                    buttonText: '확인',
+                    handleButtonClick: () => {
+                        navigate('/mypage');
+                        return true;
+                    },
+                });
             }
+            setIsModal(true);
         },
         onError: (error: unknown) => {
             throw new Error(`error is ${error}`);
@@ -86,37 +114,41 @@ const MyEditProfile = () => {
         e.preventDefault();
         if (nickname === user.nickname) return;
         fetchMyInfo.mutate(nickname);
-        setIsModal(true);
     };
 
     return (
         <>
-            <S.MyEditProfile>
+            <section>
                 <Header title="프로필 수정" />
-                <S.EditForm>
-                    <S.ImageWrapper>
-                        <S.ProfileImage
+                <form className="flex flex-col items-center gap-4">
+                    <div className="flex justify-center mt-[2.625rem] pb-4 relative">
+                        <img
+                            className="w-[7.5rem] h-[7.5rem] rounded-full bg-gray"
                             src={user.profile_image}
                             alt="profile"
                         />
-                        <S.ProfileForm>
-                            <S.ImageButton
+                        <div className="w-7 h-7 flex justify-center items-center absolute bottom-4 right-0 rounded-full bg-navy">
+                            <input
+                                type="file"
+                                className="hidden"
                                 accept="image/*"
                                 id="image-button"
                                 onChange={(
                                     e: React.ChangeEvent<HTMLInputElement>
                                 ) => handleImageUpdate(e)}
-                                type="file"
                             />
 
-                            <S.ImageLabel htmlFor="image-button">
+                            <label
+                                className="cursor-pointer"
+                                htmlFor="image-button"
+                            >
                                 <I.Setting
                                     color={theme.color.white}
                                     fontSize={0.8}
                                 />
-                            </S.ImageLabel>
-                        </S.ProfileForm>
-                    </S.ImageWrapper>
+                            </label>
+                        </div>
+                    </div>
                     <Input
                         width={20.375}
                         name="별명"
@@ -135,15 +167,15 @@ const MyEditProfile = () => {
                             {signupFormData[1].directive}
                         </DirectiveMsg>
                     )}
-                    <S.ButtonWrapper>
+                    <div className="mt-[5.5rem]">
                         <Button
                             type="submit"
                             size="md"
                             css={css`
                                 border: 1px solid
                                     ${isDisabled
-                                    ? theme.color.gray
-                                    : theme.color.white};
+                                        ? theme.color.gray
+                                        : theme.color.white};
                                 color: ${isDisabled
                                     ? theme.color.navy
                                     : theme.color.white};
@@ -160,19 +192,19 @@ const MyEditProfile = () => {
                         >
                             변경
                         </Button>
-                    </S.ButtonWrapper>
-                </S.EditForm>
-            </S.MyEditProfile>
+                    </div>
+                </form>
+            </section>
             {isModal && (
                 <GlobalModal
                     size="small"
                     handleCancelClick={() => setIsModal(false)}
                 >
                     <ModalContent
-                        title="변경이 완료되었습니다."
-                        description="닉네임이 성공적으로 변경 되었습니다."
-                        buttonText="확인"
-                        handleButtonClick={() => navigate('/mypage')}
+                        title={modalText.title}
+                        description={modalText.description}
+                        buttonText={modalText.buttonText}
+                        handleButtonClick={modalText.handleButtonClick}
                     />
                 </GlobalModal>
             )}

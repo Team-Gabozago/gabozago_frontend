@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { getFeed, unLikeFeed, likeFeed, deleteFeed } from '@/apis/feeds';
 import I from '@/components/common/Icons';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
 import Comments from '@/components/Feed/Comments';
 import FeedProfile from '@/components/Feed/Profile';
 import GlobalModal from '@/components/GlobalModal';
@@ -23,7 +24,11 @@ const FeedPage = () => {
         imageUrl: '',
     });
 
-    const { data: feed, refetch: refetchFeed } = useQuery(['feed'], () => {
+    const {
+        data: feed,
+        isLoading,
+        refetch: refetchFeed,
+    } = useQuery(['feed'], () => {
         if (id) return getFeed(+id);
         return true;
     });
@@ -76,6 +81,7 @@ const FeedPage = () => {
         refetchFeed();
     }, [id, refetchFeed]);
 
+    if (isLoading) return <LoadingSpinner size="large" />;
     return (
         feed && (
             <>

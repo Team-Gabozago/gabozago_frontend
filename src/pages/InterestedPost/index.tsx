@@ -5,7 +5,9 @@ import { Link } from 'react-router-dom';
 import { getMyArea } from '@/apis/area';
 import { getFeeds } from '@/apis/feeds';
 import { getMyPage } from '@/apis/mypage';
+import Blank from '@/components/Blank';
 import Header from '@/components/common/Header';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
 import Navigation from '@/components/common/Navigation';
 import Title from '@/components/common/Title';
 import CreateFeed from '@/components/CreateFeed';
@@ -20,14 +22,17 @@ const LikePage = () => {
     const [sortType, setSortType] = useState('NEWEST');
 
     const [isSportModal, setIsSportModal] = useState(false);
-    const { data: me, refetch: refetchMyPage } = useQuery(
-        ['myInfo'],
-        getMyPage
-    );
+    const {
+        data: me,
+        isLoading: meLoading,
+        refetch: refetchMyPage,
+    } = useQuery(['myInfo'], getMyPage);
 
-    const { data: feeds, refetch: refetchFeeds } = useQuery(['feeds'], () =>
-        getFeeds(clickedSport.name, sortType)
-    );
+    const {
+        data: feeds,
+        isLoading: feedsLoading,
+        refetch: refetchFeeds,
+    } = useQuery(['feeds'], () => getFeeds(clickedSport.name, sortType));
 
     const { data: myArea, refetch: refetchMyArea } = useQuery(
         ['myArea'],
@@ -55,6 +60,8 @@ const LikePage = () => {
         }
         return true;
     };
+
+    if (meLoading || feedsLoading) return <LoadingSpinner size="large" />;
 
     return (
         <section className="pb-[4rem] px-7">
@@ -121,9 +128,7 @@ const LikePage = () => {
                             </Link>
                         ))
                     ) : (
-                        <div className="w-full mt-8 text-center text-lightGray">
-                            No Data...
-                        </div>
+                        <Blank />
                     )}
                 </>
             ) : (

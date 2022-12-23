@@ -2,15 +2,15 @@ import { useQuery, useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useLongPress } from 'use-long-press';
 
-import * as S from './MyComment.style';
-
 import { deleteComment } from '@/apis/comments';
 import { getMyCommentPage } from '@/apis/mypage';
+import Blank from '@/components/Blank';
+import I from '@/components/common/Icons';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import GlobalModal from '@/components/GlobalModal';
 import ModalContent from '@/components/ModalContent';
 import Header from '@/components/MyPage/Header';
-import { CommentType } from '@/types/comment';
+import { MyCommentType } from '@/types/comment';
 import { calculateDate } from '@/utils/date';
 
 const MyCommentPage = () => {
@@ -22,10 +22,11 @@ const MyCommentPage = () => {
         description: '',
         handleButtonClick: () => true,
     });
-    const { data: comments, refetch: refetchMyComments } = useQuery(
-        ['myPage'],
-        getMyCommentPage
-    );
+    const {
+        data: comments,
+        isLoading,
+        refetch: refetchMyComments,
+    } = useQuery(['myPage'], getMyCommentPage);
 
     const fetchDeleteComment = useMutation(deleteComment, {
         onSuccess: async (ok: boolean) => {
@@ -64,33 +65,48 @@ const MyCommentPage = () => {
         });
     });
 
+    if (isLoading) return <LoadingSpinner size="large" />;
+
     return (
         <>
-            <S.MyCommentPage>
+            <section>
                 <Header title="내가 쓴 댓글/답글" />
-                <S.MyCommentContent>
-                    <S.SubTitle>길게 눌러 삭제</S.SubTitle>
+                <div className="flex flex-col items-center py-7">
+                    <div className="flex justify-center items-center py-7 text-darkGray text-xs">
+                        길게 눌러 삭제
+                    </div>
                     {comments && comments.length > 0 ? (
-                        comments.map((comment: CommentType) => (
-                            <S.PostContainer
+                        comments.map((comment: MyCommentType) => (
+                            <div
+                                className="w-80 flex flex-col p-4 mb-3 rounded bg-white"
                                 key={`comment-${comment.id}`}
                                 {...bind()}
                             >
-                                <S.Time>
+                                <p className="text-xs text-label mb-2">
                                     {calculateDate(comment.updated_at)}
-                                </S.Time>
-                                <S.Divider />
-                                <S.Content>{comment.content}</S.Content>
-                            </S.PostContainer>
+                                </p>
+                                <p className="text-xs text-label">
+                                    {comment.feed_content}
+                                </p>
+                                <div className="h-[1px] my-3 bg-silver" />
+                                {comment.parent_content && (
+                                    <div className="text-xs text-label mb-2">
+                                        {comment.parent_content}
+                                    </div>
+                                )}
+                                <div className="text-xs text-black">
+                                    {comment.content}
+                                </div>
+                            </div>
                         ))
                     ) : (
-                        <LoadingSpinner size="large" />
+                        <Blank />
                     )}
-                </S.MyCommentContent>
-                <S.EndPointWrapper>
-                    <S.EndPoint />
-                </S.EndPointWrapper>
-            </S.MyCommentPage>
+                </div>
+                <div className="w-full flex justify-center mt-[3.75rem]">
+                    <div className="w-2 h-2 rounded-full bg-gray" />
+                </div>
+            </section>
             {modalData.isOpen && (
                 <GlobalModal
                     size="small"

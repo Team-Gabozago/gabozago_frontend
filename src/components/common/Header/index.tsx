@@ -2,6 +2,8 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import LoadingSpinner from '../LoadingSpinner';
+
 import { getAreaInfos, postAreaInfo } from '@/apis/area';
 import I from '@/components/common/Icons';
 import SelectAreaBox from '@/components/common/SelectAreaBox';
@@ -25,10 +27,14 @@ const Header = ({ myArea, refetchMyArea, refetchFeeds }: HeaderProps) => {
         latitude: 0,
     });
 
-    const { data: areaInfos } = useQuery(['areaInfos'], getAreaInfos, {
-        staleTime: STALE_TIME,
-        cacheTime: CACHE_TIME,
-    });
+    const { data: areaInfos, isLoading } = useQuery(
+        ['areaInfos'],
+        getAreaInfos,
+        {
+            staleTime: STALE_TIME,
+            cacheTime: CACHE_TIME,
+        }
+    );
 
     const fetchPostAreaInfo = useMutation(postAreaInfo, {
         onSuccess: async (ok: boolean) => {
@@ -57,6 +63,8 @@ const Header = ({ myArea, refetchMyArea, refetchFeeds }: HeaderProps) => {
             });
         }
     }, [myArea]);
+
+    if (isLoading) return <LoadingSpinner size="large" />;
 
     return (
         <>
