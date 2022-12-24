@@ -6,6 +6,7 @@ import { useSetRecoilState } from 'recoil';
 import { getMyPage } from '@/apis/mypage';
 import Button from '@/components/common/Button';
 import I from '@/components/common/Icons';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
 import Header from '@/components/MyPage/Header';
 import LikeSport from '@/components/MyPage/LikeSport';
 import Profile from '@/components/MyPage/Profile';
@@ -15,10 +16,11 @@ import theme from '@/styles/theme';
 
 const MyPage = () => {
     const [clickedArrow, setClickedArrow] = useState(false);
-    const { data: me, refetch: refetchMyPage } = useQuery(
-        ['myPage'],
-        getMyPage
-    );
+    const {
+        data: me,
+        isLoading,
+        refetch: refetchMyPage,
+    } = useQuery(['myPage'], getMyPage);
 
     const setUser = useSetRecoilState(userState);
 
@@ -41,6 +43,8 @@ const MyPage = () => {
             });
         }
     }, [me, setUser]);
+
+    if (isLoading) return <LoadingSpinner size="large" />;
 
     return (
         me && (

@@ -2,8 +2,6 @@ import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import * as S from './Password.style';
-
 import { checkMyPassword, patchMyPassword } from '@/apis/mypage';
 import Button from '@/components/common/Button';
 import DirectiveMsg from '@/components/common/DirectiveMsg';
@@ -124,112 +122,108 @@ const PasswordPage = () => {
 
     return (
         <>
-            <S.PasswordPage>
+            <section>
                 <Header title="비밀번호 변경" />
-                <S.PasswordForm>
-                    <>
-                        {isCheckCurrentPassword ? (
-                            <>
-                                <Input
-                                    name="새 비밀번호"
-                                    type="password"
-                                    placeholder="대소문자, 숫자, 특수문자 포함 6자리 이상 입력해주세요."
-                                    value={newPassword}
-                                    onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                    ) => handleChangeNewPassword(e)}
-                                    success={
-                                        newPassword.length > 0 &&
-                                        checkPassword(newPassword)
-                                    }
-                                    error={
-                                        newPassword.length > 0 &&
-                                        !checkPassword(newPassword)
-                                    }
-                                    onClear={handleNewPasswordClear}
-                                />
-                                <Input
-                                    name="새 비밀번호 확인"
-                                    type="password"
-                                    placeholder="새 비밀번호를 한 번더 입력해주세요"
-                                    value={newPassword2}
-                                    onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                    ) => handleChangeNewPassword2(e)}
-                                    success={
-                                        newPassword2.length > 0 &&
-                                        checkPassword(newPassword2)
-                                    }
-                                    error={
-                                        newPassword2.length > 0 &&
-                                        !checkPassword(newPassword2)
-                                    }
-                                    onClear={handleNewPassword2Clear}
-                                    autoFocus={false}
-                                />
-                            </>
-                        ) : (
+                <form className="flex flex-col items-center gap-4 mt-[3.125rem]">
+                    {isCheckCurrentPassword ? (
+                        <>
                             <Input
-                                name="현재 비밀번호"
+                                name="새 비밀번호"
                                 type="password"
-                                placeholder="현재 사용 중인 비밀번호를 입력해주세요"
-                                value={currentPassword}
+                                placeholder="대소문자, 숫자, 특수문자 포함 6자리 이상 입력해주세요."
+                                value={newPassword}
                                 onChange={(
                                     e: React.ChangeEvent<HTMLInputElement>
-                                ) => handleChangeCurrentPassword(e)}
+                                ) => handleChangeNewPassword(e)}
                                 success={
-                                    currentPassword.length > 0 &&
-                                    checkPassword(currentPassword)
+                                    newPassword.length > 0 &&
+                                    checkPassword(newPassword)
                                 }
                                 error={
-                                    currentPassword.length > 0 &&
-                                    !checkPassword(currentPassword)
+                                    newPassword.length > 0 &&
+                                    !checkPassword(newPassword)
                                 }
-                                onClear={handleCurrentPasswordClear}
+                                onClear={handleNewPasswordClear}
                             />
-                        )}
-                        {currentPassword.length > 0 &&
-                            !checkPassword(currentPassword) && (
-                                <DirectiveMsg
-                                    active={checkPassword(currentPassword)}
-                                >
-                                    <span>{signupFormData[3].directive}</span>
-                                </DirectiveMsg>
-                            )}
-                        <S.ButtonWrapper>
-                            <Button
-                                type="submit"
-                                size="md"
-                                backgroundColor={
-                                    !isDisabled
-                                        ? theme.color.navy
-                                        : theme.color.white
+                            <Input
+                                name="새 비밀번호 확인"
+                                type="password"
+                                placeholder="새 비밀번호를 한 번더 입력해주세요"
+                                value={newPassword2}
+                                onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                ) => handleChangeNewPassword2(e)}
+                                success={
+                                    newPassword2.length > 0 &&
+                                    checkPassword(newPassword2)
                                 }
-                                disabled={isDisabled}
-                                onClick={
-                                    isComplete
-                                        ? (
-                                              e: React.SyntheticEvent<HTMLFormElement>
-                                          ) => handleModifyPassword(e)
-                                        : (
-                                              e: React.SyntheticEvent<HTMLFormElement>
-                                          ) => handleNextButton(e)
+                                error={
+                                    newPassword2.length > 0 &&
+                                    !checkPassword(newPassword2)
                                 }
+                                onClear={handleNewPassword2Clear}
+                                autoFocus={false}
+                            />
+                        </>
+                    ) : (
+                        <Input
+                            name="현재 비밀번호"
+                            type="password"
+                            placeholder="현재 사용 중인 비밀번호를 입력해주세요"
+                            value={currentPassword}
+                            onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                            ) => handleChangeCurrentPassword(e)}
+                            success={
+                                currentPassword.length > 0 &&
+                                checkPassword(currentPassword)
+                            }
+                            error={
+                                currentPassword.length > 0 &&
+                                !checkPassword(currentPassword)
+                            }
+                            onClear={handleCurrentPasswordClear}
+                        />
+                    )}
+                    {currentPassword.length > 0 &&
+                        !checkPassword(currentPassword) && (
+                            <DirectiveMsg
+                                active={checkPassword(currentPassword)}
                             >
-                                <S.ButtonText
-                                    color={
-                                        isDisabled
-                                            ? theme.color.black
-                                            : theme.color.white
-                                    }
-                                >
-                                    {isCheckCurrentPassword ? '변경' : '다음'}
-                                </S.ButtonText>
-                            </Button>
-                        </S.ButtonWrapper>
-                    </>
-                </S.PasswordForm>
-            </S.PasswordPage>
+                                <span>{signupFormData[3].directive}</span>
+                            </DirectiveMsg>
+                        )}
+                    <div className="absolute bottom-20">
+                        <Button
+                            type="submit"
+                            size="md"
+                            backgroundColor={
+                                !isDisabled
+                                    ? theme.color.navy
+                                    : theme.color.white
+                            }
+                            disabled={isDisabled}
+                            onClick={
+                                isComplete
+                                    ? (
+                                          e: React.SyntheticEvent<HTMLFormElement>
+                                      ) => handleModifyPassword(e)
+                                    : (
+                                          e: React.SyntheticEvent<HTMLFormElement>
+                                      ) => handleNextButton(e)
+                            }
+                        >
+                            <span
+                                className={`${
+                                    isDisabled ? 'text-black' : 'text-white'
+                                }`}
+                            >
+                                {isCheckCurrentPassword ? '변경' : '다음'}
+                            </span>
+                        </Button>
+                    </div>
+                </form>
+            </section>
             {isModal && (
                 <GlobalModal
                     size="small"

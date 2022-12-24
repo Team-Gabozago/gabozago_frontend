@@ -177,7 +177,7 @@ export const patchMyInfo = async (nickname: string) => {
     const data = await response.json();
 
     try {
-        return data;
+        return data.code;
     } catch (err) {
         throw new Error(`patchMyPassword patch api fail err: ${err}`);
     }
