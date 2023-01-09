@@ -47,7 +47,9 @@ const SignupPage = () => {
     });
     const [level, setLevel] = useState(0);
     const [isDisabled, setIsDisabled] = useState(true);
-    const [form, setForm] = useState<boolean[]>(new Array(6).fill(false));
+    const [checkInputs, setCheckInputs] = useState<boolean[]>(
+        new Array(6).fill(false)
+    );
 
     const fetchDupliateEmail = useMutation(duplicateEmail, {
         onSuccess: (code: string) => {
@@ -107,27 +109,27 @@ const SignupPage = () => {
     });
 
     const checkDisableButton = (
-        paramsLevel: number, // 어떤 인풋인지 체킹
+        paramsLevel: number, // 어떤 인풋인지 체킹 (지금 인풋의 level name:  1, nickname: 2, emai: 3, password: 4, password: 5, tel : 6)
         targetValue: string, // 입력한 인풋의 value
         checkFunc: (checkParam: string, checkParam2?: string) => boolean // 입력한 값을 체킹하는 callbackFunc
     ) => {
-        let newForm = [...form];
+        let newInputs = [...checkInputs];
 
         if (checkFunc(targetValue)) {
-            newForm = newForm.map((v, idx) => {
+            newInputs = newInputs.map((v, idx) => {
                 if (idx === paramsLevel) return true;
                 return v;
             });
-            setForm(newForm);
         } else {
-            newForm = newForm.map((v, idx) => {
+            newInputs = newInputs.map((v, idx) => {
                 if (idx === paramsLevel) return false;
                 return v;
             });
-            setForm(newForm);
         }
 
-        return newForm.slice(0, level + 1).every(value => value === true)
+        setCheckInputs(newInputs);
+
+        return newInputs.slice(0, level + 1).every(value => value === true)
             ? setIsDisabled(false)
             : setIsDisabled(true);
     };

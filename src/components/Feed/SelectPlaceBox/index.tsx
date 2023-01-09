@@ -38,8 +38,8 @@ const SelectPlaceBox = ({
                 place_id: +place.id,
                 name: place.place_name,
                 address: place.address_name,
-                latitude: +place.x,
-                longitude: +place.y,
+                latitude: +place.y,
+                longitude: +place.x,
                 detail_link: place.place_url,
             }));
 
