@@ -205,6 +205,16 @@ const Form = () => {
             });
             setPlaceDetail(feed.location.placeDetail);
             setContent(feed.content);
+        } else {
+            setSport({ id: 0, name: '' });
+            setTitle('');
+            setPlace({
+                name: '',
+                latitude: 0,
+                longitude: 0,
+            });
+            setPlaceDetail('');
+            setContent('');
         }
     }, [feed]);
 
