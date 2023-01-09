@@ -99,7 +99,7 @@ const MyPage = () => {
                         <span className="px-4">관심 보낸 글</span>
                     </Link>
                 </div>
-                <div className="h-[12.75rem] flex justify-center relative">
+                <div className="flex flex-col justify-center relative">
                     <Link to="/logout">
                         <Button
                             className="border border-solid border-gray"
@@ -108,7 +108,7 @@ const MyPage = () => {
                             로그아웃
                         </Button>
                     </Link>
-                    <div className="px-4 absolute left-0 bottom-0 text-lightGray">
+                    <div className="px-4 text-lightGray mt-4">
                         <Link to="/mypage/secession">탈퇴하기</Link>
                     </div>
                 </div>

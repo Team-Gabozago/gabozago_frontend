@@ -124,12 +124,12 @@ const Form = () => {
         setContent(e.target.value);
     };
 
-    const handleSportFocus = () => {
+    const handleSportClick = () => {
         setSport({ id: 0, name: '' });
         setSelectSport(true);
     };
 
-    const handlePlaceFocus = () => {
+    const handlePlaceClick = () => {
         setIsSelectBoxModal(true);
     };
 
@@ -223,7 +223,7 @@ const Form = () => {
                     type="text"
                     placeholder="함께 할 운동을 선택해 주세요"
                     value={sport.name}
-                    onFocus={handleSportFocus}
+                    onClick={handleSportClick}
                 />
                 {selectSport && (
                     <SelectSportBox
@@ -253,7 +253,7 @@ const Form = () => {
                     type="text"
                     placeholder="운동 장소를 검색해 보세요"
                     value={place.name}
-                    onFocus={handlePlaceFocus}
+                    onClick={handlePlaceClick}
                 />
                 {isSelectBoxModal && (
                     <GlobalModal

@@ -170,7 +170,7 @@ const MySecessionPage = () => {
                             <div className="flex items-center gap-2 text-xs text-label">
                                 <button
                                     type="button"
-                                    className={`w-4 h-4 rounded-full flex justify-center items-center ${
+                                    className={`w-5 h-5 rounded-full flex justify-center items-center ${
                                         isCheck ? 'bg-navy' : 'bg-white'
                                     }`}
                                     onClick={(

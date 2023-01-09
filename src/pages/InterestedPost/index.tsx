@@ -18,7 +18,7 @@ import { Feed } from '@/interfaces/feed';
 import { LikeSportCategory } from '@/interfaces/sport';
 
 const LikePage = () => {
-    const [clickedSport, setClickedSport] = useState({ idx: 0, name: '' });
+    const [clickedSport, setClickedSport] = useState({ id: 0, name: '' });
     const [sortType, setSortType] = useState('NEWEST');
 
     const [isSportModal, setIsSportModal] = useState(false);
@@ -78,26 +78,26 @@ const LikePage = () => {
                     </Title>
                     <div className="flex gap-2 flex-wrap">
                         {me.categories.map(
-                            (category: LikeSportCategory, idx: number) =>
+                            (category: LikeSportCategory) =>
                                 category.favorite && (
                                     <button
+                                        key={`favorite-${category.id}`}
                                         type="button"
                                         className={`h-7 rounded-2xl px-3 text-silver font-xs 
                                         border
                                         border-solid
                                         ${
-                                            idx === clickedSport.idx
+                                            category.id === clickedSport.id
                                                 ? 'border-blue'
                                                 : 'border-gray'
                                         }
                                         ${
-                                            idx === clickedSport.idx &&
+                                            category.id === clickedSport.id &&
                                             'bg-blue'
                                         }`}
-                                        key={category.id}
                                         onClick={() =>
                                             setClickedSport({
-                                                idx,
+                                                id: category.id,
                                                 name: category.name,
                                             })
                                         }
