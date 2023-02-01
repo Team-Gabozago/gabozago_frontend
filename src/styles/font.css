@@ -3,6 +3,7 @@
     src: url('../fonts/Pretendard-Regular.woff') format('woff');
     font-weight: 400;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
@@ -10,6 +11,7 @@
     src: url('../fonts/SpoqaHanSansNeo-Bold.woff') format('woff');
     font-weight: 400;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
@@ -17,4 +19,5 @@
     src: url('../fonts/GangwonEduPower.woff') format('woff');
     font-weight: 400;
     font-style: normal;
+    font-display: swap;
 }
