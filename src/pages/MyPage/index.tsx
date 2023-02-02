@@ -16,11 +16,7 @@ import theme from '@/styles/theme';
 
 const MyPage = () => {
     const [clickedArrow, setClickedArrow] = useState(false);
-    const {
-        data: me,
-        isLoading,
-        refetch: refetchMyPage,
-    } = useQuery(['myPage'], getMyPage);
+    const { data: me, isLoading } = useQuery(['myInfo'], getMyPage);
 
     const setUser = useSetRecoilState(userState);
 
@@ -51,10 +47,7 @@ const MyPage = () => {
             <section className="pb-[5rem]">
                 <Header title="마이페이지" />
                 <Profile me={me} />
-                <LikeSport
-                    categories={me.categories}
-                    refetchMyPage={refetchMyPage}
-                />
+                <LikeSport categories={me.categories} />
                 <div className="h-20 flex items-center border-b border-solid border-silver">
                     <Link to="/mypage/password">
                         <span className="px-4">비밀번호 변경</span>

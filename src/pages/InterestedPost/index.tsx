@@ -22,11 +22,7 @@ const LikePage = () => {
     const [sortType, setSortType] = useState('NEWEST');
 
     const [isSportModal, setIsSportModal] = useState(false);
-    const {
-        data: me,
-        isLoading: meLoading,
-        refetch: refetchMyPage,
-    } = useQuery(['myInfo'], getMyPage);
+    const { data: me, isLoading: meLoading } = useQuery(['myInfo'], getMyPage);
 
     const {
         data: feeds,
@@ -34,10 +30,7 @@ const LikePage = () => {
         refetch: refetchFeeds,
     } = useQuery(['feeds'], () => getFeeds(clickedSport.name, sortType));
 
-    const { data: myArea, refetch: refetchMyArea } = useQuery(
-        ['myArea'],
-        getMyArea
-    );
+    const { data: myArea } = useQuery(['myArea'], getMyArea);
 
     const handlePlusClick = () => {
         setIsSportModal(true);
@@ -65,11 +58,7 @@ const LikePage = () => {
 
     return (
         <section className="pb-[4rem] px-7">
-            <Header
-                myArea={myArea}
-                refetchMyArea={refetchMyArea}
-                refetchFeeds={refetchFeeds}
-            />
+            <Header myArea={myArea} />
             {me && !isCheckFavoriteSports() ? (
                 <>
                     <Title>
@@ -155,8 +144,7 @@ const LikePage = () => {
                 >
                     <LikeSportModal
                         likeSports={me.categories}
-                        handleCancelModal={() => setIsSportModal(false)}
-                        refetchMyPage={refetchMyPage}
+                        setIsSportModal={setIsSportModal}
                     />
                 </GlobalModal>
             )}

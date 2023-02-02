@@ -18,11 +18,7 @@ const Comments = () => {
     const [allComments, setAllComments] = useState<CommentType[]>([]);
     const [isOpenCreate, setIsOpenCreate] = useState(false);
 
-    const {
-        data: comments,
-        isLoading,
-        refetch: refetchComments,
-    } = useQuery(['feedComments'], () => {
+    const { data: comments, isLoading } = useQuery(['feedComments'], () => {
         if (feedId) return getComments(+feedId);
         return false;
     });
@@ -67,13 +63,9 @@ const Comments = () => {
                 <span className="px-6 pt-3 border-t-[1px] border-solid border-silver text-xs text-label">
                     댓글 {allComments.length}
                 </span>
-                <CommentList
-                    allComments={allComments}
-                    refetchComments={refetchComments}
-                />
+                <CommentList allComments={allComments} />
                 {isOpenCreate && (
                     <CreateComment
-                        refetchComments={refetchComments}
                         handleCancelClick={() => setIsOpenCreate(false)}
                     />
                 )}

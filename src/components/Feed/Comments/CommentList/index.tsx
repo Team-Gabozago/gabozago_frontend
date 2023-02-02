@@ -7,14 +7,14 @@ import Comment from '../Comment';
 import { deleteComment, patchComment } from '@/apis/comments';
 import GlobalModal from '@/components/GlobalModal';
 import ModalContent from '@/components/ModalContent';
+import { queryClient } from '@/index';
 import { CommentType } from '@/types/comment';
 
 interface CommentListProps {
     allComments: CommentType[];
-    refetchComments: () => void;
 }
 
-const CommentList = ({ allComments, refetchComments }: CommentListProps) => {
+const CommentList = ({ allComments }: CommentListProps) => {
     const { id } = useParams();
     const [isModal, setIsModal] = useState(false);
     const [modalText, setModalText] = useState({
@@ -30,7 +30,7 @@ const CommentList = ({ allComments, refetchComments }: CommentListProps) => {
                     title: '정상적으로 삭제되었습니다.',
                     description: '댓글 삭제 완료',
                     handleButtonClick: () => {
-                        refetchComments();
+                        queryClient.invalidateQueries('feedComments');
                         setIsModal(false);
                         return true;
                     },
@@ -50,7 +50,7 @@ const CommentList = ({ allComments, refetchComments }: CommentListProps) => {
                     title: '정상적으로 수정되었습니다.',
                     description: '댓글 수정 완료',
                     handleButtonClick: () => {
-                        refetchComments();
+                        queryClient.invalidateQueries('feedComments');
                         setIsModal(false);
                         return true;
                     },
@@ -86,7 +86,6 @@ const CommentList = ({ allComments, refetchComments }: CommentListProps) => {
                             comment={comment}
                             handlePutComment={handlePutComment}
                             handleDeleteComment={handleDeleteComment}
-                            refetchComments={refetchComments}
                         />
                         {comment.replies.length > 0 &&
                             comment.replies.map((replyComment: CommentType) => (
@@ -95,7 +94,6 @@ const CommentList = ({ allComments, refetchComments }: CommentListProps) => {
                                     comment={replyComment}
                                     handlePutComment={handlePutComment}
                                     handleDeleteComment={handleDeleteComment}
-                                    refetchComments={refetchComments}
                                 />
                             ))}
                     </>

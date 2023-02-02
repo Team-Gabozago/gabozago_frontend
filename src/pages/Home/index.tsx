@@ -35,7 +35,7 @@ const HomePage: React.FC = () => {
 
     return (
         <section className="pb-[4rem] px-7">
-            <Header myArea={myArea} refetchFeeds={refetchFeeds} />
+            <Header myArea={myArea} />
             {myArea && myArea.code === USER_LOCATION_NOT_FOUND ? (
                 <div className="h-screen flex justify-center items-center text-silver text-xs">
                     아직 동네가 설정되지 않았어요.

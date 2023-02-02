@@ -7,10 +7,10 @@ import CreateInputView from '../CreateInputView';
 
 import { postComment, postReplyComment } from '@/apis/comments';
 import Overlayout from '@/components/OverLayout';
+import { queryClient } from '@/index';
 import { userState } from '@/recoil/atoms/user';
 
 interface CreateCommentProps {
-    refetchComments: () => void;
     isPatch?: boolean;
     commentId?: number;
     commentAuthor?: string;
@@ -20,7 +20,6 @@ interface CreateCommentProps {
 }
 
 const CreateComment = ({
-    refetchComments,
     isPatch,
     commentId,
     commentAuthor,
@@ -29,6 +28,7 @@ const CreateComment = ({
     handlePutComment,
 }: CreateCommentProps) => {
     // 댓글 등록, 수정, 대댓글 등록, 수정 에서 모두 사용되어지는 컴포넌트. 넘겨야할 props가 점점 많아진다. 어떻게 해결 할 수 없으려나??
+
     const user = useRecoilValue(userState);
     const { id } = useParams();
 
@@ -36,7 +36,7 @@ const CreateComment = ({
 
     const fetchPostComment = useMutation(postComment, {
         onSuccess: async () => {
-            refetchComments();
+            queryClient.invalidateQueries('feedComments');
             setCurrentContent('');
             handleCancelClick();
         },
@@ -47,7 +47,7 @@ const CreateComment = ({
 
     const fetchPostReplyComment = useMutation(postReplyComment, {
         onSuccess: async () => {
-            refetchComments();
+            queryClient.invalidateQueries('feedComments');
             setCurrentContent('');
             handleCancelClick();
         },

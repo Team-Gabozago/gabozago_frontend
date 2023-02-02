@@ -13,14 +13,12 @@ interface CommentProps {
     comment: CommentType;
     handlePutComment: (commentId: number, content: string) => void;
     handleDeleteComment: (commentId: number) => void;
-    refetchComments: () => void;
 }
 
 const Comment = ({
     comment,
     handlePutComment,
     handleDeleteComment,
-    refetchComments,
 }: CommentProps) => {
     const user = useRecoilValue(userState);
     const [isOpenCreate, setIsOpenCreate] = useState(false);
@@ -87,7 +85,6 @@ const Comment = ({
                     commentId={comment.id}
                     commentAuthor={comment.author.nickname}
                     commentContent={isPatch ? comment.content : ''}
-                    refetchComments={refetchComments}
                     isPatch={isPatch}
                     handlePutComment={handlePutComment}
                     handleCancelClick={() => {

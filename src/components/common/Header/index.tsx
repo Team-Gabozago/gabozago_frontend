@@ -9,17 +9,16 @@ import I from '@/components/common/Icons';
 import SelectAreaBox from '@/components/common/SelectAreaBox';
 import Overlayout from '@/components/OverLayout';
 import { STALE_TIME, CACHE_TIME } from '@/constants/time';
+import { queryClient } from '@/index';
 import { MyAreaInfo } from '@/interfaces/area';
 import theme from '@/styles/theme';
 import { AreaType } from '@/types/place';
 
 interface HeaderProps {
     myArea: MyAreaInfo;
-    refetchMyArea?: () => void;
-    refetchFeeds?: () => void;
 }
 
-const Header = ({ myArea, refetchMyArea, refetchFeeds }: HeaderProps) => {
+const Header = ({ myArea }: HeaderProps) => {
     const [isAreaBox, setIsAreaBox] = useState(false);
     const [place, setPlace] = useState<AreaType>({
         name: '동네설정',
@@ -39,9 +38,9 @@ const Header = ({ myArea, refetchMyArea, refetchFeeds }: HeaderProps) => {
     const fetchPostAreaInfo = useMutation(postAreaInfo, {
         onSuccess: async (ok: boolean) => {
             if (ok) {
-                if (refetchMyArea) refetchMyArea();
-                if (refetchFeeds) refetchFeeds();
                 setIsAreaBox(false);
+                queryClient.invalidateQueries('myArea');
+                queryClient.invalidateQueries('allFeeds');
             }
         },
         onError: (error: unknown) => {
