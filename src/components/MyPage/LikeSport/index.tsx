@@ -7,10 +7,9 @@ import { LikeSportCategory } from '@/interfaces/sport';
 
 interface LikeSportProps {
     categories: LikeSportCategory[];
-    refetchMyPage: () => void;
 }
 
-const LikeSport = ({ categories, refetchMyPage }: LikeSportProps) => {
+const LikeSport = ({ categories }: LikeSportProps) => {
     const [isSportModal, setIsSportModal] = useState(false);
     const handlePlusClick = () => {
         setIsSportModal(true);
@@ -49,8 +48,7 @@ const LikeSport = ({ categories, refetchMyPage }: LikeSportProps) => {
                 >
                     <LikeSportModal
                         likeSports={categories}
-                        handleCancelModal={() => setIsSportModal(false)}
-                        refetchMyPage={refetchMyPage}
+                        setIsSportModal={setIsSportModal}
                     />
                 </GlobalModal>
             )}

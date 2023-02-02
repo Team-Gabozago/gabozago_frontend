@@ -1,25 +1,21 @@
-import { css } from '@emotion/react';
 import { useMutation } from '@tanstack/react-query';
 
 import { deleteSport, patchSport } from '@/apis/sport';
-import Button from '@/components/common/Button';
 import {
     SUCCESS_FAVORITE_DELETED,
     SUCCESS_FAVORITE_UPDATED,
 } from '@/constants/code';
+import { queryClient } from '@/index';
 import { LikeSportCategory } from '@/interfaces/sport';
-import theme from '@/styles/theme';
 
 interface LikeSportModalProps {
     likeSports: LikeSportCategory[];
-    handleCancelModal: () => void;
-    refetchMyPage: () => void;
+    setIsSportModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const LikeSportModal = ({
     likeSports,
-    handleCancelModal,
-    refetchMyPage,
+    setIsSportModal,
 }: LikeSportModalProps) => {
     const filteredSports = likeSports.filter(
         (sport: LikeSportCategory) => sport.favorite
@@ -30,10 +26,10 @@ const LikeSportModal = ({
     );
 
     const fetchDeleteSport = useMutation(deleteSport, {
-        onSuccess: (code: string) => {
+        onSuccess: async (code: string) => {
             if (code === SUCCESS_FAVORITE_DELETED) {
-                handleCancelModal();
-                refetchMyPage();
+                setIsSportModal(false);
+                queryClient.invalidateQueries('myInfo');
             }
         },
         onError: (error: unknown) => {
@@ -42,10 +38,10 @@ const LikeSportModal = ({
     });
 
     const fetchPatchSport = useMutation(patchSport, {
-        onSuccess: (code: string) => {
+        onSuccess: async (code: string) => {
             if (code === SUCCESS_FAVORITE_UPDATED) {
-                handleCancelModal();
-                refetchMyPage();
+                setIsSportModal(false);
+                queryClient.invalidateQueries('myInfo');
             }
         },
         onError: (error: unknown) => {
@@ -116,30 +112,6 @@ const LikeSportModal = ({
                     ))}
                 </div>
             </form>
-            <div className="flex gap-4 mt-auto">
-                <Button
-                    size="sm"
-                    backgroundColor={theme.color.silver}
-                    css={css`
-                        color: ${theme.color.label};
-                        border-radius: 10px;
-                    `}
-                    onClick={handleCancelModal}
-                >
-                    취소
-                </Button>
-                <Button
-                    size="sm"
-                    backgroundColor={theme.color.blue}
-                    css={css`
-                        color: ${theme.color.white};
-                        border-radius: 10px;
-                    `}
-                    onClick={handleCancelModal}
-                >
-                    저장
-                </Button>
-            </div>
         </div>
     );
 };
